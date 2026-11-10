@@ -1,0 +1,2372 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>VOCAL ANALYZER</title>
+  <style>
+    :root {
+      --bg: #030712;
+      --bg2: #07111f;
+      --card: rgba(15, 23, 42, 0.82);
+      --card2: rgba(2, 6, 23, 0.72);
+      --border: rgba(148, 163, 184, 0.22);
+      --text: #e5f4ff;
+      --muted: #8fa7bd;
+      --cyan: #22d3ee;
+      --green: #34d399;
+      --lime: #a3e635;
+      --pink: #fb7185;
+      --orange: #fb923c;
+      --purple: #a78bfa;
+      --yellow: #facc15;
+      --red: #f87171;
+      --shadow: 0 24px 80px rgba(0, 0, 0, 0.42);
+      --radius: 26px;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html,
+    body {
+      margin: 0;
+      min-height: 100%;
+      background:
+        radial-gradient(circle at 20% 10%, rgba(34, 211, 238, 0.18), transparent 34%),
+        radial-gradient(circle at 80% 25%, rgba(167, 139, 250, 0.15), transparent 30%),
+        radial-gradient(circle at 50% 100%, rgba(52, 211, 153, 0.10), transparent 42%),
+        linear-gradient(135deg, #020617 0%, #06121f 45%, #020617 100%);
+      color: var(--text);
+      font-family:
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+      overflow-x: hidden;
+    }
+
+    body {
+      min-height: 100vh;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .app {
+      width: 100%;
+      min-height: 100vh;
+      padding: clamp(16px, 3vw, 34px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .screen {
+      width: min(1180px, 100%);
+      min-height: calc(100vh - clamp(32px, 6vw, 68px));
+      display: none;
+      animation: fadeIn 0.35s ease both;
+    }
+
+    .screen.active {
+      display: flex;
+      flex-direction: column;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .top-wrap {
+      margin: auto;
+      width: min(760px, 100%);
+      text-align: center;
+      padding: clamp(24px, 5vw, 54px);
+      border: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(15, 23, 42, 0.92), rgba(2, 6, 23, 0.74));
+      border-radius: 34px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .top-wrap::before {
+      content: "";
+      position: absolute;
+      inset: -2px;
+      background:
+        radial-gradient(circle at 30% 20%, rgba(34, 211, 238, 0.25), transparent 28%),
+        radial-gradient(circle at 75% 15%, rgba(52, 211, 153, 0.18), transparent 30%);
+      pointer-events: none;
+    }
+
+    .top-inner {
+      position: relative;
+      z-index: 1;
+    }
+
+    .brand {
+      letter-spacing: 0.13em;
+      font-weight: 900;
+      line-height: 0.95;
+      font-size: clamp(42px, 10vw, 86px);
+      margin: 0 0 14px;
+      background: linear-gradient(90deg, #e0faff, #22d3ee, #a3e635);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 34px rgba(34, 211, 238, 0.12);
+    }
+
+    .tagline {
+      margin: 0 auto 34px;
+      max-width: 620px;
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: clamp(14px, 2.5vw, 17px);
+    }
+
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn {
+      appearance: none;
+      border: 0;
+      cursor: pointer;
+      border-radius: 999px;
+      padding: 15px 26px;
+      min-height: 54px;
+      color: #eaffff;
+      background: rgba(15, 23, 42, 0.94);
+      border: 1px solid rgba(148, 163, 184, 0.24);
+      box-shadow: 0 14px 36px rgba(0, 0, 0, 0.24);
+      transition:
+        transform 0.16s ease,
+        border-color 0.16s ease,
+        background 0.16s ease,
+        box-shadow 0.16s ease;
+      font-weight: 800;
+    }
+
+    .btn:hover,
+    .btn:focus-visible {
+      transform: translateY(-2px);
+      border-color: rgba(34, 211, 238, 0.7);
+      box-shadow: 0 18px 45px rgba(34, 211, 238, 0.12);
+      outline: none;
+    }
+
+    .btn.primary {
+      background: linear-gradient(135deg, #0891b2, #10b981);
+      border-color: rgba(34, 211, 238, 0.55);
+      color: white;
+      padding-inline: 38px;
+    }
+
+    .btn.danger {
+      background: linear-gradient(135deg, #dc2626, #fb7185);
+      border-color: rgba(251, 113, 133, 0.52);
+      color: white;
+    }
+
+    .btn.small {
+      padding: 10px 15px;
+      min-height: 42px;
+      font-size: 14px;
+    }
+
+    .message {
+      margin-top: 22px;
+      min-height: 26px;
+      color: #bae6fd;
+      line-height: 1.65;
+      white-space: pre-wrap;
+    }
+
+    .message.error {
+      color: #fecaca;
+    }
+
+    .how {
+      display: none;
+      margin: 24px auto 0;
+      text-align: left;
+      max-width: 660px;
+      padding: 18px 20px;
+      border-radius: 22px;
+      background: rgba(2, 6, 23, 0.58);
+      border: 1px solid rgba(148, 163, 184, 0.18);
+      color: #cbeafe;
+      line-height: 1.8;
+    }
+
+    .how.show {
+      display: block;
+    }
+
+    .how h2 {
+      margin: 0 0 8px;
+      font-size: 20px;
+    }
+
+    .how ul {
+      margin: 8px 0 0;
+      padding-left: 1.3em;
+    }
+
+    .analysis-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .analysis-title {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .analysis-title h1 {
+      margin: 0;
+      font-size: clamp(24px, 5vw, 42px);
+      letter-spacing: 0.08em;
+    }
+
+    .status-line {
+      color: var(--muted);
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .header-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      justify-content: flex-end;
+    }
+
+    .page-indicator {
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.72);
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      color: #dff9ff;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .main-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      flex: 1;
+      min-height: 0;
+    }
+
+    .page {
+      display: none;
+      flex: 1;
+      min-height: 0;
+      animation: pageIn 0.24s ease both;
+    }
+
+    .page.active {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    @keyframes pageIn {
+      from {
+        opacity: 0;
+        transform: translateX(8px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .card {
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(15, 23, 42, 0.88), rgba(2, 6, 23, 0.62));
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      padding: clamp(16px, 3vw, 24px);
+      overflow: hidden;
+    }
+
+    .card.grow {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-title {
+      margin: 0 0 12px;
+      font-size: clamp(18px, 3vw, 25px);
+      color: #dff9ff;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    .pitch-hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(220px, 0.9fr);
+      gap: 16px;
+      align-items: stretch;
+    }
+
+    .big-note {
+      min-height: 190px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border-radius: 24px;
+      background:
+        radial-gradient(circle at 50% 30%, rgba(34, 211, 238, 0.16), transparent 44%),
+        rgba(2, 6, 23, 0.48);
+      border: 1px solid rgba(34, 211, 238, 0.20);
+    }
+
+    .current-label {
+      font-size: clamp(54px, 15vw, 124px);
+      font-weight: 950;
+      letter-spacing: -0.06em;
+      line-height: 0.92;
+      background: linear-gradient(90deg, #e0ffff, #22d3ee, #34d399);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-align: center;
+      word-break: keep-all;
+    }
+
+    .current-sub {
+      color: var(--muted);
+      font-weight: 800;
+      font-size: clamp(15px, 3vw, 20px);
+      margin-top: 14px;
+      text-align: center;
+    }
+
+    .meter-card {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 14px;
+      border-radius: 24px;
+      background: rgba(2, 6, 23, 0.48);
+      border: 1px solid rgba(148, 163, 184, 0.16);
+      padding: 18px;
+    }
+
+    .metric {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.12);
+      padding-bottom: 12px;
+    }
+
+    .metric:last-child {
+      border-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .metric span {
+      color: var(--muted);
+      font-weight: 800;
+    }
+
+    .metric strong {
+      font-size: clamp(24px, 5vw, 38px);
+      color: #efffff;
+      text-align: right;
+    }
+
+    .graph-wrap {
+      position: relative;
+      flex: 1;
+      min-height: 300px;
+      border-radius: 22px;
+      overflow: hidden;
+      background:
+        linear-gradient(180deg, rgba(8, 47, 73, 0.18), rgba(2, 6, 23, 0.74)),
+        rgba(2, 6, 23, 0.78);
+      border: 1px solid rgba(148, 163, 184, 0.18);
+    }
+
+    canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .graph-overlay {
+      pointer-events: none;
+      position: absolute;
+      inset: 12px 14px auto 14px;
+      display: flex;
+      justify-content: space-between;
+      color: rgba(226, 246, 255, 0.76);
+      font-weight: 900;
+      font-size: 13px;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .tech-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .tech-card {
+      border-radius: 22px;
+      padding: 18px;
+      min-height: 150px;
+      background: rgba(2, 6, 23, 0.48);
+      border: 1px solid rgba(148, 163, 184, 0.16);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .tech-card h3 {
+      margin: 0;
+      font-size: 18px;
+      color: #dff9ff;
+    }
+
+    .tech-count {
+      font-size: clamp(42px, 9vw, 82px);
+      font-weight: 950;
+      line-height: 1;
+    }
+
+    .tech-card.vibrato .tech-count,
+    .color-vibrato {
+      color: var(--purple);
+    }
+
+    .tech-card.scoop .tech-count,
+    .color-scoop {
+      color: var(--orange);
+    }
+
+    .tech-card.fall .tech-count,
+    .color-fall {
+      color: var(--pink);
+    }
+
+    .detected-badge {
+      align-self: flex-start;
+      border-radius: 999px;
+      padding: 8px 13px;
+      min-height: 36px;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.18);
+      color: #cbd5e1;
+      font-weight: 900;
+    }
+
+    .detected-badge.on {
+      color: #ffffff;
+      border-color: rgba(250, 204, 21, 0.7);
+      background: rgba(250, 204, 21, 0.16);
+      box-shadow: 0 0 30px rgba(250, 204, 21, 0.16);
+    }
+
+    .big-tech {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 16px;
+      min-height: 0;
+    }
+
+    .tech-focus {
+      border-radius: 26px;
+      background:
+        radial-gradient(circle at 50% 30%, rgba(167, 139, 250, 0.16), transparent 42%),
+        rgba(2, 6, 23, 0.48);
+      border: 1px solid rgba(148, 163, 184, 0.18);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      text-align: center;
+      min-height: 260px;
+    }
+
+    .tech-focus .name {
+      font-size: clamp(34px, 8vw, 74px);
+      font-weight: 950;
+      line-height: 1;
+    }
+
+    .tech-focus .num {
+      font-size: clamp(72px, 20vw, 170px);
+      font-weight: 950;
+      line-height: 0.95;
+    }
+
+    .tech-focus .desc {
+      color: var(--muted);
+      max-width: 420px;
+      line-height: 1.7;
+      font-weight: 700;
+    }
+
+    .range-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .range-box {
+      padding: 20px;
+      border-radius: 24px;
+      background: rgba(2, 6, 23, 0.48);
+      border: 1px solid rgba(148, 163, 184, 0.16);
+      min-height: 190px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .range-box span {
+      color: var(--muted);
+      font-weight: 900;
+      font-size: 15px;
+    }
+
+    .range-box strong {
+      font-size: clamp(44px, 10vw, 92px);
+      line-height: 1;
+      margin-top: 10px;
+      color: #eaffff;
+    }
+
+    .history-list {
+      overflow: auto;
+      flex: 1;
+      min-height: 0;
+      padding-right: 4px;
+    }
+
+    .history-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.12);
+      color: #dceeff;
+      font-weight: 800;
+    }
+
+    .history-item small {
+      color: var(--muted);
+      font-weight: 800;
+    }
+
+    .result-screen {
+      gap: 16px;
+    }
+
+    .result-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+
+    .result-head h1 {
+      margin: 0;
+      font-size: clamp(28px, 6vw, 54px);
+      letter-spacing: 0.08em;
+      background: linear-gradient(90deg, #e0ffff, #22d3ee, #a3e635);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .summary-card {
+      border-radius: 24px;
+      background: rgba(2, 6, 23, 0.5);
+      border: 1px solid rgba(148, 163, 184, 0.16);
+      padding: 18px;
+      min-height: 150px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .summary-card span {
+      color: var(--muted);
+      font-weight: 900;
+    }
+
+    .summary-card strong {
+      margin-top: 8px;
+      font-size: clamp(28px, 6vw, 54px);
+      line-height: 1;
+      color: #efffff;
+    }
+
+    .result-two {
+      display: grid;
+      grid-template-columns: 1.25fr 0.75fr;
+      gap: 16px;
+      min-height: 420px;
+    }
+
+    .footer-note {
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 13px;
+      text-align: center;
+      margin-top: 12px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.18);
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 20px currentColor;
+    }
+
+    .dot.off {
+      background: var(--muted);
+    }
+
+    .mobile-only-break {
+      display: none;
+    }
+
+    @media (max-width: 860px) {
+      .app {
+        align-items: stretch;
+        padding: 12px;
+      }
+
+      .screen {
+        min-height: calc(100vh - 24px);
+      }
+
+      .analysis-header {
+        align-items: flex-start;
+      }
+
+      .header-actions {
+        width: 100%;
+        justify-content: space-between;
+      }
+
+      .pitch-hero,
+      .big-tech,
+      .result-two {
+        grid-template-columns: 1fr;
+      }
+
+      .tech-grid,
+      .summary-grid,
+      .range-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .graph-wrap {
+        min-height: 330px;
+      }
+
+      .card {
+        border-radius: 22px;
+      }
+
+      .top-wrap {
+        border-radius: 28px;
+      }
+
+      .btn {
+        width: 100%;
+      }
+
+      .header-actions .btn {
+        width: auto;
+        flex: 1 1 120px;
+      }
+
+      .page-indicator {
+        width: 100%;
+        text-align: center;
+      }
+
+      .mobile-only-break {
+        display: block;
+      }
+    }
+
+    @media (max-width: 420px) {
+      .header-actions {
+        gap: 8px;
+      }
+
+      .btn.small {
+        padding-inline: 10px;
+        font-size: 13px;
+      }
+
+      .graph-wrap {
+        min-height: 300px;
+      }
+
+      .current-label {
+        font-size: clamp(46px, 18vw, 76px);
+      }
+
+      .metric {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .metric strong {
+        text-align: left;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <section id="topScreen" class="screen active">
+      <div class="top-wrap">
+        <div class="top-inner">
+          <h1 class="brand">VOCAL<br class="mobile-only-break"> ANALYZER</h1>
+          <p class="tagline">
+            マイク入力から歌声の音程、音域、ビブラート・しゃくり・フォールをリアルタイム解析します。
+            解析はブラウザ内で行われ、音声を外部サーバーへ送信しません。
+          </p>
+          <div class="btn-row">
+            <button id="startBtn" class="btn primary" type="button">開始</button>
+            <button id="howBtn" class="btn" type="button">使い方</button>
+          </div>
+          <div id="topMessage" class="message"></div>
+          <div id="howPanel" class="how">
+            <h2>使い方</h2>
+            <ul>
+              <li>「開始」を押してマイク使用を許可してください。</li>
+              <li>歌うと現在の音程、Hz、カラオケ表記、音程グラフがリアルタイムに表示されます。</li>
+              <li>10秒ごとに表示ページが切り替わります。解析は切り替え中も継続します。</li>
+              <li>終了ボタンを押すとマイクを停止し、結果画面に移動します。</li>
+              <li>無音や環境ノイズが多い場合は、音程表示を抑制します。</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="analysisScreen" class="screen">
+      <header class="analysis-header">
+        <div class="analysis-title">
+          <h1>VOCAL ANALYZER</h1>
+          <div class="status-line">
+            <span class="pill"><span id="micDot" class="dot off"></span><span id="micStatus">待機中</span></span>
+            <span class="pill">解析時間 <span id="elapsedText">00:00</span></span>
+          </div>
+        </div>
+        <div class="header-actions">
+          <button id="prevPageBtn" class="btn small" type="button">前へ</button>
+          <button id="nextPageBtn" class="btn small" type="button">次へ</button>
+          <div id="pageIndicator" class="page-indicator">1 / 5　残り 10秒</div>
+          <button id="stopBtn" class="btn danger small" type="button">終了</button>
+        </div>
+      </header>
+
+      <main class="main-grid">
+        <section id="page1" class="page active">
+          <div class="card">
+            <div class="pitch-hero">
+              <div class="big-note">
+                <div id="currentLabel" class="current-label">--</div>
+                <div id="currentSub" class="current-sub">歌うと音程を表示します</div>
+              </div>
+              <div class="meter-card">
+                <div class="metric">
+                  <span>基本周波数</span>
+                  <strong id="freqText">-- Hz</strong>
+                </div>
+                <div class="metric">
+                  <span>音名 / オクターブ</span>
+                  <strong id="noteText">--</strong>
+                </div>
+                <div class="metric">
+                  <span>検出信頼度</span>
+                  <strong id="clarityText">--%</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card grow">
+            <h2 class="card-title">
+              <span>カラオケ風 音程バー</span>
+              <span class="pill">直近 <span id="graphWindowText">12</span>秒</span>
+            </h2>
+            <div class="graph-wrap">
+              <canvas id="pitchCanvas"></canvas>
+              <div class="graph-overlay">
+                <span>高音 ↑</span>
+                <span id="graphRangeText">自動スケール</span>
+                <span>時間 →</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="page2" class="page">
+          <div class="card grow">
+            <h2 class="card-title">
+              <span class="color-vibrato">ビブラート検出</span>
+              <span id="vibratoBadge" class="detected-badge">待機中</span>
+            </h2>
+            <div class="big-tech">
+              <div class="tech-focus">
+                <div class="name color-vibrato">ビブラート</div>
+                <div id="vibratoBigCount" class="num color-vibrato">0</div>
+                <p class="desc">音程が一定周期で上下する動きを、周期性・深さ・継続時間から判定します。</p>
+              </div>
+              <div class="graph-wrap">
+                <canvas id="vibratoCanvas"></canvas>
+                <div class="graph-overlay">
+                  <span>検出位置を紫でマーク</span>
+                  <span>音程推移</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="page3" class="page">
+          <div class="card grow">
+            <h2 class="card-title">
+              <span class="color-scoop">しゃくり検出</span>
+              <span id="scoopBadge" class="detected-badge">待機中</span>
+            </h2>
+            <div class="big-tech">
+              <div class="tech-focus">
+                <div class="name color-scoop">しゃくり</div>
+                <div id="scoopBigCount" class="num color-scoop">0</div>
+                <p class="desc">低い音から目標音へ上昇して安定する動きを、上昇量・速度・終点安定性で判定します。</p>
+              </div>
+              <div class="graph-wrap">
+                <canvas id="scoopCanvas"></canvas>
+                <div class="graph-overlay">
+                  <span>検出位置を橙でマーク</span>
+                  <span>音程推移</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="page4" class="page">
+          <div class="card grow">
+            <h2 class="card-title">
+              <span class="color-fall">フォール検出</span>
+              <span id="fallBadge" class="detected-badge">待機中</span>
+            </h2>
+            <div class="big-tech">
+              <div class="tech-focus">
+                <div class="name color-fall">フォール</div>
+                <div id="fallBigCount" class="num color-fall">0</div>
+                <p class="desc">音程を保ったあと語尾で下降する動きを、保持時間・下降量・下降速度から判定します。</p>
+              </div>
+              <div class="graph-wrap">
+                <canvas id="fallCanvas"></canvas>
+                <div class="graph-overlay">
+                  <span>検出位置を桃色でマーク</span>
+                  <span>音程推移</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="page5" class="page">
+          <div class="card">
+            <h2 class="card-title">音域と最高音・最低音</h2>
+            <div class="range-grid">
+              <div class="range-box">
+                <span>最高音</span>
+                <strong id="liveMaxNote">--</strong>
+                <div id="liveMaxTime" class="current-sub">--</div>
+              </div>
+              <div class="range-box">
+                <span>最低音</span>
+                <strong id="liveMinNote">--</strong>
+                <div id="liveMinTime" class="current-sub">--</div>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <h2 class="card-title">歌唱テクニック合計</h2>
+            <div class="tech-grid">
+              <div class="tech-card vibrato">
+                <h3>ビブラート</h3>
+                <div id="vibratoCount" class="tech-count">0</div>
+                <div>回</div>
+              </div>
+              <div class="tech-card scoop">
+                <h3>しゃくり</h3>
+                <div id="scoopCount" class="tech-count">0</div>
+                <div>回</div>
+              </div>
+              <div class="tech-card fall">
+                <h3>フォール</h3>
+                <div id="fallCount" class="tech-count">0</div>
+                <div>回</div>
+              </div>
+            </div>
+          </div>
+          <div class="card grow">
+            <h2 class="card-title">直近の検出履歴</h2>
+            <div id="liveHistory" class="history-list"></div>
+          </div>
+        </section>
+      </main>
+    </section>
+
+    <section id="resultScreen" class="screen result-screen">
+      <div class="result-head">
+        <h1>RESULT</h1>
+        <button id="retryBtn" class="btn primary" type="button">もう一度測定する</button>
+      </div>
+
+      <div class="card">
+        <h2 class="card-title">音域</h2>
+        <div class="range-grid">
+          <div class="range-box">
+            <span>最高音</span>
+            <strong id="resultMaxNote">--</strong>
+            <div id="resultMaxTime" class="current-sub">--</div>
+          </div>
+          <div class="range-box">
+            <span>最低音</span>
+            <strong id="resultMinNote">--</strong>
+            <div id="resultMinTime" class="current-sub">--</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="summary-grid">
+        <div class="summary-card">
+          <span>総解析時間</span>
+          <strong id="resultDuration">00:00</strong>
+        </div>
+        <div class="summary-card">
+          <span>ビブラート合計 / 分</span>
+          <strong id="resultVibrato">0 / 0.0</strong>
+        </div>
+        <div class="summary-card">
+          <span>しゃくり合計 / 分</span>
+          <strong id="resultScoop">0 / 0.0</strong>
+        </div>
+        <div class="summary-card">
+          <span>フォール合計 / 分</span>
+          <strong id="resultFall">0 / 0.0</strong>
+        </div>
+      </div>
+
+      <div class="result-two">
+        <div class="card grow">
+          <h2 class="card-title">音程の推移グラフ</h2>
+          <div class="graph-wrap">
+            <canvas id="resultCanvas"></canvas>
+            <div class="graph-overlay">
+              <span>全解析時間</span>
+              <span id="resultGraphRange">自動スケール</span>
+            </div>
+          </div>
+        </div>
+        <div class="card grow">
+          <h2 class="card-title">テクニック発生履歴</h2>
+          <div id="resultHistory" class="history-list"></div>
+        </div>
+      </div>
+
+      <p class="footer-note">
+        判定はマイク音声から抽出した基本周波数に基づく推定です。環境ノイズ、声量、発音、端末マイク性能により結果は変動します。
+      </p>
+    </section>
+  </div>
+
+  <script>
+    "use strict";
+
+    const CONFIG = {
+      audio: {
+        fftSize: 4096,
+        minFreq: 65,
+        maxFreq: 1200,
+        rmsThreshold: 0.014,
+        clarityThreshold: 0.56,
+        silenceHoldMs: 160,
+        smoothingAlpha: 0.34,
+        maxReasonableJumpCents: 850
+      },
+      graph: {
+        liveWindowSec: 12,
+        minSemitoneSpan: 18,
+        verticalPaddingSemi: 3
+      },
+      page: {
+        count: 5,
+        switchSec: 10
+      },
+      technique: {
+        vibrato: {
+          windowSec: 1.25,
+          minDepthCents: 22,
+          maxDepthCents: 135,
+          minRateHz: 4.2,
+          maxRateHz: 8.6,
+          minZeroCrossings: 8,
+          minVoicedRatio: 0.72,
+          cooldownMs: 1400
+        },
+        scoop: {
+          lookbackSec: 0.72,
+          stableTailSec: 0.20,
+          minRiseCents: 55,
+          maxRiseCents: 330,
+          maxTailStdCents: 24,
+          minDurationMs: 120,
+          maxDurationMs: 720,
+          minUpwardRatio: 0.62,
+          cooldownMs: 950
+        },
+        fall: {
+          lookbackSec: 0.95,
+          stableHeadSec: 0.26,
+          tailSec: 0.42,
+          minDropCents: 58,
+          maxDropCents: 430,
+          maxHeadStdCents: 24,
+          minDurationMs: 130,
+          cooldownMs: 1100
+        }
+      }
+    };
+
+    const $ = (id) => document.getElementById(id);
+
+    const elements = {
+      topScreen: $("topScreen"),
+      analysisScreen: $("analysisScreen"),
+      resultScreen: $("resultScreen"),
+      startBtn: $("startBtn"),
+      howBtn: $("howBtn"),
+      howPanel: $("howPanel"),
+      topMessage: $("topMessage"),
+      stopBtn: $("stopBtn"),
+      retryBtn: $("retryBtn"),
+      prevPageBtn: $("prevPageBtn"),
+      nextPageBtn: $("nextPageBtn"),
+      pageIndicator: $("pageIndicator"),
+      micDot: $("micDot"),
+      micStatus: $("micStatus"),
+      elapsedText: $("elapsedText"),
+      currentLabel: $("currentLabel"),
+      currentSub: $("currentSub"),
+      freqText: $("freqText"),
+      noteText: $("noteText"),
+      clarityText: $("clarityText"),
+      graphWindowText: $("graphWindowText"),
+      graphRangeText: $("graphRangeText"),
+      vibratoCount: $("vibratoCount"),
+      scoopCount: $("scoopCount"),
+      fallCount: $("fallCount"),
+      vibratoBigCount: $("vibratoBigCount"),
+      scoopBigCount: $("scoopBigCount"),
+      fallBigCount: $("fallBigCount"),
+      vibratoBadge: $("vibratoBadge"),
+      scoopBadge: $("scoopBadge"),
+      fallBadge: $("fallBadge"),
+      liveMaxNote: $("liveMaxNote"),
+      liveMinNote: $("liveMinNote"),
+      liveMaxTime: $("liveMaxTime"),
+      liveMinTime: $("liveMinTime"),
+      liveHistory: $("liveHistory"),
+      resultMaxNote: $("resultMaxNote"),
+      resultMinNote: $("resultMinNote"),
+      resultMaxTime: $("resultMaxTime"),
+      resultMinTime: $("resultMinTime"),
+      resultDuration: $("resultDuration"),
+      resultVibrato: $("resultVibrato"),
+      resultScoop: $("resultScoop"),
+      resultFall: $("resultFall"),
+      resultHistory: $("resultHistory"),
+      resultGraphRange: $("resultGraphRange"),
+      pitchCanvas: $("pitchCanvas"),
+      vibratoCanvas: $("vibratoCanvas"),
+      scoopCanvas: $("scoopCanvas"),
+      fallCanvas: $("fallCanvas"),
+      resultCanvas: $("resultCanvas")
+    };
+
+    let state = createInitialState();
+
+    function createInitialState() {
+      return {
+        audioContext: null,
+        analyser: null,
+        source: null,
+        mediaStream: null,
+        buffer: null,
+        rafId: null,
+        running: false,
+        startedAt: 0,
+        endedAt: 0,
+        lastFrameAt: 0,
+        lastVoicedAt: 0,
+        currentPage: 0,
+        pageStartedAt: 0,
+        smoothedFreq: null,
+        rawLastFreq: null,
+        currentPitch: null,
+        pitchPoints: [],
+        techniqueEvents: [],
+        counts: {
+          vibrato: 0,
+          scoop: 0,
+          fall: 0
+        },
+        lastTechniqueAt: {
+          vibrato: -Infinity,
+          scoop: -Infinity,
+          fall: -Infinity
+        },
+        activeTechniqueUntil: {
+          vibrato: 0,
+          scoop: 0,
+          fall: 0
+        },
+        vibratoActive: false,
+        maxPitch: null,
+        minPitch: null
+      };
+    }
+
+    function resetStateKeepingDom() {
+      if (state.rafId) {
+        cancelAnimationFrame(state.rafId);
+      }
+      state = createInitialState();
+      updateTopMessage("");
+      elements.currentLabel.textContent = "--";
+      elements.currentSub.textContent = "歌うと音程を表示します";
+      elements.freqText.textContent = "-- Hz";
+      elements.noteText.textContent = "--";
+      elements.clarityText.textContent = "--%";
+      elements.vibratoCount.textContent = "0";
+      elements.scoopCount.textContent = "0";
+      elements.fallCount.textContent = "0";
+      elements.vibratoBigCount.textContent = "0";
+      elements.scoopBigCount.textContent = "0";
+      elements.fallBigCount.textContent = "0";
+      elements.liveMaxNote.textContent = "--";
+      elements.liveMinNote.textContent = "--";
+      elements.liveMaxTime.textContent = "--";
+      elements.liveMinTime.textContent = "--";
+      elements.liveHistory.innerHTML = "";
+      setBadge("vibrato", false);
+      setBadge("scoop", false);
+      setBadge("fall", false);
+      setMicStatus(false, "待機中");
+      setPage(0, false);
+    }
+
+    function showScreen(name) {
+      elements.topScreen.classList.remove("active");
+      elements.analysisScreen.classList.remove("active");
+      elements.resultScreen.classList.remove("active");
+      if (name === "top") elements.topScreen.classList.add("active");
+      if (name === "analysis") elements.analysisScreen.classList.add("active");
+      if (name === "result") elements.resultScreen.classList.add("active");
+      requestAnimationFrame(resizeAllCanvases);
+    }
+
+    function updateTopMessage(text, isError = false) {
+      elements.topMessage.textContent = text;
+      elements.topMessage.classList.toggle("error", isError);
+    }
+
+    function setMicStatus(on, text) {
+      elements.micDot.classList.toggle("off", !on);
+      elements.micStatus.textContent = text;
+    }
+
+    elements.howBtn.addEventListener("click", () => {
+      elements.howPanel.classList.toggle("show");
+    });
+
+    elements.startBtn.addEventListener("click", async () => {
+      await startAnalysis();
+    });
+
+    elements.stopBtn.addEventListener("click", () => {
+      stopAnalysisAndShowResult();
+    });
+
+    elements.retryBtn.addEventListener("click", () => {
+      stopAudioOnly();
+      resetStateKeepingDom();
+      showScreen("top");
+    });
+
+    elements.prevPageBtn.addEventListener("click", () => {
+      setPage((state.currentPage + CONFIG.page.count - 1) % CONFIG.page.count, true);
+    });
+
+    elements.nextPageBtn.addEventListener("click", () => {
+      setPage((state.currentPage + 1) % CONFIG.page.count, true);
+    });
+
+    async function startAnalysis() {
+      updateTopMessage("マイクの使用許可を確認しています…");
+      resetStateKeepingDom();
+
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        updateTopMessage("このブラウザではマイク入力を利用できません。Chrome、Edge、Safariなどの最新版でお試しください。", true);
+        return;
+      }
+
+      if (location.protocol !== "https:" && location.hostname !== "localhost" && location.hostname !== "127.0.0.1") {
+        updateTopMessage("マイクを使うにはHTTPS環境が必要です。ローカル確認の場合は localhost で開いてください。", true);
+        return;
+      }
+
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({
+          audio: {
+            echoCancellation: false,
+            noiseSuppression: false,
+            autoGainControl: false,
+            channelCount: 1
+          },
+          video: false
+        });
+
+        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContextClass) {
+          stream.getTracks().forEach((track) => track.stop());
+          updateTopMessage("このブラウザではWeb Audio APIを利用できません。", true);
+          return;
+        }
+
+        const audioContext = new AudioContextClass();
+        await audioContext.resume();
+
+        const analyser = audioContext.createAnalyser();
+        analyser.fftSize = CONFIG.audio.fftSize;
+        analyser.smoothingTimeConstant = 0;
+
+        const source = audioContext.createMediaStreamSource(stream);
+        source.connect(analyser);
+
+        state.audioContext = audioContext;
+        state.analyser = analyser;
+        state.source = source;
+        state.mediaStream = stream;
+        state.buffer = new Float32Array(analyser.fftSize);
+        state.running = true;
+        state.startedAt = performance.now();
+        state.lastFrameAt = state.startedAt;
+        state.lastVoicedAt = 0;
+        state.pageStartedAt = state.startedAt;
+        state.currentPage = 0;
+
+        showScreen("analysis");
+        setMicStatus(true, "解析中");
+        updateTopMessage("");
+        resizeAllCanvases();
+        analysisLoop();
+
+      } catch (error) {
+        console.error(error);
+        let message = "マイクを開始できませんでした。";
+
+        if (error && error.name === "NotAllowedError") {
+          message = "マイクの使用が許可されませんでした。ブラウザの設定からマイク許可を有効にしてください。";
+        } else if (error && error.name === "NotFoundError") {
+          message = "使用できるマイクが見つかりませんでした。マイクの接続を確認してください。";
+        } else if (error && error.name === "NotReadableError") {
+          message = "マイクを使用できません。他のアプリがマイクを使用している可能性があります。";
+        } else if (error && error.message) {
+          message = "マイクを開始できませんでした。\n" + error.message;
+        }
+
+        updateTopMessage(message, true);
+        stopAudioOnly();
+      }
+    }
+
+    function analysisLoop() {
+      if (!state.running || !state.analyser) return;
+
+      const now = performance.now();
+      const elapsedSec = (now - state.startedAt) / 1000;
+
+      state.analyser.getFloatTimeDomainData(state.buffer);
+      const pitch = detectPitchByAutocorrelation(state.buffer, state.audioContext.sampleRate);
+
+      if (pitch) {
+        const smoothFreq = smoothFrequency(pitch.frequency);
+        const midiFloat = frequencyToMidi(smoothFreq);
+        const noteInfo = midiToKaraokeNote(Math.round(midiFloat));
+        const point = {
+          t: elapsedSec,
+          timeMs: now,
+          freq: smoothFreq,
+          rawFreq: pitch.frequency,
+          midi: midiFloat,
+          midiRounded: Math.round(midiFloat),
+          label: noteInfo.label,
+          standard: noteInfo.standard,
+          octave: noteInfo.standardOctave,
+          clarity: pitch.clarity,
+          rms: pitch.rms
+        };
+
+        state.currentPitch = point;
+        state.lastVoicedAt = now;
+        state.pitchPoints.push(point);
+        trimOldIfTooLarge();
+        updateRange(point);
+        detectTechniques(now);
+      } else {
+        if (now - state.lastVoicedAt > CONFIG.audio.silenceHoldMs) {
+          state.currentPitch = null;
+          state.smoothedFreq = null;
+          state.rawLastFreq = null;
+          state.vibratoActive = false;
+        }
+      }
+
+      updatePageTimer(now);
+      updateLiveUI(now);
+      drawVisibleCanvases(false);
+      state.rafId = requestAnimationFrame(analysisLoop);
+    }
+
+    function detectPitchByAutocorrelation(buffer, sampleRate) {
+      let sum = 0;
+      for (let i = 0; i < buffer.length; i++) {
+        sum += buffer[i] * buffer[i];
+      }
+
+      const rms = Math.sqrt(sum / buffer.length);
+      if (rms < CONFIG.audio.rmsThreshold) {
+        return null;
+      }
+
+      const minLag = Math.floor(sampleRate / CONFIG.audio.maxFreq);
+      const maxLag = Math.floor(sampleRate / CONFIG.audio.minFreq);
+      const size = buffer.length;
+      const usable = size - maxLag - 1;
+
+      if (usable <= 0) return null;
+
+      let bestLag = -1;
+      let bestCorr = 0;
+      let prevCorr = 0;
+      let foundLocalPeak = false;
+
+      for (let lag = minLag; lag <= maxLag; lag++) {
+        let ac = 0;
+        let x2 = 0;
+        let y2 = 0;
+
+        for (let i = 0; i < usable; i++) {
+          const x = buffer[i];
+          const y = buffer[i + lag];
+          ac += x * y;
+          x2 += x * x;
+          y2 += y * y;
+        }
+
+        const denom = Math.sqrt(x2 * y2) || 1;
+        const corr = ac / denom;
+
+        if (lag > minLag + 1 && prevCorr > corr && prevCorr > bestCorr) {
+          bestCorr = prevCorr;
+          bestLag = lag - 1;
+          foundLocalPeak = true;
+        }
+
+        if (!foundLocalPeak && corr > bestCorr) {
+          bestCorr = corr;
+          bestLag = lag;
+        }
+
+        prevCorr = corr;
+      }
+
+      if (bestLag <= 0 || bestCorr < CONFIG.audio.clarityThreshold) {
+        return null;
+      }
+
+      const c0 = correlationAtLag(buffer, usable, bestLag - 1);
+      const c1 = correlationAtLag(buffer, usable, bestLag);
+      const c2 = correlationAtLag(buffer, usable, bestLag + 1);
+      const denom = c0 - 2 * c1 + c2;
+      let refinedLag = bestLag;
+
+      if (Math.abs(denom) > 1e-9) {
+        refinedLag = bestLag + 0.5 * (c0 - c2) / denom;
+      }
+
+      const frequency = sampleRate / refinedLag;
+      if (!Number.isFinite(frequency) || frequency < CONFIG.audio.minFreq || frequency > CONFIG.audio.maxFreq) {
+        return null;
+      }
+
+      return {
+        frequency,
+        clarity: Math.max(0, Math.min(1, bestCorr)),
+        rms
+      };
+    }
+
+    function correlationAtLag(buffer, usable, lag) {
+      if (lag <= 0) return 0;
+      let ac = 0;
+      let x2 = 0;
+      let y2 = 0;
+
+      for (let i = 0; i < usable; i++) {
+        const x = buffer[i];
+        const y = buffer[i + lag];
+        ac += x * y;
+        x2 += x * x;
+        y2 += y * y;
+      }
+
+      return ac / (Math.sqrt(x2 * y2) || 1);
+    }
+
+    function smoothFrequency(freq) {
+      if (!state.smoothedFreq) {
+        state.smoothedFreq = freq;
+        state.rawLastFreq = freq;
+        return freq;
+      }
+
+      const jumpCents = Math.abs(1200 * Math.log2(freq / state.smoothedFreq));
+
+      if (jumpCents > CONFIG.audio.maxReasonableJumpCents) {
+        state.smoothedFreq = freq * 0.18 + state.smoothedFreq * 0.82;
+      } else {
+        const alpha = CONFIG.audio.smoothingAlpha;
+        state.smoothedFreq = freq * alpha + state.smoothedFreq * (1 - alpha);
+      }
+
+      state.rawLastFreq = freq;
+      return state.smoothedFreq;
+    }
+
+    function frequencyToMidi(freq) {
+      return 69 + 12 * Math.log2(freq / 440);
+    }
+
+    function midiToFrequency(midi) {
+      return 440 * Math.pow(2, (midi - 69) / 12);
+    }
+
+    function midiToKaraokeNote(midi) {
+      const sharpNames = ["C", "C♯", "D", "D♯", "E", "F", "F♯", "G", "G♯", "A", "A♯", "B"];
+      const pc = ((midi % 12) + 12) % 12;
+      const standardOctave = Math.floor(midi / 12) - 1;
+      const standard = sharpNames[pc] + standardOctave;
+
+      const aBasedIndex = Math.floor((midi - 21) / 12);
+      let prefix;
+
+      if (aBasedIndex <= 0) {
+        prefix = "lowlow";
+      } else if (aBasedIndex === 1) {
+        prefix = "low";
+      } else if (aBasedIndex === 2) {
+        prefix = "mid1";
+      } else if (aBasedIndex === 3) {
+        prefix = "mid2";
+      } else if (aBasedIndex === 4) {
+        prefix = "hi";
+      } else if (aBasedIndex === 5) {
+        prefix = "hihi";
+      } else {
+        prefix = "hihihi";
+      }
+
+      return {
+        label: prefix + sharpNames[pc],
+        standard,
+        standardOctave,
+        note: sharpNames[pc]
+      };
+    }
+
+    function formatTime(sec) {
+      sec = Math.max(0, Math.floor(sec || 0));
+      const m = Math.floor(sec / 60);
+      const s = sec % 60;
+      return String(m).padStart(2, "0") + ":" + String(s).padStart(2, "0");
+    }
+
+    function formatEventTime(sec) {
+      return formatTime(sec);
+    }
+
+    function updateRange(point) {
+      if (!state.maxPitch || point.midi > state.maxPitch.midi) {
+        state.maxPitch = { ...point };
+      }
+
+      if (!state.minPitch || point.midi < state.minPitch.midi) {
+        state.minPitch = { ...point };
+      }
+    }
+
+    function getRecentVoiced(windowSec) {
+      if (!state.pitchPoints.length) return [];
+      const latestT = state.pitchPoints[state.pitchPoints.length - 1].t;
+      const from = latestT - windowSec;
+      return state.pitchPoints.filter((p) => p.t >= from);
+    }
+
+    function centsFromMidi(midi, baseMidi) {
+      return (midi - baseMidi) * 100;
+    }
+
+    function mean(values) {
+      if (!values.length) return 0;
+      return values.reduce((a, b) => a + b, 0) / values.length;
+    }
+
+    function std(values) {
+      if (values.length < 2) return 0;
+      const m = mean(values);
+      return Math.sqrt(values.reduce((a, b) => a + (b - m) * (b - m), 0) / values.length);
+    }
+
+    function detectTechniques(nowMs) {
+      detectVibrato(nowMs);
+      detectScoop(nowMs);
+      detectFall(nowMs);
+    }
+
+    function detectVibrato(nowMs) {
+      const cfg = CONFIG.technique.vibrato;
+      const recent = getRecentVoiced(cfg.windowSec);
+      if (recent.length < 12) {
+        state.vibratoActive = false;
+        return;
+      }
+
+      const latestT = recent[recent.length - 1].t;
+      const span = latestT - recent[0].t;
+      if (span < cfg.windowSec * 0.72) {
+        state.vibratoActive = false;
+        return;
+      }
+
+      const expectedFrames = Math.max(1, cfg.windowSec * 25);
+      const voicedRatio = Math.min(1, recent.length / expectedFrames);
+      if (voicedRatio < cfg.minVoicedRatio) {
+        state.vibratoActive = false;
+        return;
+      }
+
+      const midis = recent.map((p) => p.midi);
+      const base = mean(midis);
+      const cents = midis.map((m) => centsFromMidi(m, base));
+      const amplitude = (Math.max(...cents) - Math.min(...cents)) / 2;
+
+      if (amplitude < cfg.minDepthCents || amplitude > cfg.maxDepthCents) {
+        state.vibratoActive = false;
+        return;
+      }
+
+      let zeroCrossings = 0;
+      let lastSign = Math.sign(cents[0]);
+      for (let i = 1; i < cents.length; i++) {
+        const sign = Math.sign(cents[i]);
+        if (sign !== 0 && lastSign !== 0 && sign !== lastSign) {
+          zeroCrossings++;
+        }
+        if (sign !== 0) {
+          lastSign = sign;
+        }
+      }
+
+      const rateHz = zeroCrossings / 2 / span;
+      if (
+        zeroCrossings >= cfg.minZeroCrossings &&
+        rateHz >= cfg.minRateHz &&
+        rateHz <= cfg.maxRateHz
+      ) {
+        if (!state.vibratoActive && nowMs - state.lastTechniqueAt.vibrato > cfg.cooldownMs) {
+          addTechniqueEvent("vibrato", recent[Math.floor(recent.length / 2)] || recent[recent.length - 1], {
+            depth: amplitude,
+            rate: rateHz
+          });
+          state.lastTechniqueAt.vibrato = nowMs;
+          state.activeTechniqueUntil.vibrato = nowMs + 1000;
+        }
+        state.vibratoActive = true;
+      } else {
+        state.vibratoActive = false;
+      }
+    }
+
+    function detectScoop(nowMs) {
+      const cfg = CONFIG.technique.scoop;
+      if (nowMs - state.lastTechniqueAt.scoop < cfg.cooldownMs) return;
+
+      const recent = getRecentVoiced(cfg.lookbackSec);
+      if (recent.length < 8) return;
+
+      const endT = recent[recent.length - 1].t;
+      const tailFrom = endT - cfg.stableTailSec;
+      const tail = recent.filter((p) => p.t >= tailFrom);
+      if (tail.length < 4) return;
+
+      const tailMidis = tail.map((p) => p.midi);
+      const tailMean = mean(tailMidis);
+      const tailStd = std(tailMidis) * 100;
+      if (tailStd > cfg.maxTailStdCents) return;
+
+      let minPoint = recent[0];
+      for (const p of recent) {
+        if (p.t < tailFrom && p.midi < minPoint.midi) {
+          minPoint = p;
+        }
+      }
+
+      const riseCents = (tailMean - minPoint.midi) * 100;
+      const durationMs = (tail[0].t - minPoint.t) * 1000;
+
+      if (
+        riseCents < cfg.minRiseCents ||
+        riseCents > cfg.maxRiseCents ||
+        durationMs < cfg.minDurationMs ||
+        durationMs > cfg.maxDurationMs
+      ) {
+        return;
+      }
+
+      const segment = recent.filter((p) => p.t >= minPoint.t && p.t <= tail[tail.length - 1].t);
+      if (segment.length < 5) return;
+
+      let upward = 0;
+      let total = 0;
+      for (let i = 1; i < segment.length; i++) {
+        const diff = segment[i].midi - segment[i - 1].midi;
+        if (Math.abs(diff) < 0.015) continue;
+        total++;
+        if (diff > 0) upward++;
+      }
+
+      const upwardRatio = total ? upward / total : 0;
+      if (upwardRatio >= cfg.minUpwardRatio) {
+        addTechniqueEvent("scoop", tail[Math.floor(tail.length / 2)] || recent[recent.length - 1], {
+          rise: riseCents,
+          durationMs
+        });
+        state.lastTechniqueAt.scoop = nowMs;
+        state.activeTechniqueUntil.scoop = nowMs + 1000;
+      }
+    }
+
+    function detectFall(nowMs) {
+      const cfg = CONFIG.technique.fall;
+      if (nowMs - state.lastTechniqueAt.fall < cfg.cooldownMs) return;
+
+      const recent = getRecentVoiced(cfg.lookbackSec);
+      if (recent.length < 8) return;
+
+      const latest = recent[recent.length - 1];
+      const endT = latest.t;
+      const headEnd = endT - cfg.tailSec;
+      const headStart = headEnd - cfg.stableHeadSec;
+
+      const head = recent.filter((p) => p.t >= headStart && p.t <= headEnd);
+      const tail = recent.filter((p) => p.t >= headEnd);
+
+      if (head.length < 4 || tail.length < 4) return;
+
+      const headMidis = head.map((p) => p.midi);
+      const headMean = mean(headMidis);
+      const headStd = std(headMidis) * 100;
+      if (headStd > cfg.maxHeadStdCents) return;
+
+      let minTail = tail[0];
+      for (const p of tail) {
+        if (p.midi < minTail.midi) minTail = p;
+      }
+
+      const dropCents = (headMean - minTail.midi) * 100;
+      const durationMs = (minTail.t - head[head.length - 1].t) * 1000;
+
+      if (
+        dropCents < cfg.minDropCents ||
+        dropCents > cfg.maxDropCents ||
+        durationMs < cfg.minDurationMs
+      ) {
+        return;
+      }
+
+      let downward = 0;
+      let total = 0;
+      for (let i = 1; i < tail.length; i++) {
+        const diff = tail[i].midi - tail[i - 1].midi;
+        if (Math.abs(diff) < 0.015) continue;
+        total++;
+        if (diff < 0) downward++;
+      }
+
+      const downwardRatio = total ? downward / total : 0;
+      if (downwardRatio >= 0.55) {
+        addTechniqueEvent("fall", minTail, {
+          drop: dropCents,
+          durationMs
+        });
+        state.lastTechniqueAt.fall = nowMs;
+        state.activeTechniqueUntil.fall = nowMs + 1000;
+      }
+    }
+
+    function addTechniqueEvent(type, point, detail = {}) {
+      const event = {
+        type,
+        t: point.t,
+        timeMs: point.timeMs,
+        midi: point.midi,
+        freq: point.freq,
+        label: point.label,
+        detail
+      };
+
+      state.techniqueEvents.push(event);
+      state.counts[type] += 1;
+    }
+
+    function setBadge(type, on) {
+      const text = {
+        vibrato: "ビブラート検出",
+        scoop: "しゃくり検出",
+        fall: "フォール検出"
+      };
+
+      const idle = {
+        vibrato: "待機中",
+        scoop: "待機中",
+        fall: "待機中"
+      };
+
+      const element = {
+        vibrato: elements.vibratoBadge,
+        scoop: elements.scoopBadge,
+        fall: elements.fallBadge
+      }[type];
+
+      element.classList.toggle("on", on);
+      element.textContent = on ? text[type] : idle[type];
+    }
+
+    function updateLiveUI(nowMs) {
+      const elapsed = state.running ? (nowMs - state.startedAt) / 1000 : 0;
+      elements.elapsedText.textContent = formatTime(elapsed);
+      elements.graphWindowText.textContent = String(CONFIG.graph.liveWindowSec);
+
+      if (state.currentPitch) {
+        const p = state.currentPitch;
+        elements.currentLabel.textContent = p.label;
+        elements.currentSub.textContent = p.standard + " / " + p.freq.toFixed(1) + " Hz";
+        elements.freqText.textContent = p.freq.toFixed(1) + " Hz";
+        elements.noteText.textContent = p.standard;
+        elements.clarityText.textContent = Math.round(p.clarity * 100) + "%";
+      } else {
+        elements.currentLabel.textContent = "--";
+        elements.currentSub.textContent = "無音または音程を検出していません";
+        elements.freqText.textContent = "-- Hz";
+        elements.noteText.textContent = "--";
+        elements.clarityText.textContent = "--%";
+      }
+
+      elements.vibratoCount.textContent = String(state.counts.vibrato);
+      elements.scoopCount.textContent = String(state.counts.scoop);
+      elements.fallCount.textContent = String(state.counts.fall);
+      elements.vibratoBigCount.textContent = String(state.counts.vibrato);
+      elements.scoopBigCount.textContent = String(state.counts.scoop);
+      elements.fallBigCount.textContent = String(state.counts.fall);
+
+      setBadge("vibrato", nowMs < state.activeTechniqueUntil.vibrato);
+      setBadge("scoop", nowMs < state.activeTechniqueUntil.scoop);
+      setBadge("fall", nowMs < state.activeTechniqueUntil.fall);
+
+      if (state.maxPitch) {
+        elements.liveMaxNote.textContent = state.maxPitch.label;
+        elements.liveMaxTime.textContent = formatEventTime(state.maxPitch.t) + " / " + state.maxPitch.freq.toFixed(1) + " Hz";
+      } else {
+        elements.liveMaxNote.textContent = "--";
+        elements.liveMaxTime.textContent = "--";
+      }
+
+      if (state.minPitch) {
+        elements.liveMinNote.textContent = state.minPitch.label;
+        elements.liveMinTime.textContent = formatEventTime(state.minPitch.t) + " / " + state.minPitch.freq.toFixed(1) + " Hz";
+      } else {
+        elements.liveMinNote.textContent = "--";
+        elements.liveMinTime.textContent = "--";
+      }
+
+      renderLiveHistory();
+    }
+
+    function renderLiveHistory() {
+      const recent = state.techniqueEvents.slice(-12).reverse();
+
+      if (!recent.length) {
+        elements.liveHistory.innerHTML = '<div class="history-item"><span>まだ検出履歴はありません</span><small>--</small></div>';
+        return;
+      }
+
+      elements.liveHistory.innerHTML = recent.map((event) => {
+        return '<div class="history-item">' +
+          '<span>' + escapeHtml(techniqueName(event.type)) + ' <small>' + escapeHtml(event.label) + '</small></span>' +
+          '<small>' + escapeHtml(formatEventTime(event.t)) + '</small>' +
+          '</div>';
+      }).join("");
+    }
+
+    function techniqueName(type) {
+      if (type === "vibrato") return "ビブラート";
+      if (type === "scoop") return "しゃくり";
+      if (type === "fall") return "フォール";
+      return type;
+    }
+
+    function techniqueColor(type) {
+      if (type === "vibrato") return "#a78bfa";
+      if (type === "scoop") return "#fb923c";
+      if (type === "fall") return "#fb7185";
+      return "#facc15";
+    }
+
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>"']/g, (char) => {
+        return {
+          "&": "&amp;",
+          "<": "&lt;",
+          ">": "&gt;",
+          '"': "&quot;",
+          "'": "&#039;"
+        }[char];
+      });
+    }
+
+    function updatePageTimer(nowMs) {
+      const elapsedOnPage = (nowMs - state.pageStartedAt) / 1000;
+      if (elapsedOnPage >= CONFIG.page.switchSec) {
+        setPage((state.currentPage + 1) % CONFIG.page.count, false);
+      }
+
+      const remaining = Math.max(0, Math.ceil(CONFIG.page.switchSec - ((performance.now() - state.pageStartedAt) / 1000)));
+      elements.pageIndicator.textContent = (state.currentPage + 1) + " / " + CONFIG.page.count + "　残り " + remaining + "秒";
+    }
+
+    function setPage(index, manual) {
+      state.currentPage = index;
+      state.pageStartedAt = performance.now();
+
+      for (let i = 1; i <= CONFIG.page.count; i++) {
+        const page = $("page" + i);
+        if (page) page.classList.toggle("active", i - 1 === index);
+      }
+
+      elements.pageIndicator.textContent = (state.currentPage + 1) + " / " + CONFIG.page.count + "　残り " + CONFIG.page.switchSec + "秒";
+
+      if (manual) {
+        drawVisibleCanvases(false);
+      }
+
+      requestAnimationFrame(resizeAllCanvases);
+    }
+
+    function trimOldIfTooLarge() {
+      const maxPoints = 18000;
+      if (state.pitchPoints.length > maxPoints) {
+        state.pitchPoints.splice(0, state.pitchPoints.length - maxPoints);
+      }
+
+      const maxEvents = 3000;
+      if (state.techniqueEvents.length > maxEvents) {
+        state.techniqueEvents.splice(0, state.techniqueEvents.length - maxEvents);
+      }
+    }
+
+    function resizeCanvas(canvas) {
+      const rect = canvas.getBoundingClientRect();
+      const dpr = Math.max(1, Math.min(window.devicePixelRatio || 1, 2));
+      const width = Math.max(1, Math.floor(rect.width * dpr));
+      const height = Math.max(1, Math.floor(rect.height * dpr));
+
+      if (canvas.width !== width || canvas.height !== height) {
+        canvas.width = width;
+        canvas.height = height;
+      }
+
+      const ctx = canvas.getContext("2d");
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      return {
+        ctx,
+        width: rect.width,
+        height: rect.height,
+        dpr
+      };
+    }
+
+    function resizeAllCanvases() {
+      [
+        elements.pitchCanvas,
+        elements.vibratoCanvas,
+        elements.scoopCanvas,
+        elements.fallCanvas,
+        elements.resultCanvas
+      ].forEach((canvas) => {
+        if (canvas) resizeCanvas(canvas);
+      });
+      drawVisibleCanvases(true);
+    }
+
+    window.addEventListener("resize", resizeAllCanvases);
+    window.addEventListener("orientationchange", () => {
+      setTimeout(resizeAllCanvases, 250);
+    });
+
+    function drawVisibleCanvases(forceAll) {
+      const page = state.currentPage;
+
+      if (forceAll || page === 0) drawPitchGraph(elements.pitchCanvas, "all", true);
+      if (forceAll || page === 1) drawPitchGraph(elements.vibratoCanvas, "vibrato", true);
+      if (forceAll || page === 2) drawPitchGraph(elements.scoopCanvas, "scoop", true);
+      if (forceAll || page === 3) drawPitchGraph(elements.fallCanvas, "fall", true);
+      if (forceAll) drawPitchGraph(elements.resultCanvas, "all", false);
+    }
+
+    function drawPitchGraph(canvas, markerFilter, live) {
+      const data = resizeCanvas(canvas);
+      const ctx = data.ctx;
+      const width = data.width;
+      const height = data.height;
+
+      ctx.clearRect(0, 0, width, height);
+
+      const gradient = ctx.createLinearGradient(0, 0, 0, height);
+      gradient.addColorStop(0, "rgba(8, 47, 73, 0.52)");
+      gradient.addColorStop(1, "rgba(2, 6, 23, 0.96)");
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, width, height);
+
+      const points = getGraphPoints(live);
+      if (!points.length) {
+        drawEmptyGraph(ctx, width, height, "音程を検出するとここに線が描画されます");
+        return;
+      }
+
+      const bounds = getMidiBounds(points);
+      const minMidi = bounds.minMidi;
+      const maxMidi = bounds.maxMidi;
+      const duration = live
+        ? CONFIG.graph.liveWindowSec
+        : Math.max(1, (points[points.length - 1].t - points[0].t) || 1);
+
+      const tStart = live
+        ? Math.max(0, ((performance.now() - state.startedAt) / 1000) - CONFIG.graph.liveWindowSec)
+        : points[0].t;
+      const tEnd = live
+        ? tStart + CONFIG.graph.liveWindowSec
+        : points[points.length - 1].t;
+
+      drawGrid(ctx, width, height, minMidi, maxMidi);
+
+      ctx.save();
+      ctx.lineWidth = 3;
+      ctx.lineJoin = "round";
+      ctx.lineCap = "round";
+      ctx.strokeStyle = "#22d3ee";
+      ctx.shadowColor = "rgba(34, 211, 238, 0.55)";
+      ctx.shadowBlur = 12;
+
+      let drawing = false;
+      let prev = null;
+      ctx.beginPath();
+
+      for (const p of points) {
+        const x = ((p.t - tStart) / Math.max(0.001, (tEnd - tStart))) * width;
+        const y = height - ((p.midi - minMidi) / Math.max(0.001, (maxMidi - minMidi))) * height;
+
+        if (!Number.isFinite(x) || !Number.isFinite(y)) continue;
+
+        if (!prev || Math.abs(p.t - prev.t) > 0.28) {
+          if (drawing) {
+            ctx.stroke();
+            ctx.beginPath();
+          }
+          ctx.moveTo(x, y);
+          drawing = true;
+        } else {
+          ctx.lineTo(x, y);
+        }
+
+        prev = p;
+      }
+
+      if (drawing) ctx.stroke();
+      ctx.restore();
+
+      drawMarkers(ctx, width, height, minMidi, maxMidi, tStart, tEnd, markerFilter);
+
+      if (state.currentPitch && live) {
+        const p = state.currentPitch;
+        if (p.t >= tStart && p.t <= tEnd) {
+          const x = ((p.t - tStart) / (tEnd - tStart)) * width;
+          const y = height - ((p.midi - minMidi) / (maxMidi - minMidi)) * height;
+          ctx.save();
+          ctx.fillStyle = "#a3e635";
+          ctx.shadowColor = "rgba(163, 230, 53, 0.7)";
+          ctx.shadowBlur = 18;
+          ctx.beginPath();
+          ctx.arc(x, y, 7, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.restore();
+        }
+      }
+
+      const topNote = midiToKaraokeNote(Math.round(maxMidi)).label;
+      const bottomNote = midiToKaraokeNote(Math.round(minMidi)).label;
+      const rangeText = bottomNote + " ～ " + topNote;
+
+      if (canvas === elements.pitchCanvas) elements.graphRangeText.textContent = rangeText;
+      if (canvas === elements.resultCanvas) elements.resultGraphRange.textContent = rangeText;
+    }
+
+    function getGraphPoints(live) {
+      if (!state.pitchPoints.length) return [];
+
+      if (!live) {
+        return decimatePoints(state.pitchPoints, 2600);
+      }
+
+      const nowSec = state.running
+        ? (performance.now() - state.startedAt) / 1000
+        : (state.endedAt - state.startedAt) / 1000;
+      const from = nowSec - CONFIG.graph.liveWindowSec;
+      return state.pitchPoints.filter((p) => p.t >= from);
+    }
+
+    function decimatePoints(points, max) {
+      if (points.length <= max) return points;
+      const step = Math.ceil(points.length / max);
+      const out = [];
+      for (let i = 0; i < points.length; i += step) {
+        out.push(points[i]);
+      }
+      if (out[out.length - 1] !== points[points.length - 1]) {
+        out.push(points[points.length - 1]);
+      }
+      return out;
+    }
+
+    function getMidiBounds(points) {
+      let min = Infinity;
+      let max = -Infinity;
+
+      for (const p of points) {
+        if (p.midi < min) min = p.midi;
+        if (p.midi > max) max = p.midi;
+      }
+
+      if (!Number.isFinite(min) || !Number.isFinite(max)) {
+        min = 48;
+        max = 72;
+      }
+
+      min -= CONFIG.graph.verticalPaddingSemi;
+      max += CONFIG.graph.verticalPaddingSemi;
+
+      const span = max - min;
+      if (span < CONFIG.graph.minSemitoneSpan) {
+        const center = (min + max) / 2;
+        min = center - CONFIG.graph.minSemitoneSpan / 2;
+        max = center + CONFIG.graph.minSemitoneSpan / 2;
+      }
+
+      return {
+        minMidi: min,
+        maxMidi: max
+      };
+    }
+
+    function drawGrid(ctx, width, height, minMidi, maxMidi) {
+      ctx.save();
+
+      ctx.strokeStyle = "rgba(148, 163, 184, 0.12)";
+      ctx.lineWidth = 1;
+
+      for (let i = 0; i <= 6; i++) {
+        const y = (height / 6) * i;
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(width, y);
+        ctx.stroke();
+      }
+
+      for (let i = 0; i <= 8; i++) {
+        const x = (width / 8) * i;
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, height);
+        ctx.stroke();
+      }
+
+      ctx.fillStyle = "rgba(226, 246, 255, 0.50)";
+      ctx.font = "700 12px system-ui, sans-serif";
+      ctx.textBaseline = "middle";
+
+      const minRound = Math.ceil(minMidi);
+      const maxRound = Math.floor(maxMidi);
+      for (let midi = minRound; midi <= maxRound; midi++) {
+        if (midi % 2 !== 0) continue;
+        const y = height - ((midi - minMidi) / (maxMidi - minMidi)) * height;
+        if (y < 12 || y > height - 12) continue;
+        const label = midiToKaraokeNote(midi).label;
+        ctx.fillText(label, 10, y);
+      }
+
+      ctx.restore();
+    }
+
+    function drawMarkers(ctx, width, height, minMidi, maxMidi, tStart, tEnd, markerFilter) {
+      const events = state.techniqueEvents.filter((event) => {
+        if (event.t < tStart || event.t > tEnd) return false;
+        if (markerFilter === "all") return true;
+        return event.type === markerFilter;
+      });
+
+      for (const event of events) {
+        const x = ((event.t - tStart) / Math.max(0.001, (tEnd - tStart))) * width;
+        const y = height - ((event.midi - minMidi) / Math.max(0.001, (maxMidi - minMidi))) * height;
+        const color = techniqueColor(event.type);
+
+        ctx.save();
+        ctx.fillStyle = color;
+        ctx.strokeStyle = "rgba(255,255,255,0.84)";
+        ctx.lineWidth = 2;
+        ctx.shadowColor = color;
+        ctx.shadowBlur = 16;
+        ctx.beginPath();
+        ctx.arc(x, y, 8, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.shadowBlur = 0;
+        ctx.font = "900 12px system-ui, sans-serif";
+        ctx.fillStyle = "rgba(255,255,255,0.92)";
+        ctx.textAlign = "center";
+        ctx.fillText(techniqueShortName(event.type), x, Math.max(14, y - 14));
+        ctx.restore();
+      }
+    }
+
+    function techniqueShortName(type) {
+      if (type === "vibrato") return "Vib";
+      if (type === "scoop") return "Up";
+      if (type === "fall") return "Fall";
+      return "*";
+    }
+
+    function drawEmptyGraph(ctx, width, height, text) {
+      drawGrid(ctx, width, height, 48, 72);
+
+      ctx.save();
+      ctx.fillStyle = "rgba(226, 246, 255, 0.68)";
+      ctx.font = "900 16px system-ui, sans-serif";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillText(text, width / 2, height / 2);
+      ctx.restore();
+    }
+
+    function stopAnalysisAndShowResult() {
+      if (!state.running) return;
+
+      state.running = false;
+      state.endedAt = performance.now();
+
+      if (state.rafId) {
+        cancelAnimationFrame(state.rafId);
+        state.rafId = null;
+      }
+
+      stopAudioOnly();
+      buildResultScreen();
+      showScreen("result");
+      setTimeout(() => drawPitchGraph(elements.resultCanvas, "all", false), 60);
+    }
+
+    function stopAudioOnly() {
+      try {
+        if (state.source) {
+          state.source.disconnect();
+        }
+      } catch (_) {}
+
+      if (state.mediaStream) {
+        state.mediaStream.getTracks().forEach((track) => {
+          try {
+            track.stop();
+          } catch (_) {}
+        });
+      }
+
+      if (state.audioContext && state.audioContext.state !== "closed") {
+        state.audioContext.close().catch(() => {});
+      }
+
+      state.source = null;
+      state.mediaStream = null;
+      state.audioContext = null;
+      state.analyser = null;
+      state.buffer = null;
+      setMicStatus(false, "停止");
+    }
+
+    function buildResultScreen() {
+      const durationSec = Math.max(
+        0,
+        ((state.endedAt || performance.now()) - state.startedAt) / 1000
+      );
+      const durationMin = Math.max(durationSec / 60, 1 / 60);
+
+      elements.resultDuration.textContent = formatTime(durationSec);
+
+      elements.resultMaxNote.textContent = state.maxPitch ? state.maxPitch.label : "--";
+      elements.resultMinNote.textContent = state.minPitch ? state.minPitch.label : "--";
+
+      elements.resultMaxTime.textContent = state.maxPitch
+        ? formatEventTime(state.maxPitch.t) + " / " + state.maxPitch.freq.toFixed(1) + " Hz"
+        : "--";
+
+      elements.resultMinTime.textContent = state.minPitch
+        ? formatEventTime(state.minPitch.t) + " / " + state.minPitch.freq.toFixed(1) + " Hz"
+        : "--";
+
+      elements.resultVibrato.textContent =
+        state.counts.vibrato + " / " + (state.counts.vibrato / durationMin).toFixed(1);
+
+      elements.resultScoop.textContent =
+        state.counts.scoop + " / " + (state.counts.scoop / durationMin).toFixed(1);
+
+      elements.resultFall.textContent =
+        state.counts.fall + " / " + (state.counts.fall / durationMin).toFixed(1);
+
+      renderResultHistory();
+    }
+
+    function renderResultHistory() {
+      if (!state.techniqueEvents.length) {
+        elements.resultHistory.innerHTML = '<div class="history-item"><span>検出履歴はありません</span><small>--</small></div>';
+        return;
+      }
+
+      elements.resultHistory.innerHTML = state.techniqueEvents.map((event, index) => {
+        return '<div class="history-item">' +
+          '<span>' +
+          String(index + 1) + ". " +
+          '<span style="color:' + techniqueColor(event.type) + '">' + escapeHtml(techniqueName(event.type)) + '</span>' +
+          ' <small>' + escapeHtml(event.label) + '</small>' +
+          '</span>' +
+          '<small>' + escapeHtml(formatEventTime(event.t)) + '</small>' +
+          '</div>';
+      }).join("");
+    }
+
+    document.addEventListener("visibilitychange", async () => {
+      if (!document.hidden && state.running && state.audioContext && state.audioContext.state === "suspended") {
+        try {
+          await state.audioContext.resume();
+        } catch (_) {}
+      }
+    });
+
+    window.addEventListener("beforeunload", () => {
+      stopAudioOnly();
+    });
+
+    resizeAllCanvases();
+  </script>
+</body>
+</html>
