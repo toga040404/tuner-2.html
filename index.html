@@ -8,8 +8,8 @@
     :root {
       --bg: #030712;
       --bg2: #07111f;
-      --card: rgba(15, 23, 42, 0.82);
-      --card2: rgba(2, 6, 23, 0.72);
+      --card: rgba(15, 23, 42, 0.86);
+      --card2: rgba(2, 6, 23, 0.76);
       --border: rgba(148, 163, 184, 0.22);
       --text: #e5f4ff;
       --muted: #8fa7bd;
@@ -22,7 +22,7 @@
       --yellow: #facc15;
       --red: #f87171;
       --shadow: 0 24px 80px rgba(0, 0, 0, 0.42);
-      --radius: 26px;
+      --radius: 24px;
     }
 
     * {
@@ -53,29 +53,37 @@
       min-height: 100vh;
     }
 
-    button {
+    button,
+    input,
+    select,
+    textarea {
       font: inherit;
+    }
+
+    button {
+      touch-action: manipulation;
     }
 
     .app {
       width: 100%;
       min-height: 100vh;
-      padding: clamp(16px, 3vw, 34px);
+      padding: clamp(14px, 3vw, 34px);
       display: flex;
       align-items: center;
       justify-content: center;
     }
 
     .screen {
-      width: min(1180px, 100%);
-      min-height: calc(100vh - clamp(32px, 6vw, 68px));
+      width: min(1240px, 100%);
+      min-height: calc(100vh - clamp(28px, 6vw, 68px));
       display: none;
-      animation: fadeIn 0.35s ease both;
+      animation: fadeIn 0.28s ease both;
     }
 
     .screen.active {
       display: flex;
       flex-direction: column;
+      gap: 16px;
     }
 
     @keyframes fadeIn {
@@ -92,9 +100,9 @@
 
     .top-wrap {
       margin: auto;
-      width: min(760px, 100%);
+      width: min(1060px, 100%);
       text-align: center;
-      padding: clamp(24px, 5vw, 54px);
+      padding: clamp(22px, 5vw, 50px);
       border: 1px solid var(--border);
       background: linear-gradient(180deg, rgba(15, 23, 42, 0.92), rgba(2, 6, 23, 0.74));
       border-radius: 34px;
@@ -120,9 +128,9 @@
 
     .brand {
       letter-spacing: 0.13em;
-      font-weight: 900;
-      line-height: 0.95;
-      font-size: clamp(42px, 10vw, 86px);
+      font-weight: 950;
+      line-height: 0.96;
+      font-size: clamp(42px, 9vw, 86px);
       margin: 0 0 14px;
       background: linear-gradient(90deg, #e0faff, #22d3ee, #a3e635);
       -webkit-background-clip: text;
@@ -132,17 +140,49 @@
     }
 
     .tagline {
-      margin: 0 auto 34px;
-      max-width: 620px;
+      margin: 0 auto 28px;
+      max-width: 760px;
       color: var(--muted);
       line-height: 1.8;
-      font-size: clamp(14px, 2.5vw, 17px);
+      font-size: clamp(14px, 2.4vw, 17px);
+    }
+
+    .mode-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 22px;
+    }
+
+    .mode-card {
+      text-align: left;
+      padding: 22px;
+      min-height: 230px;
+      border-radius: 26px;
+      background: rgba(2, 6, 23, 0.58);
+      border: 1px solid rgba(148, 163, 184, 0.20);
+      box-shadow: 0 18px 46px rgba(0, 0, 0, 0.26);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .mode-card h2 {
+      margin: 0;
+      font-size: clamp(20px, 3vw, 26px);
+    }
+
+    .mode-card p {
+      margin: 0;
+      color: #bfd8eb;
+      line-height: 1.7;
+      flex: 1;
     }
 
     .btn-row {
       display: flex;
       flex-wrap: wrap;
-      gap: 14px;
+      gap: 10px;
       align-items: center;
       justify-content: center;
     }
@@ -152,8 +192,8 @@
       border: 0;
       cursor: pointer;
       border-radius: 999px;
-      padding: 15px 26px;
-      min-height: 54px;
+      padding: 13px 20px;
+      min-height: 50px;
       color: #eaffff;
       background: rgba(15, 23, 42, 0.94);
       border: 1px solid rgba(148, 163, 184, 0.24);
@@ -163,7 +203,8 @@
         border-color 0.16s ease,
         background 0.16s ease,
         box-shadow 0.16s ease;
-      font-weight: 800;
+      font-weight: 850;
+      white-space: nowrap;
     }
 
     .btn:hover,
@@ -178,7 +219,6 @@
       background: linear-gradient(135deg, #0891b2, #10b981);
       border-color: rgba(34, 211, 238, 0.55);
       color: white;
-      padding-inline: 38px;
     }
 
     .btn.danger {
@@ -187,18 +227,25 @@
       color: white;
     }
 
+    .btn.warn {
+      background: linear-gradient(135deg, #b45309, #fb923c);
+      border-color: rgba(251, 146, 60, 0.58);
+      color: white;
+    }
+
     .btn.small {
-      padding: 10px 15px;
-      min-height: 42px;
+      padding: 9px 14px;
+      min-height: 40px;
       font-size: 14px;
     }
 
     .message {
-      margin-top: 22px;
+      margin-top: 18px;
       min-height: 26px;
       color: #bae6fd;
       line-height: 1.65;
       white-space: pre-wrap;
+      text-align: center;
     }
 
     .message.error {
@@ -207,9 +254,9 @@
 
     .how {
       display: none;
-      margin: 24px auto 0;
+      margin: 22px auto 0;
       text-align: left;
-      max-width: 660px;
+      max-width: 820px;
       padding: 18px 20px;
       border-radius: 22px;
       background: rgba(2, 6, 23, 0.58);
@@ -222,40 +269,27 @@
       display: block;
     }
 
-    .how h2 {
-      margin: 0 0 8px;
-      font-size: 20px;
-    }
-
-    .how ul {
-      margin: 8px 0 0;
-      padding-left: 1.3em;
-    }
-
-    .analysis-header {
+    .app-header {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: space-between;
       gap: 14px;
-      margin-bottom: 16px;
       flex-wrap: wrap;
     }
 
-    .analysis-title {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-
-    .analysis-title h1 {
+    .app-title h1 {
       margin: 0;
       font-size: clamp(24px, 5vw, 42px);
       letter-spacing: 0.08em;
     }
 
     .status-line {
+      margin-top: 6px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
       color: var(--muted);
-      font-weight: 700;
+      font-weight: 800;
       font-size: 14px;
     }
 
@@ -267,55 +301,12 @@
       justify-content: flex-end;
     }
 
-    .page-indicator {
-      padding: 10px 14px;
-      border-radius: 999px;
-      background: rgba(15, 23, 42, 0.72);
-      border: 1px solid rgba(148, 163, 184, 0.2);
-      color: #dff9ff;
-      font-weight: 900;
-      white-space: nowrap;
-    }
-
-    .main-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 16px;
-      flex: 1;
-      min-height: 0;
-    }
-
-    .page {
-      display: none;
-      flex: 1;
-      min-height: 0;
-      animation: pageIn 0.24s ease both;
-    }
-
-    .page.active {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    @keyframes pageIn {
-      from {
-        opacity: 0;
-        transform: translateX(8px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateX(0);
-      }
-    }
-
     .card {
       border-radius: var(--radius);
       background: linear-gradient(180deg, rgba(15, 23, 42, 0.88), rgba(2, 6, 23, 0.62));
       border: 1px solid var(--border);
       box-shadow: var(--shadow);
-      padding: clamp(16px, 3vw, 24px);
+      padding: clamp(14px, 3vw, 22px);
       overflow: hidden;
     }
 
@@ -335,338 +326,6 @@
       align-items: center;
       justify-content: space-between;
       flex-wrap: wrap;
-    }
-
-    .pitch-hero {
-      display: grid;
-      grid-template-columns: minmax(0, 1.1fr) minmax(220px, 0.9fr);
-      gap: 16px;
-      align-items: stretch;
-    }
-
-    .big-note {
-      min-height: 190px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      border-radius: 24px;
-      background:
-        radial-gradient(circle at 50% 30%, rgba(34, 211, 238, 0.16), transparent 44%),
-        rgba(2, 6, 23, 0.48);
-      border: 1px solid rgba(34, 211, 238, 0.20);
-    }
-
-    .current-label {
-      font-size: clamp(54px, 15vw, 124px);
-      font-weight: 950;
-      letter-spacing: -0.06em;
-      line-height: 0.92;
-      background: linear-gradient(90deg, #e0ffff, #22d3ee, #34d399);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      text-align: center;
-      word-break: keep-all;
-    }
-
-    .current-sub {
-      color: var(--muted);
-      font-weight: 800;
-      font-size: clamp(15px, 3vw, 20px);
-      margin-top: 14px;
-      text-align: center;
-    }
-
-    .meter-card {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      gap: 14px;
-      border-radius: 24px;
-      background: rgba(2, 6, 23, 0.48);
-      border: 1px solid rgba(148, 163, 184, 0.16);
-      padding: 18px;
-    }
-
-    .metric {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: 12px;
-      border-bottom: 1px solid rgba(148, 163, 184, 0.12);
-      padding-bottom: 12px;
-    }
-
-    .metric:last-child {
-      border-bottom: 0;
-      padding-bottom: 0;
-    }
-
-    .metric span {
-      color: var(--muted);
-      font-weight: 800;
-    }
-
-    .metric strong {
-      font-size: clamp(24px, 5vw, 38px);
-      color: #efffff;
-      text-align: right;
-    }
-
-    .graph-wrap {
-      position: relative;
-      flex: 1;
-      min-height: 300px;
-      border-radius: 22px;
-      overflow: hidden;
-      background:
-        linear-gradient(180deg, rgba(8, 47, 73, 0.18), rgba(2, 6, 23, 0.74)),
-        rgba(2, 6, 23, 0.78);
-      border: 1px solid rgba(148, 163, 184, 0.18);
-    }
-
-    canvas {
-      width: 100%;
-      height: 100%;
-      display: block;
-    }
-
-    .graph-overlay {
-      pointer-events: none;
-      position: absolute;
-      inset: 12px 14px auto 14px;
-      display: flex;
-      justify-content: space-between;
-      color: rgba(226, 246, 255, 0.76);
-      font-weight: 900;
-      font-size: 13px;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .tech-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-    }
-
-    .tech-card {
-      border-radius: 22px;
-      padding: 18px;
-      min-height: 150px;
-      background: rgba(2, 6, 23, 0.48);
-      border: 1px solid rgba(148, 163, 184, 0.16);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .tech-card h3 {
-      margin: 0;
-      font-size: 18px;
-      color: #dff9ff;
-    }
-
-    .tech-count {
-      font-size: clamp(42px, 9vw, 82px);
-      font-weight: 950;
-      line-height: 1;
-    }
-
-    .tech-card.vibrato .tech-count,
-    .color-vibrato {
-      color: var(--purple);
-    }
-
-    .tech-card.scoop .tech-count,
-    .color-scoop {
-      color: var(--orange);
-    }
-
-    .tech-card.fall .tech-count,
-    .color-fall {
-      color: var(--pink);
-    }
-
-    .detected-badge {
-      align-self: flex-start;
-      border-radius: 999px;
-      padding: 8px 13px;
-      min-height: 36px;
-      background: rgba(15, 23, 42, 0.85);
-      border: 1px solid rgba(148, 163, 184, 0.18);
-      color: #cbd5e1;
-      font-weight: 900;
-    }
-
-    .detected-badge.on {
-      color: #ffffff;
-      border-color: rgba(250, 204, 21, 0.7);
-      background: rgba(250, 204, 21, 0.16);
-      box-shadow: 0 0 30px rgba(250, 204, 21, 0.16);
-    }
-
-    .big-tech {
-      flex: 1;
-      display: grid;
-      grid-template-columns: 0.9fr 1.1fr;
-      gap: 16px;
-      min-height: 0;
-    }
-
-    .tech-focus {
-      border-radius: 26px;
-      background:
-        radial-gradient(circle at 50% 30%, rgba(167, 139, 250, 0.16), transparent 42%),
-        rgba(2, 6, 23, 0.48);
-      border: 1px solid rgba(148, 163, 184, 0.18);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 18px;
-      text-align: center;
-      min-height: 260px;
-    }
-
-    .tech-focus .name {
-      font-size: clamp(34px, 8vw, 74px);
-      font-weight: 950;
-      line-height: 1;
-    }
-
-    .tech-focus .num {
-      font-size: clamp(72px, 20vw, 170px);
-      font-weight: 950;
-      line-height: 0.95;
-    }
-
-    .tech-focus .desc {
-      color: var(--muted);
-      max-width: 420px;
-      line-height: 1.7;
-      font-weight: 700;
-    }
-
-    .range-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 16px;
-    }
-
-    .range-box {
-      padding: 20px;
-      border-radius: 24px;
-      background: rgba(2, 6, 23, 0.48);
-      border: 1px solid rgba(148, 163, 184, 0.16);
-      min-height: 190px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    .range-box span {
-      color: var(--muted);
-      font-weight: 900;
-      font-size: 15px;
-    }
-
-    .range-box strong {
-      font-size: clamp(44px, 10vw, 92px);
-      line-height: 1;
-      margin-top: 10px;
-      color: #eaffff;
-    }
-
-    .history-list {
-      overflow: auto;
-      flex: 1;
-      min-height: 0;
-      padding-right: 4px;
-    }
-
-    .history-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 14px;
-      padding: 12px 0;
-      border-bottom: 1px solid rgba(148, 163, 184, 0.12);
-      color: #dceeff;
-      font-weight: 800;
-    }
-
-    .history-item small {
-      color: var(--muted);
-      font-weight: 800;
-    }
-
-    .result-screen {
-      gap: 16px;
-    }
-
-    .result-head {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 14px;
-      flex-wrap: wrap;
-      margin-bottom: 16px;
-    }
-
-    .result-head h1 {
-      margin: 0;
-      font-size: clamp(28px, 6vw, 54px);
-      letter-spacing: 0.08em;
-      background: linear-gradient(90deg, #e0ffff, #22d3ee, #a3e635);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-
-    .summary-grid {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 14px;
-    }
-
-    .summary-card {
-      border-radius: 24px;
-      background: rgba(2, 6, 23, 0.5);
-      border: 1px solid rgba(148, 163, 184, 0.16);
-      padding: 18px;
-      min-height: 150px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    .summary-card span {
-      color: var(--muted);
-      font-weight: 900;
-    }
-
-    .summary-card strong {
-      margin-top: 8px;
-      font-size: clamp(28px, 6vw, 54px);
-      line-height: 1;
-      color: #efffff;
-    }
-
-    .result-two {
-      display: grid;
-      grid-template-columns: 1.25fr 0.75fr;
-      gap: 16px;
-      min-height: 420px;
-    }
-
-    .footer-note {
-      color: var(--muted);
-      line-height: 1.7;
-      font-size: 13px;
-      text-align: center;
-      margin-top: 12px;
     }
 
     .pill {
@@ -693,11 +352,367 @@
       background: var(--muted);
     }
 
+    .normal-layout {
+      display: grid;
+      grid-template-rows: auto minmax(360px, 1fr);
+      gap: 16px;
+      flex: 1;
+      min-height: 0;
+    }
+
+    .fixed-stats {
+      display: grid;
+      grid-template-columns: repeat(10, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .stat {
+      border-radius: 18px;
+      background: rgba(2, 6, 23, 0.52);
+      border: 1px solid rgba(148, 163, 184, 0.16);
+      padding: 12px;
+      min-height: 88px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-weight: 900;
+      font-size: 12px;
+      line-height: 1.2;
+    }
+
+    .stat strong {
+      margin-top: 7px;
+      color: #efffff;
+      font-size: clamp(20px, 3.1vw, 35px);
+      line-height: 1;
+      letter-spacing: -0.03em;
+      word-break: keep-all;
+    }
+
+    .stat.current strong {
+      background: linear-gradient(90deg, #e0ffff, #22d3ee, #34d399);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .karaoke-stage {
+      position: relative;
+      flex: 1;
+      min-height: 340px;
+      border-radius: 24px;
+      overflow: hidden;
+      background:
+        linear-gradient(180deg, rgba(8, 47, 73, 0.18), rgba(2, 6, 23, 0.78)),
+        rgba(2, 6, 23, 0.8);
+      border: 1px solid rgba(148, 163, 184, 0.18);
+    }
+
+    canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    .graph-overlay {
+      pointer-events: none;
+      position: absolute;
+      inset: 12px 14px auto 14px;
+      display: flex;
+      justify-content: space-between;
+      color: rgba(226, 246, 255, 0.80);
+      font-weight: 900;
+      font-size: 13px;
+      gap: 8px;
+      flex-wrap: wrap;
+      z-index: 2;
+    }
+
+    .flash-badges {
+      position: absolute;
+      left: 18px;
+      bottom: 16px;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .tech-flash {
+      opacity: 0.3;
+      transform: scale(0.96);
+      border-radius: 999px;
+      padding: 8px 13px;
+      background: rgba(15, 23, 42, 0.86);
+      border: 1px solid rgba(148, 163, 184, 0.18);
+      color: #cbd5e1;
+      font-weight: 950;
+      transition: 0.18s ease;
+    }
+
+    .tech-flash.on {
+      opacity: 1;
+      transform: scale(1);
+      border-color: rgba(250, 204, 21, 0.7);
+      background: rgba(250, 204, 21, 0.16);
+      box-shadow: 0 0 30px rgba(250, 204, 21, 0.16);
+      color: #fff;
+    }
+
+    .color-vibrato {
+      color: var(--purple);
+    }
+
+    .color-scoop {
+      color: var(--orange);
+    }
+
+    .color-fall {
+      color: var(--pink);
+    }
+
+    .result-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .result-head h1 {
+      margin: 0;
+      font-size: clamp(28px, 6vw, 54px);
+      letter-spacing: 0.08em;
+      background: linear-gradient(90deg, #e0ffff, #22d3ee, #a3e635);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .summary-card {
+      border-radius: 24px;
+      background: rgba(2, 6, 23, 0.5);
+      border: 1px solid rgba(148, 163, 184, 0.16);
+      padding: 18px;
+      min-height: 140px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .summary-card span {
+      color: var(--muted);
+      font-weight: 900;
+    }
+
+    .summary-card strong {
+      margin-top: 8px;
+      font-size: clamp(28px, 6vw, 54px);
+      line-height: 1;
+      color: #efffff;
+    }
+
+    .result-two {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 16px;
+      min-height: 420px;
+    }
+
+    .history-list {
+      overflow: auto;
+      flex: 1;
+      min-height: 0;
+      padding-right: 4px;
+    }
+
+    .history-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.12);
+      color: #dceeff;
+      font-weight: 800;
+    }
+
+    .history-item small {
+      color: var(--muted);
+      font-weight: 800;
+    }
+
+    .editor-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 320px;
+      gap: 16px;
+      flex: 1;
+      min-height: 0;
+    }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .field.inline {
+      flex-direction: row;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+    }
+
+    .input,
+    .select,
+    .textarea {
+      width: 100%;
+      color: var(--text);
+      background: rgba(2, 6, 23, 0.70);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      border-radius: 14px;
+      padding: 10px 12px;
+      outline: none;
+    }
+
+    .input:focus,
+    .select:focus,
+    .textarea:focus {
+      border-color: rgba(34, 211, 238, 0.7);
+      box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.10);
+    }
+
+    .textarea {
+      min-height: 110px;
+      resize: vertical;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 12px;
+    }
+
+    .editor-scroll {
+      position: relative;
+      flex: 1;
+      min-height: 440px;
+      overflow: auto;
+      border-radius: 24px;
+      background:
+        linear-gradient(180deg, rgba(8, 47, 73, 0.18), rgba(2, 6, 23, 0.78)),
+        rgba(2, 6, 23, 0.8);
+      border: 1px solid rgba(148, 163, 184, 0.18);
+      touch-action: none;
+    }
+
+    .editor-canvas {
+      width: 1800px;
+      height: 940px;
+      max-width: none;
+      display: block;
+      cursor: crosshair;
+    }
+
+    .side-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      min-height: 0;
+    }
+
+    .side-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .wide {
+      grid-column: 1 / -1;
+    }
+
+    .score-box {
+      border-radius: 20px;
+      background: rgba(2, 6, 23, 0.50);
+      border: 1px solid rgba(148, 163, 184, 0.16);
+      padding: 14px;
+    }
+
+    .score-line {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.12);
+      font-weight: 850;
+    }
+
+    .score-line:last-child {
+      border-bottom: 0;
+    }
+
+    .score-line strong {
+      color: #efffff;
+    }
+
+    .final-score {
+      text-align: center;
+      font-size: clamp(46px, 10vw, 88px);
+      font-weight: 950;
+      line-height: 1;
+      color: var(--lime);
+      margin: 8px 0 2px;
+    }
+
+    .footer-note {
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 13px;
+      text-align: center;
+      margin-top: 4px;
+    }
+
     .mobile-only-break {
       display: none;
     }
 
-    @media (max-width: 860px) {
+    @media (max-width: 1080px) {
+      .fixed-stats {
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+      }
+
+      .mode-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .editor-layout,
+      .result-two {
+        grid-template-columns: 1fr;
+      }
+
+      .side-panel {
+        order: -1;
+      }
+    }
+
+    @media (max-width: 720px) {
       .app {
         align-items: stretch;
         padding: 12px;
@@ -707,83 +722,43 @@
         min-height: calc(100vh - 24px);
       }
 
-      .analysis-header {
-        align-items: flex-start;
-      }
-
       .header-actions {
         width: 100%;
         justify-content: space-between;
       }
 
-      .pitch-hero,
-      .big-tech,
-      .result-two {
+      .header-actions .btn {
+        flex: 1 1 110px;
+      }
+
+      .fixed-stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .summary-grid {
         grid-template-columns: 1fr;
       }
 
-      .tech-grid,
-      .summary-grid,
-      .range-grid {
-        grid-template-columns: 1fr;
+      .karaoke-stage {
+        min-height: 430px;
       }
 
-      .graph-wrap {
-        min-height: 330px;
+      .editor-scroll {
+        min-height: 430px;
       }
 
-      .card {
-        border-radius: 22px;
-      }
-
-      .top-wrap {
-        border-radius: 28px;
+      .mobile-only-break {
+        display: block;
       }
 
       .btn {
         width: 100%;
       }
 
-      .header-actions .btn {
-        width: auto;
-        flex: 1 1 120px;
-      }
-
-      .page-indicator {
-        width: 100%;
-        text-align: center;
-      }
-
-      .mobile-only-break {
-        display: block;
-      }
-    }
-
-    @media (max-width: 420px) {
-      .header-actions {
-        gap: 8px;
-      }
-
+      .toolbar .btn,
+      .header-actions .btn,
       .btn.small {
-        padding-inline: 10px;
-        font-size: 13px;
-      }
-
-      .graph-wrap {
-        min-height: 300px;
-      }
-
-      .current-label {
-        font-size: clamp(46px, 18vw, 76px);
-      }
-
-      .metric {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .metric strong {
-        text-align: left;
+        width: auto;
       }
     }
   </style>
@@ -796,246 +771,139 @@
           <h1 class="brand">VOCAL<br class="mobile-only-break"> ANALYZER</h1>
           <p class="tagline">
             マイク入力から歌声の音程、音域、ビブラート・しゃくり・フォールをリアルタイム解析します。
-            解析はブラウザ内で行われ、音声を外部サーバーへ送信しません。
+            さらに、自分で音程バーを作るカラオケモード、歌って譜面を自動生成する逆カラオケモードに対応しました。
           </p>
-          <div class="btn-row">
-            <button id="startBtn" class="btn primary" type="button">開始</button>
+
+          <div class="mode-grid">
+            <div class="mode-card">
+              <h2>① 通常解析モード</h2>
+              <p>
+                歌声を解析し、現在の音程、最高音、最低音、ビブラート・しゃくり・フォールを常時表示します。
+                音程バーは10秒ごとに表示領域だけ更新され、解析は終了まで継続します。
+              </p>
+              <button id="startNormalBtn" class="btn primary" type="button">通常解析を開始</button>
+            </div>
+
+            <div class="mode-card">
+              <h2>② カラオケモード</h2>
+              <p>
+                マウスやタッチで音程バーを自由に作成できます。BPM、拍子、小節グリッド、吸着、保存・読込、JSON入出力、採点に対応します。
+              </p>
+              <button id="openKaraokeBtn" class="btn primary" type="button">カラオケモードを開く</button>
+            </div>
+
+            <div class="mode-card">
+              <h2>③ 逆カラオケモード</h2>
+              <p>
+                実際に歌った音程をリアルタイムに長方形の音程バーへ変換します。録音後は通常の譜面と同じように編集・保存できます。
+              </p>
+              <button id="openReverseBtn" class="btn primary" type="button">逆カラオケモードを開く</button>
+            </div>
+          </div>
+
+          <div class="btn-row" style="margin-top:18px;">
             <button id="howBtn" class="btn" type="button">使い方</button>
           </div>
           <div id="topMessage" class="message"></div>
+
           <div id="howPanel" class="how">
             <h2>使い方</h2>
             <ul>
-              <li>「開始」を押してマイク使用を許可してください。</li>
-              <li>歌うと現在の音程、Hz、カラオケ表記、音程グラフがリアルタイムに表示されます。</li>
-              <li>10秒ごとに表示ページが切り替わります。解析は切り替え中も継続します。</li>
-              <li>終了ボタンを押すとマイクを停止し、結果画面に移動します。</li>
-              <li>無音や環境ノイズが多い場合は、音程表示を抑制します。</li>
+              <li>通常解析モードでは「通常解析を開始」を押し、マイクを許可して歌ってください。</li>
+              <li>通常解析の音程バーは10秒ごとに表示領域だけがリセットされます。統計・最高音・最低音・検出回数は保持されます。</li>
+              <li>カラオケモードではグリッドをタップまたはクリックすると音程バーを作成できます。選択後、移動・リサイズ・削除・複製できます。</li>
+              <li>カラオケモードの採点では、作成した正解バーと歌唱バーの時間一致度・音程一致度を比較します。</li>
+              <li>逆カラオケモードでは、歌った音程が自動的に譜面化されます。終了後は編集・保存・JSONエクスポートできます。</li>
             </ul>
           </div>
         </div>
       </div>
     </section>
 
-    <section id="analysisScreen" class="screen">
-      <header class="analysis-header">
-        <div class="analysis-title">
+    <section id="normalScreen" class="screen">
+      <header class="app-header">
+        <div class="app-title">
           <h1>VOCAL ANALYZER</h1>
           <div class="status-line">
-            <span class="pill"><span id="micDot" class="dot off"></span><span id="micStatus">待機中</span></span>
-            <span class="pill">解析時間 <span id="elapsedText">00:00</span></span>
+            <span class="pill"><span id="normalMicDot" class="dot off"></span><span id="normalMicStatus">待機中</span></span>
+            <span class="pill">通常解析モード</span>
+            <span class="pill">10秒ごとに音程バーのみ更新</span>
           </div>
         </div>
         <div class="header-actions">
-          <button id="prevPageBtn" class="btn small" type="button">前へ</button>
-          <button id="nextPageBtn" class="btn small" type="button">次へ</button>
-          <div id="pageIndicator" class="page-indicator">1 / 5　残り 10秒</div>
-          <button id="stopBtn" class="btn danger small" type="button">終了</button>
+          <button id="normalStopBtn" class="btn danger small" type="button">終了して結果を見る</button>
         </div>
       </header>
 
-      <main class="main-grid">
-        <section id="page1" class="page active">
-          <div class="card">
-            <div class="pitch-hero">
-              <div class="big-note">
-                <div id="currentLabel" class="current-label">--</div>
-                <div id="currentSub" class="current-sub">歌うと音程を表示します</div>
-              </div>
-              <div class="meter-card">
-                <div class="metric">
-                  <span>基本周波数</span>
-                  <strong id="freqText">-- Hz</strong>
-                </div>
-                <div class="metric">
-                  <span>音名 / オクターブ</span>
-                  <strong id="noteText">--</strong>
-                </div>
-                <div class="metric">
-                  <span>検出信頼度</span>
-                  <strong id="clarityText">--%</strong>
-                </div>
-              </div>
-            </div>
+      <div class="normal-layout">
+        <div class="card">
+          <div class="fixed-stats">
+            <div class="stat current"><span>現在の音程</span><strong id="normalCurrentNote">--</strong></div>
+            <div class="stat"><span>最高音</span><strong id="normalMaxNote">--</strong></div>
+            <div class="stat"><span>最低音</span><strong id="normalMinNote">--</strong></div>
+            <div class="stat"><span>ビブラート</span><strong id="normalVibratoCount">0</strong></div>
+            <div class="stat"><span>しゃくり</span><strong id="normalScoopCount">0</strong></div>
+            <div class="stat"><span>フォール</span><strong id="normalFallCount">0</strong></div>
+            <div class="stat"><span>ビブラート/分</span><strong id="normalVibratoRate">0.0</strong></div>
+            <div class="stat"><span>しゃくり/分</span><strong id="normalScoopRate">0.0</strong></div>
+            <div class="stat"><span>フォール/分</span><strong id="normalFallRate">0.0</strong></div>
+            <div class="stat"><span>経過時間</span><strong id="normalElapsed">00:00</strong></div>
           </div>
-          <div class="card grow">
-            <h2 class="card-title">
-              <span>カラオケ風 音程バー</span>
-              <span class="pill">直近 <span id="graphWindowText">12</span>秒</span>
-            </h2>
-            <div class="graph-wrap">
-              <canvas id="pitchCanvas"></canvas>
-              <div class="graph-overlay">
-                <span>高音 ↑</span>
-                <span id="graphRangeText">自動スケール</span>
-                <span>時間 →</span>
-              </div>
-            </div>
-          </div>
-        </section>
+        </div>
 
-        <section id="page2" class="page">
-          <div class="card grow">
-            <h2 class="card-title">
-              <span class="color-vibrato">ビブラート検出</span>
-              <span id="vibratoBadge" class="detected-badge">待機中</span>
-            </h2>
-            <div class="big-tech">
-              <div class="tech-focus">
-                <div class="name color-vibrato">ビブラート</div>
-                <div id="vibratoBigCount" class="num color-vibrato">0</div>
-                <p class="desc">音程が一定周期で上下する動きを、周期性・深さ・継続時間から判定します。</p>
-              </div>
-              <div class="graph-wrap">
-                <canvas id="vibratoCanvas"></canvas>
-                <div class="graph-overlay">
-                  <span>検出位置を紫でマーク</span>
-                  <span>音程推移</span>
-                </div>
-              </div>
+        <div class="card grow">
+          <h2 class="card-title">
+            <span>カラオケ形式 音程バー</span>
+            <span class="pill">表示スロット <span id="normalWindowIndex">1</span> / 10秒</span>
+          </h2>
+          <div class="karaoke-stage">
+            <canvas id="normalCanvas"></canvas>
+            <div class="graph-overlay">
+              <span>高音 ↑</span>
+              <span id="normalRangeText">自動スケール</span>
+              <span>時間 →</span>
+            </div>
+            <div class="flash-badges">
+              <span id="normalVibratoFlash" class="tech-flash color-vibrato">ビブラート</span>
+              <span id="normalScoopFlash" class="tech-flash color-scoop">しゃくり</span>
+              <span id="normalFallFlash" class="tech-flash color-fall">フォール</span>
             </div>
           </div>
-        </section>
-
-        <section id="page3" class="page">
-          <div class="card grow">
-            <h2 class="card-title">
-              <span class="color-scoop">しゃくり検出</span>
-              <span id="scoopBadge" class="detected-badge">待機中</span>
-            </h2>
-            <div class="big-tech">
-              <div class="tech-focus">
-                <div class="name color-scoop">しゃくり</div>
-                <div id="scoopBigCount" class="num color-scoop">0</div>
-                <p class="desc">低い音から目標音へ上昇して安定する動きを、上昇量・速度・終点安定性で判定します。</p>
-              </div>
-              <div class="graph-wrap">
-                <canvas id="scoopCanvas"></canvas>
-                <div class="graph-overlay">
-                  <span>検出位置を橙でマーク</span>
-                  <span>音程推移</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section id="page4" class="page">
-          <div class="card grow">
-            <h2 class="card-title">
-              <span class="color-fall">フォール検出</span>
-              <span id="fallBadge" class="detected-badge">待機中</span>
-            </h2>
-            <div class="big-tech">
-              <div class="tech-focus">
-                <div class="name color-fall">フォール</div>
-                <div id="fallBigCount" class="num color-fall">0</div>
-                <p class="desc">音程を保ったあと語尾で下降する動きを、保持時間・下降量・下降速度から判定します。</p>
-              </div>
-              <div class="graph-wrap">
-                <canvas id="fallCanvas"></canvas>
-                <div class="graph-overlay">
-                  <span>検出位置を桃色でマーク</span>
-                  <span>音程推移</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section id="page5" class="page">
-          <div class="card">
-            <h2 class="card-title">音域と最高音・最低音</h2>
-            <div class="range-grid">
-              <div class="range-box">
-                <span>最高音</span>
-                <strong id="liveMaxNote">--</strong>
-                <div id="liveMaxTime" class="current-sub">--</div>
-              </div>
-              <div class="range-box">
-                <span>最低音</span>
-                <strong id="liveMinNote">--</strong>
-                <div id="liveMinTime" class="current-sub">--</div>
-              </div>
-            </div>
-          </div>
-          <div class="card">
-            <h2 class="card-title">歌唱テクニック合計</h2>
-            <div class="tech-grid">
-              <div class="tech-card vibrato">
-                <h3>ビブラート</h3>
-                <div id="vibratoCount" class="tech-count">0</div>
-                <div>回</div>
-              </div>
-              <div class="tech-card scoop">
-                <h3>しゃくり</h3>
-                <div id="scoopCount" class="tech-count">0</div>
-                <div>回</div>
-              </div>
-              <div class="tech-card fall">
-                <h3>フォール</h3>
-                <div id="fallCount" class="tech-count">0</div>
-                <div>回</div>
-              </div>
-            </div>
-          </div>
-          <div class="card grow">
-            <h2 class="card-title">直近の検出履歴</h2>
-            <div id="liveHistory" class="history-list"></div>
-          </div>
-        </section>
-      </main>
+        </div>
+      </div>
     </section>
 
-    <section id="resultScreen" class="screen result-screen">
+    <section id="resultScreen" class="screen">
       <div class="result-head">
         <h1>RESULT</h1>
-        <button id="retryBtn" class="btn primary" type="button">もう一度測定する</button>
-      </div>
-
-      <div class="card">
-        <h2 class="card-title">音域</h2>
-        <div class="range-grid">
-          <div class="range-box">
-            <span>最高音</span>
-            <strong id="resultMaxNote">--</strong>
-            <div id="resultMaxTime" class="current-sub">--</div>
-          </div>
-          <div class="range-box">
-            <span>最低音</span>
-            <strong id="resultMinNote">--</strong>
-            <div id="resultMinTime" class="current-sub">--</div>
-          </div>
+        <div class="header-actions">
+          <button id="resultTopBtn" class="btn" type="button">トップへ戻る</button>
+          <button id="retryNormalBtn" class="btn primary" type="button">もう一度測定する</button>
         </div>
       </div>
 
       <div class="summary-grid">
-        <div class="summary-card">
-          <span>総解析時間</span>
-          <strong id="resultDuration">00:00</strong>
-        </div>
-        <div class="summary-card">
-          <span>ビブラート合計 / 分</span>
-          <strong id="resultVibrato">0 / 0.0</strong>
-        </div>
-        <div class="summary-card">
-          <span>しゃくり合計 / 分</span>
-          <strong id="resultScoop">0 / 0.0</strong>
-        </div>
-        <div class="summary-card">
-          <span>フォール合計 / 分</span>
-          <strong id="resultFall">0 / 0.0</strong>
-        </div>
+        <div class="summary-card"><span>最高音</span><strong id="resultMaxNote">--</strong><span id="resultMaxTime">--</span></div>
+        <div class="summary-card"><span>最低音</span><strong id="resultMinNote">--</strong><span id="resultMinTime">--</span></div>
+        <div class="summary-card"><span>総解析時間</span><strong id="resultDuration">00:00</strong></div>
+        <div class="summary-card"><span>検出音数</span><strong id="resultSegmentCount">0</strong></div>
+      </div>
+
+      <div class="summary-grid">
+        <div class="summary-card"><span>ビブラート 合計 / 分</span><strong id="resultVibrato">0 / 0.0</strong></div>
+        <div class="summary-card"><span>しゃくり 合計 / 分</span><strong id="resultScoop">0 / 0.0</strong></div>
+        <div class="summary-card"><span>フォール 合計 / 分</span><strong id="resultFall">0 / 0.0</strong></div>
+        <div class="summary-card"><span>平均検出信頼度</span><strong id="resultClarity">--%</strong></div>
       </div>
 
       <div class="result-two">
         <div class="card grow">
           <h2 class="card-title">音程の推移グラフ</h2>
-          <div class="graph-wrap">
+          <div class="karaoke-stage">
             <canvas id="resultCanvas"></canvas>
             <div class="graph-overlay">
               <span>全解析時間</span>
-              <span id="resultGraphRange">自動スケール</span>
+              <span id="resultRangeText">自動スケール</span>
             </div>
           </div>
         </div>
@@ -1048,6 +916,172 @@
       <p class="footer-note">
         判定はマイク音声から抽出した基本周波数に基づく推定です。環境ノイズ、声量、発音、端末マイク性能により結果は変動します。
       </p>
+    </section>
+
+    <section id="karaokeScreen" class="screen">
+      <header class="app-header">
+        <div class="app-title">
+          <h1>KARAOKE MODE</h1>
+          <div class="status-line">
+            <span class="pill"><span id="karaokeMicDot" class="dot off"></span><span id="karaokeMicStatus">編集モード</span></span>
+            <span class="pill">譜面作成・再生・採点</span>
+          </div>
+        </div>
+        <div class="header-actions">
+          <button id="karaokeTopBtn" class="btn small" type="button">トップへ</button>
+        </div>
+      </header>
+
+      <div class="card">
+        <div class="toolbar">
+          <label class="field">曲名<input id="songTitleInput" class="input" value="Untitled Song" /></label>
+          <label class="field">BPM<input id="karaokeBpmInput" class="input" type="number" min="30" max="260" value="120" /></label>
+          <label class="field">拍子<select id="karaokeTimeSigInput" class="select"><option value="4">4/4</option><option value="3">3/4</option><option value="6">6/8</option></select></label>
+          <label class="field inline"><input id="karaokeSnapInput" type="checkbox" checked />グリッド吸着</label>
+          <button id="karaokePlayBtn" class="btn primary small" type="button">再生</button>
+          <button id="karaokePauseBtn" class="btn small" type="button">一時停止</button>
+          <button id="karaokeStopPlayBtn" class="btn small" type="button">停止</button>
+          <button id="scoreStartBtn" class="btn warn small" type="button">採点開始</button>
+          <button id="scoreStopBtn" class="btn danger small" type="button">採点終了</button>
+        </div>
+      </div>
+
+      <div class="editor-layout">
+        <div class="card grow">
+          <h2 class="card-title">
+            <span>音程バー編集グリッド</span>
+            <span class="pill">クリック/タップで作成・ドラッグで編集</span>
+          </h2>
+          <div id="karaokeScroll" class="editor-scroll">
+            <canvas id="karaokeCanvas" class="editor-canvas"></canvas>
+          </div>
+        </div>
+
+        <aside class="side-panel">
+          <div class="card">
+            <h2 class="card-title">選択バー編集</h2>
+            <div class="side-grid">
+              <label class="field wide">音程<select id="editPitchSelect" class="select"></select></label>
+              <label class="field">開始秒<input id="editStartInput" class="input" type="number" step="0.05" /></label>
+              <label class="field">長さ秒<input id="editDurationInput" class="input" type="number" step="0.05" min="0.05" /></label>
+              <label class="field">色<input id="editColorInput" class="input" type="color" value="#22d3ee" /></label>
+              <label class="field">MIDI<input id="editMidiInput" class="input" type="number" step="1" /></label>
+            </div>
+            <div class="btn-row" style="margin-top:12px;">
+              <button id="applyEditBtn" class="btn primary small" type="button">反映</button>
+              <button id="duplicateRectBtn" class="btn small" type="button">複製</button>
+              <button id="copyRectBtn" class="btn small" type="button">コピー</button>
+              <button id="deleteRectBtn" class="btn danger small" type="button">削除</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <h2 class="card-title">保存・読込</h2>
+            <div class="side-grid">
+              <label class="field wide">保存済み譜面<select id="savedSongsSelect" class="select"></select></label>
+            </div>
+            <div class="btn-row" style="margin-top:12px;">
+              <button id="saveSongBtn" class="btn primary small" type="button">保存</button>
+              <button id="loadSongBtn" class="btn small" type="button">読込</button>
+              <button id="deleteSongBtn" class="btn danger small" type="button">削除</button>
+            </div>
+            <label class="field" style="margin-top:12px;">JSON<textarea id="jsonArea" class="textarea" placeholder="ここにJSONをエクスポート/インポート"></textarea></label>
+            <div class="btn-row" style="margin-top:12px;">
+              <button id="exportJsonBtn" class="btn small" type="button">JSON出力</button>
+              <button id="importJsonBtn" class="btn small" type="button">JSON読込</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <h2 class="card-title">採点結果</h2>
+            <div id="scorePanel" class="score-box">
+              <div class="score-line"><span>音程正解率</span><strong id="scoreAccuracy">--%</strong></div>
+              <div class="score-line"><span>ビブラート加点</span><strong id="scoreVibratoBonus">--</strong></div>
+              <div class="score-line"><span>しゃくり加点</span><strong id="scoreScoopBonus">--</strong></div>
+              <div class="score-line"><span>フォール加点</span><strong id="scoreFallBonus">--</strong></div>
+              <div class="score-line"><span>技術加点合計</span><strong id="scoreTechBonus">--</strong></div>
+              <div class="final-score" id="scoreFinal">--</div>
+              <div class="footer-note">100点満点</div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="reverseScreen" class="screen">
+      <header class="app-header">
+        <div class="app-title">
+          <h1>REVERSE KARAOKE</h1>
+          <div class="status-line">
+            <span class="pill"><span id="reverseMicDot" class="dot off"></span><span id="reverseMicStatus">待機中</span></span>
+            <span class="pill">歌って譜面を自動生成</span>
+          </div>
+        </div>
+        <div class="header-actions">
+          <button id="reverseTopBtn" class="btn small" type="button">トップへ</button>
+        </div>
+      </header>
+
+      <div class="card">
+        <div class="toolbar">
+          <label class="field">曲名<input id="reverseTitleInput" class="input" value="My Reverse Song" /></label>
+          <label class="field">BPM<input id="reverseBpmInput" class="input" type="number" min="30" max="260" value="120" /></label>
+          <label class="field">拍子<select id="reverseTimeSigInput" class="select"><option value="4">4/4</option><option value="3">3/4</option><option value="6">6/8</option></select></label>
+          <label class="field inline"><input id="reverseSnapInput" type="checkbox" />BPMグリッドに吸着</label>
+          <button id="reverseStartBtn" class="btn primary small" type="button">自動入力開始</button>
+          <button id="reverseStopBtn" class="btn danger small" type="button">自動入力終了</button>
+          <button id="reverseCopyToKaraokeBtn" class="btn warn small" type="button">カラオケ編集へ送る</button>
+        </div>
+      </div>
+
+      <div class="editor-layout">
+        <div class="card grow">
+          <h2 class="card-title">
+            <span>自動生成された音程バー</span>
+            <span class="pill">録音中も編集可能</span>
+          </h2>
+          <div id="reverseScroll" class="editor-scroll">
+            <canvas id="reverseCanvas" class="editor-canvas"></canvas>
+          </div>
+        </div>
+
+        <aside class="side-panel">
+          <div class="card">
+            <h2 class="card-title">選択バー編集</h2>
+            <div class="side-grid">
+              <label class="field wide">音程<select id="reverseEditPitchSelect" class="select"></select></label>
+              <label class="field">開始秒<input id="reverseEditStartInput" class="input" type="number" step="0.05" /></label>
+              <label class="field">長さ秒<input id="reverseEditDurationInput" class="input" type="number" step="0.05" min="0.05" /></label>
+              <label class="field">色<input id="reverseEditColorInput" class="input" type="color" value="#34d399" /></label>
+              <label class="field">MIDI<input id="reverseEditMidiInput" class="input" type="number" step="1" /></label>
+            </div>
+            <div class="btn-row" style="margin-top:12px;">
+              <button id="reverseApplyEditBtn" class="btn primary small" type="button">反映</button>
+              <button id="reverseDuplicateRectBtn" class="btn small" type="button">複製</button>
+              <button id="reverseDeleteRectBtn" class="btn danger small" type="button">削除</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <h2 class="card-title">保存・JSON</h2>
+            <div class="btn-row">
+              <button id="reverseSaveBtn" class="btn primary small" type="button">保存</button>
+              <button id="reverseExportBtn" class="btn small" type="button">JSON出力</button>
+              <button id="reverseImportBtn" class="btn small" type="button">JSON読込</button>
+            </div>
+            <label class="field" style="margin-top:12px;">JSON<textarea id="reverseJsonArea" class="textarea"></textarea></label>
+          </div>
+
+          <div class="card">
+            <h2 class="card-title">自動入力状況</h2>
+            <div class="score-box">
+              <div class="score-line"><span>生成バー数</span><strong id="reverseRectCount">0</strong></div>
+              <div class="score-line"><span>現在音程</span><strong id="reverseCurrentNote">--</strong></div>
+              <div class="score-line"><span>経過時間</span><strong id="reverseElapsed">00:00</strong></div>
+            </div>
+          </div>
+        </aside>
+      </div>
     </section>
   </div>
 
@@ -1065,14 +1099,16 @@
         smoothingAlpha: 0.34,
         maxReasonableJumpCents: 850
       },
-      graph: {
-        liveWindowSec: 12,
+      segment: {
+        changeHoldSec: 0.60,
+        silenceEndSec: 0.28,
+        minDurationSec: 0.08,
+        vibratoFreezeRangeSemi: 2.0
+      },
+      normal: {
+        windowSec: 10,
         minSemitoneSpan: 18,
         verticalPaddingSemi: 3
-      },
-      page: {
-        count: 5,
-        switchSec: 10
       },
       technique: {
         vibrato: {
@@ -1106,195 +1142,346 @@
           minDurationMs: 130,
           cooldownMs: 1100
         }
+      },
+      editor: {
+        minMidi: 43,
+        maxMidi: 84,
+        rowHeight: 24,
+        pxPerSec: 86,
+        defaultDurationSec: 0.5,
+        beatSubdiv: 4
+      },
+      scoring: {
+        pitchFullCents: 50,
+        pitchZeroCents: 220,
+        sampleStepSec: 0.05,
+        baseMax: 90,
+        techMax: 10,
+        vibratoPoint: 0.8,
+        scoopPoint: 0.6,
+        fallPoint: 0.6
       }
     };
 
     const $ = (id) => document.getElementById(id);
 
-    const elements = {
+    const els = {
       topScreen: $("topScreen"),
-      analysisScreen: $("analysisScreen"),
+      normalScreen: $("normalScreen"),
       resultScreen: $("resultScreen"),
-      startBtn: $("startBtn"),
+      karaokeScreen: $("karaokeScreen"),
+      reverseScreen: $("reverseScreen"),
+      startNormalBtn: $("startNormalBtn"),
+      openKaraokeBtn: $("openKaraokeBtn"),
+      openReverseBtn: $("openReverseBtn"),
       howBtn: $("howBtn"),
       howPanel: $("howPanel"),
       topMessage: $("topMessage"),
-      stopBtn: $("stopBtn"),
-      retryBtn: $("retryBtn"),
-      prevPageBtn: $("prevPageBtn"),
-      nextPageBtn: $("nextPageBtn"),
-      pageIndicator: $("pageIndicator"),
-      micDot: $("micDot"),
-      micStatus: $("micStatus"),
-      elapsedText: $("elapsedText"),
-      currentLabel: $("currentLabel"),
-      currentSub: $("currentSub"),
-      freqText: $("freqText"),
-      noteText: $("noteText"),
-      clarityText: $("clarityText"),
-      graphWindowText: $("graphWindowText"),
-      graphRangeText: $("graphRangeText"),
-      vibratoCount: $("vibratoCount"),
-      scoopCount: $("scoopCount"),
-      fallCount: $("fallCount"),
-      vibratoBigCount: $("vibratoBigCount"),
-      scoopBigCount: $("scoopBigCount"),
-      fallBigCount: $("fallBigCount"),
-      vibratoBadge: $("vibratoBadge"),
-      scoopBadge: $("scoopBadge"),
-      fallBadge: $("fallBadge"),
-      liveMaxNote: $("liveMaxNote"),
-      liveMinNote: $("liveMinNote"),
-      liveMaxTime: $("liveMaxTime"),
-      liveMinTime: $("liveMinTime"),
-      liveHistory: $("liveHistory"),
+
+      normalMicDot: $("normalMicDot"),
+      normalMicStatus: $("normalMicStatus"),
+      normalStopBtn: $("normalStopBtn"),
+      normalCurrentNote: $("normalCurrentNote"),
+      normalMaxNote: $("normalMaxNote"),
+      normalMinNote: $("normalMinNote"),
+      normalVibratoCount: $("normalVibratoCount"),
+      normalScoopCount: $("normalScoopCount"),
+      normalFallCount: $("normalFallCount"),
+      normalVibratoRate: $("normalVibratoRate"),
+      normalScoopRate: $("normalScoopRate"),
+      normalFallRate: $("normalFallRate"),
+      normalElapsed: $("normalElapsed"),
+      normalWindowIndex: $("normalWindowIndex"),
+      normalCanvas: $("normalCanvas"),
+      normalRangeText: $("normalRangeText"),
+      normalVibratoFlash: $("normalVibratoFlash"),
+      normalScoopFlash: $("normalScoopFlash"),
+      normalFallFlash: $("normalFallFlash"),
+
+      resultTopBtn: $("resultTopBtn"),
+      retryNormalBtn: $("retryNormalBtn"),
       resultMaxNote: $("resultMaxNote"),
       resultMinNote: $("resultMinNote"),
       resultMaxTime: $("resultMaxTime"),
       resultMinTime: $("resultMinTime"),
       resultDuration: $("resultDuration"),
+      resultSegmentCount: $("resultSegmentCount"),
       resultVibrato: $("resultVibrato"),
       resultScoop: $("resultScoop"),
       resultFall: $("resultFall"),
+      resultClarity: $("resultClarity"),
+      resultCanvas: $("resultCanvas"),
+      resultRangeText: $("resultRangeText"),
       resultHistory: $("resultHistory"),
-      resultGraphRange: $("resultGraphRange"),
-      pitchCanvas: $("pitchCanvas"),
-      vibratoCanvas: $("vibratoCanvas"),
-      scoopCanvas: $("scoopCanvas"),
-      fallCanvas: $("fallCanvas"),
-      resultCanvas: $("resultCanvas")
+
+      karaokeMicDot: $("karaokeMicDot"),
+      karaokeMicStatus: $("karaokeMicStatus"),
+      karaokeTopBtn: $("karaokeTopBtn"),
+      songTitleInput: $("songTitleInput"),
+      karaokeBpmInput: $("karaokeBpmInput"),
+      karaokeTimeSigInput: $("karaokeTimeSigInput"),
+      karaokeSnapInput: $("karaokeSnapInput"),
+      karaokePlayBtn: $("karaokePlayBtn"),
+      karaokePauseBtn: $("karaokePauseBtn"),
+      karaokeStopPlayBtn: $("karaokeStopPlayBtn"),
+      scoreStartBtn: $("scoreStartBtn"),
+      scoreStopBtn: $("scoreStopBtn"),
+      karaokeScroll: $("karaokeScroll"),
+      karaokeCanvas: $("karaokeCanvas"),
+      editPitchSelect: $("editPitchSelect"),
+      editStartInput: $("editStartInput"),
+      editDurationInput: $("editDurationInput"),
+      editColorInput: $("editColorInput"),
+      editMidiInput: $("editMidiInput"),
+      applyEditBtn: $("applyEditBtn"),
+      duplicateRectBtn: $("duplicateRectBtn"),
+      copyRectBtn: $("copyRectBtn"),
+      deleteRectBtn: $("deleteRectBtn"),
+      savedSongsSelect: $("savedSongsSelect"),
+      saveSongBtn: $("saveSongBtn"),
+      loadSongBtn: $("loadSongBtn"),
+      deleteSongBtn: $("deleteSongBtn"),
+      jsonArea: $("jsonArea"),
+      exportJsonBtn: $("exportJsonBtn"),
+      importJsonBtn: $("importJsonBtn"),
+      scoreAccuracy: $("scoreAccuracy"),
+      scoreVibratoBonus: $("scoreVibratoBonus"),
+      scoreScoopBonus: $("scoreScoopBonus"),
+      scoreFallBonus: $("scoreFallBonus"),
+      scoreTechBonus: $("scoreTechBonus"),
+      scoreFinal: $("scoreFinal"),
+
+      reverseMicDot: $("reverseMicDot"),
+      reverseMicStatus: $("reverseMicStatus"),
+      reverseTopBtn: $("reverseTopBtn"),
+      reverseTitleInput: $("reverseTitleInput"),
+      reverseBpmInput: $("reverseBpmInput"),
+      reverseTimeSigInput: $("reverseTimeSigInput"),
+      reverseSnapInput: $("reverseSnapInput"),
+      reverseStartBtn: $("reverseStartBtn"),
+      reverseStopBtn: $("reverseStopBtn"),
+      reverseCopyToKaraokeBtn: $("reverseCopyToKaraokeBtn"),
+      reverseScroll: $("reverseScroll"),
+      reverseCanvas: $("reverseCanvas"),
+      reverseEditPitchSelect: $("reverseEditPitchSelect"),
+      reverseEditStartInput: $("reverseEditStartInput"),
+      reverseEditDurationInput: $("reverseEditDurationInput"),
+      reverseEditColorInput: $("reverseEditColorInput"),
+      reverseEditMidiInput: $("reverseEditMidiInput"),
+      reverseApplyEditBtn: $("reverseApplyEditBtn"),
+      reverseDuplicateRectBtn: $("reverseDuplicateRectBtn"),
+      reverseDeleteRectBtn: $("reverseDeleteRectBtn"),
+      reverseSaveBtn: $("reverseSaveBtn"),
+      reverseExportBtn: $("reverseExportBtn"),
+      reverseImportBtn: $("reverseImportBtn"),
+      reverseJsonArea: $("reverseJsonArea"),
+      reverseRectCount: $("reverseRectCount"),
+      reverseCurrentNote: $("reverseCurrentNote"),
+      reverseElapsed: $("reverseElapsed")
     };
 
-    let state = createInitialState();
-
-    function createInitialState() {
+    function createSession() {
       return {
-        audioContext: null,
-        analyser: null,
-        source: null,
-        mediaStream: null,
-        buffer: null,
-        rafId: null,
-        running: false,
         startedAt: 0,
         endedAt: 0,
-        lastFrameAt: 0,
-        lastVoicedAt: 0,
-        currentPage: 0,
-        pageStartedAt: 0,
         smoothedFreq: null,
         rawLastFreq: null,
         currentPitch: null,
+        lastVoicedAt: 0,
         pitchPoints: [],
+        segments: [],
         techniqueEvents: [],
-        counts: {
-          vibrato: 0,
-          scoop: 0,
-          fall: 0
-        },
-        lastTechniqueAt: {
-          vibrato: -Infinity,
-          scoop: -Infinity,
-          fall: -Infinity
-        },
-        activeTechniqueUntil: {
-          vibrato: 0,
-          scoop: 0,
-          fall: 0
-        },
+        counts: { vibrato: 0, scoop: 0, fall: 0 },
+        lastTechniqueAt: { vibrato: -Infinity, scoop: -Infinity, fall: -Infinity },
+        activeTechniqueUntil: { vibrato: 0, scoop: 0, fall: 0 },
         vibratoActive: false,
         maxPitch: null,
-        minPitch: null
+        minPitch: null,
+        tracker: null
       };
     }
 
-    function resetStateKeepingDom() {
-      if (state.rafId) {
-        cancelAnimationFrame(state.rafId);
+    const app = {
+      audioContext: null,
+      analyser: null,
+      source: null,
+      mediaStream: null,
+      buffer: null,
+      rafId: null,
+      audioMode: null,
+      running: false,
+      activeSession: null,
+      normal: createSession(),
+      score: createSession(),
+      reverse: createSession(),
+      normalWindowIndex: -1,
+      metronome: {
+        playing: false,
+        startedAt: 0,
+        pausedAt: 0,
+        playheadSec: 0,
+        rafId: null,
+        beatTimer: null
+      },
+      copiedRect: null
+    };
+
+    class SegmentTracker {
+      constructor(segments, options = {}) {
+        this.segments = segments;
+        this.changeHoldSec = options.changeHoldSec || CONFIG.segment.changeHoldSec;
+        this.silenceEndSec = options.silenceEndSec || CONFIG.segment.silenceEndSec;
+        this.defaultColor = options.defaultColor || "#22d3ee";
+        this.snapProvider = options.snapProvider || null;
+        this.current = null;
+        this.candidateMidi = null;
+        this.candidateSince = 0;
+        this.lastPointT = 0;
       }
-      state = createInitialState();
-      updateTopMessage("");
-      elements.currentLabel.textContent = "--";
-      elements.currentSub.textContent = "歌うと音程を表示します";
-      elements.freqText.textContent = "-- Hz";
-      elements.noteText.textContent = "--";
-      elements.clarityText.textContent = "--%";
-      elements.vibratoCount.textContent = "0";
-      elements.scoopCount.textContent = "0";
-      elements.fallCount.textContent = "0";
-      elements.vibratoBigCount.textContent = "0";
-      elements.scoopBigCount.textContent = "0";
-      elements.fallBigCount.textContent = "0";
-      elements.liveMaxNote.textContent = "--";
-      elements.liveMinNote.textContent = "--";
-      elements.liveMaxTime.textContent = "--";
-      elements.liveMinTime.textContent = "--";
-      elements.liveHistory.innerHTML = "";
-      setBadge("vibrato", false);
-      setBadge("scoop", false);
-      setBadge("fall", false);
-      setMicStatus(false, "待機中");
-      setPage(0, false);
+
+      reset() {
+        this.current = null;
+        this.candidateMidi = null;
+        this.candidateSince = 0;
+        this.lastPointT = 0;
+      }
+
+      process(point, vibratoActive) {
+        if (!point) return;
+        this.lastPointT = point.t;
+
+        let midi = Math.round(point.midi);
+        if (vibratoActive && this.current && Math.abs(midi - this.current.midi) <= CONFIG.segment.vibratoFreezeRangeSemi) {
+          midi = this.current.midi;
+        }
+
+        if (!this.current) {
+          this.current = this.createSegment(point.t, point.t, midi, point.label);
+          this.segments.push(this.current);
+          return;
+        }
+
+        if (midi === this.current.midi) {
+          this.current.end = point.t;
+          this.candidateMidi = null;
+          return;
+        }
+
+        if (this.candidateMidi !== midi) {
+          this.candidateMidi = midi;
+          this.candidateSince = point.t;
+          this.current.end = point.t;
+          return;
+        }
+
+        if (point.t - this.candidateSince >= this.changeHoldSec) {
+          this.current.end = Math.max(this.current.start + CONFIG.segment.minDurationSec, this.candidateSince);
+          const label = midiToKaraokeNote(midi).label;
+          this.current = this.createSegment(this.candidateSince, point.t, midi, label);
+          this.segments.push(this.current);
+          this.candidateMidi = null;
+        } else {
+          this.current.end = point.t;
+        }
+      }
+
+      processSilence(t) {
+        if (!this.current) return;
+        if (t - this.lastPointT >= this.silenceEndSec) {
+          this.current.end = Math.max(this.current.start + CONFIG.segment.minDurationSec, this.lastPointT);
+          this.current = null;
+          this.candidateMidi = null;
+        }
+      }
+
+      createSegment(start, end, midi, label) {
+        if (this.snapProvider) {
+          const snapped = this.snapProvider(start, end);
+          start = snapped.start;
+          end = snapped.end;
+        }
+        return {
+          id: makeId(),
+          start,
+          end,
+          duration: Math.max(CONFIG.segment.minDurationSec, end - start),
+          midi,
+          label: midiToKaraokeNote(midi).label || label,
+          color: this.defaultColor,
+          vibrato: false,
+          scoop: false,
+          fall: false
+        };
+      }
+    }
+
+    function makeId() {
+      return "id_" + Math.random().toString(36).slice(2) + "_" + Date.now().toString(36);
     }
 
     function showScreen(name) {
-      elements.topScreen.classList.remove("active");
-      elements.analysisScreen.classList.remove("active");
-      elements.resultScreen.classList.remove("active");
-      if (name === "top") elements.topScreen.classList.add("active");
-      if (name === "analysis") elements.analysisScreen.classList.add("active");
-      if (name === "result") elements.resultScreen.classList.add("active");
-      requestAnimationFrame(resizeAllCanvases);
+      for (const s of [els.topScreen, els.normalScreen, els.resultScreen, els.karaokeScreen, els.reverseScreen]) {
+        s.classList.remove("active");
+      }
+      if (name === "top") els.topScreen.classList.add("active");
+      if (name === "normal") els.normalScreen.classList.add("active");
+      if (name === "result") els.resultScreen.classList.add("active");
+      if (name === "karaoke") els.karaokeScreen.classList.add("active");
+      if (name === "reverse") els.reverseScreen.classList.add("active");
+      requestAnimationFrame(drawAll);
     }
 
-    function updateTopMessage(text, isError = false) {
-      elements.topMessage.textContent = text;
-      elements.topMessage.classList.toggle("error", isError);
+    function setTopMessage(text, isError = false) {
+      els.topMessage.textContent = text;
+      els.topMessage.classList.toggle("error", isError);
     }
 
-    function setMicStatus(on, text) {
-      elements.micDot.classList.toggle("off", !on);
-      elements.micStatus.textContent = text;
+    function setMicStatus(mode, on, text) {
+      const dot = mode === "normal" ? els.normalMicDot : mode === "karaoke" ? els.karaokeMicDot : els.reverseMicDot;
+      const label = mode === "normal" ? els.normalMicStatus : mode === "karaoke" ? els.karaokeMicStatus : els.reverseMicStatus;
+      dot.classList.toggle("off", !on);
+      label.textContent = text;
     }
 
-    elements.howBtn.addEventListener("click", () => {
-      elements.howPanel.classList.toggle("show");
-    });
+    els.howBtn.addEventListener("click", () => els.howPanel.classList.toggle("show"));
+    els.startNormalBtn.addEventListener("click", startNormalMode);
+    els.openKaraokeBtn.addEventListener("click", () => { stopAudioOnly(); showScreen("karaoke"); drawEditor(karaokeEditor); });
+    els.openReverseBtn.addEventListener("click", () => { stopAudioOnly(); showScreen("reverse"); drawEditor(reverseEditor); });
+    els.normalStopBtn.addEventListener("click", stopNormalMode);
+    els.retryNormalBtn.addEventListener("click", startNormalMode);
+    els.resultTopBtn.addEventListener("click", () => { stopAudioOnly(); showScreen("top"); });
+    els.karaokeTopBtn.addEventListener("click", () => { stopAudioOnly(); stopMetronome(); showScreen("top"); });
+    els.reverseTopBtn.addEventListener("click", () => { stopAudioOnly(); showScreen("top"); });
 
-    elements.startBtn.addEventListener("click", async () => {
-      await startAnalysis();
-    });
-
-    elements.stopBtn.addEventListener("click", () => {
-      stopAnalysisAndShowResult();
-    });
-
-    elements.retryBtn.addEventListener("click", () => {
+    async function startNormalMode() {
+      setTopMessage("");
       stopAudioOnly();
-      resetStateKeepingDom();
-      showScreen("top");
-    });
+      app.normal = createSession();
+      app.normal.tracker = new SegmentTracker(app.normal.segments, { defaultColor: "#22d3ee" });
+      app.normalWindowIndex = -1;
+      showScreen("normal");
+      const ok = await startAudioSession("normal", app.normal);
+      if (!ok) showScreen("top");
+    }
 
-    elements.prevPageBtn.addEventListener("click", () => {
-      setPage((state.currentPage + CONFIG.page.count - 1) % CONFIG.page.count, true);
-    });
+    function stopNormalMode() {
+      if (!app.running || app.audioMode !== "normal") return;
+      app.normal.endedAt = performance.now();
+      if (app.normal.tracker) app.normal.tracker.processSilence((app.normal.endedAt - app.normal.startedAt) / 1000 + 10);
+      stopAudioOnly();
+      buildResult();
+      showScreen("result");
+    }
 
-    elements.nextPageBtn.addEventListener("click", () => {
-      setPage((state.currentPage + 1) % CONFIG.page.count, true);
-    });
-
-    async function startAnalysis() {
-      updateTopMessage("マイクの使用許可を確認しています…");
-      resetStateKeepingDom();
-
+    async function startAudioSession(mode, session) {
       if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-        updateTopMessage("このブラウザではマイク入力を利用できません。Chrome、Edge、Safariなどの最新版でお試しください。", true);
-        return;
+        setTopMessage("このブラウザではマイク入力を利用できません。Chrome、Edge、Safariなどの最新版でお試しください。", true);
+        return false;
       }
 
       if (location.protocol !== "https:" && location.hostname !== "localhost" && location.hostname !== "127.0.0.1") {
-        updateTopMessage("マイクを使うにはHTTPS環境が必要です。ローカル確認の場合は localhost で開いてください。", true);
-        return;
+        setTopMessage("マイクを使うにはHTTPS環境が必要です。ローカル確認の場合は localhost で開いてください。", true);
+        return false;
       }
 
       try {
@@ -1311,8 +1498,8 @@
         const AudioContextClass = window.AudioContext || window.webkitAudioContext;
         if (!AudioContextClass) {
           stream.getTracks().forEach((track) => track.stop());
-          updateTopMessage("このブラウザではWeb Audio APIを利用できません。", true);
-          return;
+          setTopMessage("このブラウザではWeb Audio APIを利用できません。", true);
+          return false;
         }
 
         const audioContext = new AudioContextClass();
@@ -1325,54 +1512,77 @@
         const source = audioContext.createMediaStreamSource(stream);
         source.connect(analyser);
 
-        state.audioContext = audioContext;
-        state.analyser = analyser;
-        state.source = source;
-        state.mediaStream = stream;
-        state.buffer = new Float32Array(analyser.fftSize);
-        state.running = true;
-        state.startedAt = performance.now();
-        state.lastFrameAt = state.startedAt;
-        state.lastVoicedAt = 0;
-        state.pageStartedAt = state.startedAt;
-        state.currentPage = 0;
+        app.audioContext = audioContext;
+        app.analyser = analyser;
+        app.source = source;
+        app.mediaStream = stream;
+        app.buffer = new Float32Array(analyser.fftSize);
+        app.audioMode = mode;
+        app.activeSession = session;
+        app.running = true;
+        session.startedAt = performance.now();
+        session.endedAt = 0;
+        session.lastVoicedAt = 0;
+        setMicStatus(mode === "score" ? "karaoke" : mode, true, mode === "score" ? "採点中" : "解析中");
 
-        showScreen("analysis");
-        setMicStatus(true, "解析中");
-        updateTopMessage("");
-        resizeAllCanvases();
-        analysisLoop();
-
+        audioLoop();
+        return true;
       } catch (error) {
         console.error(error);
         let message = "マイクを開始できませんでした。";
-
-        if (error && error.name === "NotAllowedError") {
-          message = "マイクの使用が許可されませんでした。ブラウザの設定からマイク許可を有効にしてください。";
-        } else if (error && error.name === "NotFoundError") {
-          message = "使用できるマイクが見つかりませんでした。マイクの接続を確認してください。";
-        } else if (error && error.name === "NotReadableError") {
-          message = "マイクを使用できません。他のアプリがマイクを使用している可能性があります。";
-        } else if (error && error.message) {
-          message = "マイクを開始できませんでした。\n" + error.message;
-        }
-
-        updateTopMessage(message, true);
+        if (error && error.name === "NotAllowedError") message = "マイクの使用が許可されませんでした。ブラウザの設定からマイク許可を有効にしてください。";
+        else if (error && error.name === "NotFoundError") message = "使用できるマイクが見つかりませんでした。マイクの接続を確認してください。";
+        else if (error && error.name === "NotReadableError") message = "マイクを使用できません。他のアプリがマイクを使用している可能性があります。";
+        else if (error && error.message) message = "マイクを開始できませんでした。\n" + error.message;
+        setTopMessage(message, true);
         stopAudioOnly();
+        return false;
       }
     }
 
-    function analysisLoop() {
-      if (!state.running || !state.analyser) return;
+    function stopAudioOnly() {
+      app.running = false;
+      if (app.rafId) cancelAnimationFrame(app.rafId);
+      app.rafId = null;
 
+      try {
+        if (app.source) app.source.disconnect();
+      } catch (_) {}
+
+      if (app.mediaStream) {
+        app.mediaStream.getTracks().forEach((track) => {
+          try { track.stop(); } catch (_) {}
+        });
+      }
+
+      if (app.audioContext && app.audioContext.state !== "closed") {
+        app.audioContext.close().catch(() => {});
+      }
+
+      if (app.audioMode === "normal") setMicStatus("normal", false, "停止");
+      if (app.audioMode === "score") setMicStatus("karaoke", false, "編集モード");
+      if (app.audioMode === "reverse") setMicStatus("reverse", false, "停止");
+
+      app.audioContext = null;
+      app.analyser = null;
+      app.source = null;
+      app.mediaStream = null;
+      app.buffer = null;
+      app.audioMode = null;
+      app.activeSession = null;
+    }
+
+    function audioLoop() {
+      if (!app.running || !app.analyser || !app.activeSession) return;
+      const session = app.activeSession;
       const now = performance.now();
-      const elapsedSec = (now - state.startedAt) / 1000;
+      const elapsedSec = (now - session.startedAt) / 1000;
 
-      state.analyser.getFloatTimeDomainData(state.buffer);
-      const pitch = detectPitchByAutocorrelation(state.buffer, state.audioContext.sampleRate);
+      app.analyser.getFloatTimeDomainData(app.buffer);
+      const pitch = detectPitchByAutocorrelation(app.buffer, app.audioContext.sampleRate);
 
       if (pitch) {
-        const smoothFreq = smoothFrequency(pitch.frequency);
+        const smoothFreq = smoothFrequency(session, pitch.frequency);
         const midiFloat = frequencyToMidi(smoothFreq);
         const noteInfo = midiToKaraokeNote(Math.round(midiFloat));
         const point = {
@@ -1384,48 +1594,51 @@
           midiRounded: Math.round(midiFloat),
           label: noteInfo.label,
           standard: noteInfo.standard,
-          octave: noteInfo.standardOctave,
           clarity: pitch.clarity,
           rms: pitch.rms
         };
 
-        state.currentPitch = point;
-        state.lastVoicedAt = now;
-        state.pitchPoints.push(point);
-        trimOldIfTooLarge();
-        updateRange(point);
-        detectTechniques(now);
+        session.currentPitch = point;
+        session.lastVoicedAt = now;
+        session.pitchPoints.push(point);
+        updateRange(session, point);
+        detectTechniques(session, now);
+        if (session.tracker) {
+          session.tracker.process(point, session.vibratoActive);
+          const currentSeg = session.tracker.current;
+          if (currentSeg) {
+            currentSeg.duration = Math.max(CONFIG.segment.minDurationSec, currentSeg.end - currentSeg.start);
+            currentSeg.label = midiToKaraokeNote(currentSeg.midi).label;
+          }
+        }
       } else {
-        if (now - state.lastVoicedAt > CONFIG.audio.silenceHoldMs) {
-          state.currentPitch = null;
-          state.smoothedFreq = null;
-          state.rawLastFreq = null;
-          state.vibratoActive = false;
+        if (now - session.lastVoicedAt > CONFIG.audio.silenceHoldMs) {
+          session.currentPitch = null;
+          session.smoothedFreq = null;
+          session.rawLastFreq = null;
+          session.vibratoActive = false;
+          if (session.tracker) session.tracker.processSilence(elapsedSec);
         }
       }
 
-      updatePageTimer(now);
-      updateLiveUI(now);
-      drawVisibleCanvases(false);
-      state.rafId = requestAnimationFrame(analysisLoop);
+      trimSession(session);
+      if (app.audioMode === "normal") updateNormalUI();
+      if (app.audioMode === "score") updateScoreLiveUI();
+      if (app.audioMode === "reverse") updateReverseLiveUI();
+      drawAll();
+      app.rafId = requestAnimationFrame(audioLoop);
     }
 
     function detectPitchByAutocorrelation(buffer, sampleRate) {
       let sum = 0;
-      for (let i = 0; i < buffer.length; i++) {
-        sum += buffer[i] * buffer[i];
-      }
-
+      for (let i = 0; i < buffer.length; i++) sum += buffer[i] * buffer[i];
       const rms = Math.sqrt(sum / buffer.length);
-      if (rms < CONFIG.audio.rmsThreshold) {
-        return null;
-      }
+      if (rms < CONFIG.audio.rmsThreshold) return null;
 
       const minLag = Math.floor(sampleRate / CONFIG.audio.maxFreq);
       const maxLag = Math.floor(sampleRate / CONFIG.audio.minFreq);
       const size = buffer.length;
       const usable = size - maxLag - 1;
-
       if (usable <= 0) return null;
 
       let bestLag = -1;
@@ -1437,7 +1650,6 @@
         let ac = 0;
         let x2 = 0;
         let y2 = 0;
-
         for (let i = 0; i < usable; i++) {
           const x = buffer[i];
           const y = buffer[i + lag];
@@ -1445,48 +1657,32 @@
           x2 += x * x;
           y2 += y * y;
         }
-
-        const denom = Math.sqrt(x2 * y2) || 1;
-        const corr = ac / denom;
-
+        const corr = ac / (Math.sqrt(x2 * y2) || 1);
         if (lag > minLag + 1 && prevCorr > corr && prevCorr > bestCorr) {
           bestCorr = prevCorr;
           bestLag = lag - 1;
           foundLocalPeak = true;
         }
-
         if (!foundLocalPeak && corr > bestCorr) {
           bestCorr = corr;
           bestLag = lag;
         }
-
         prevCorr = corr;
       }
 
-      if (bestLag <= 0 || bestCorr < CONFIG.audio.clarityThreshold) {
-        return null;
-      }
+      if (bestLag <= 0 || bestCorr < CONFIG.audio.clarityThreshold) return null;
 
       const c0 = correlationAtLag(buffer, usable, bestLag - 1);
       const c1 = correlationAtLag(buffer, usable, bestLag);
       const c2 = correlationAtLag(buffer, usable, bestLag + 1);
       const denom = c0 - 2 * c1 + c2;
       let refinedLag = bestLag;
-
-      if (Math.abs(denom) > 1e-9) {
-        refinedLag = bestLag + 0.5 * (c0 - c2) / denom;
-      }
+      if (Math.abs(denom) > 1e-9) refinedLag = bestLag + 0.5 * (c0 - c2) / denom;
 
       const frequency = sampleRate / refinedLag;
-      if (!Number.isFinite(frequency) || frequency < CONFIG.audio.minFreq || frequency > CONFIG.audio.maxFreq) {
-        return null;
-      }
+      if (!Number.isFinite(frequency) || frequency < CONFIG.audio.minFreq || frequency > CONFIG.audio.maxFreq) return null;
 
-      return {
-        frequency,
-        clarity: Math.max(0, Math.min(1, bestCorr)),
-        rms
-      };
+      return { frequency, clarity: Math.max(0, Math.min(1, bestCorr)), rms };
     }
 
     function correlationAtLag(buffer, usable, lag) {
@@ -1494,7 +1690,6 @@
       let ac = 0;
       let x2 = 0;
       let y2 = 0;
-
       for (let i = 0; i < usable; i++) {
         const x = buffer[i];
         const y = buffer[i + lag];
@@ -1502,36 +1697,28 @@
         x2 += x * x;
         y2 += y * y;
       }
-
       return ac / (Math.sqrt(x2 * y2) || 1);
     }
 
-    function smoothFrequency(freq) {
-      if (!state.smoothedFreq) {
-        state.smoothedFreq = freq;
-        state.rawLastFreq = freq;
+    function smoothFrequency(session, freq) {
+      if (!session.smoothedFreq) {
+        session.smoothedFreq = freq;
+        session.rawLastFreq = freq;
         return freq;
       }
-
-      const jumpCents = Math.abs(1200 * Math.log2(freq / state.smoothedFreq));
-
+      const jumpCents = Math.abs(1200 * Math.log2(freq / session.smoothedFreq));
       if (jumpCents > CONFIG.audio.maxReasonableJumpCents) {
-        state.smoothedFreq = freq * 0.18 + state.smoothedFreq * 0.82;
+        session.smoothedFreq = freq * 0.18 + session.smoothedFreq * 0.82;
       } else {
         const alpha = CONFIG.audio.smoothingAlpha;
-        state.smoothedFreq = freq * alpha + state.smoothedFreq * (1 - alpha);
+        session.smoothedFreq = freq * alpha + session.smoothedFreq * (1 - alpha);
       }
-
-      state.rawLastFreq = freq;
-      return state.smoothedFreq;
+      session.rawLastFreq = freq;
+      return session.smoothedFreq;
     }
 
     function frequencyToMidi(freq) {
       return 69 + 12 * Math.log2(freq / 440);
-    }
-
-    function midiToFrequency(midi) {
-      return 440 * Math.pow(2, (midi - 69) / 12);
     }
 
     function midiToKaraokeNote(midi) {
@@ -1539,32 +1726,16 @@
       const pc = ((midi % 12) + 12) % 12;
       const standardOctave = Math.floor(midi / 12) - 1;
       const standard = sharpNames[pc] + standardOctave;
-
       const aBasedIndex = Math.floor((midi - 21) / 12);
       let prefix;
-
-      if (aBasedIndex <= 0) {
-        prefix = "lowlow";
-      } else if (aBasedIndex === 1) {
-        prefix = "low";
-      } else if (aBasedIndex === 2) {
-        prefix = "mid1";
-      } else if (aBasedIndex === 3) {
-        prefix = "mid2";
-      } else if (aBasedIndex === 4) {
-        prefix = "hi";
-      } else if (aBasedIndex === 5) {
-        prefix = "hihi";
-      } else {
-        prefix = "hihihi";
-      }
-
-      return {
-        label: prefix + sharpNames[pc],
-        standard,
-        standardOctave,
-        note: sharpNames[pc]
-      };
+      if (aBasedIndex <= 0) prefix = "lowlow";
+      else if (aBasedIndex === 1) prefix = "low";
+      else if (aBasedIndex === 2) prefix = "mid1";
+      else if (aBasedIndex === 3) prefix = "mid2";
+      else if (aBasedIndex === 4) prefix = "hi";
+      else if (aBasedIndex === 5) prefix = "hihi";
+      else prefix = "hihihi";
+      return { label: prefix + sharpNames[pc], standard, standardOctave, note: sharpNames[pc] };
     }
 
     function formatTime(sec) {
@@ -1574,29 +1745,9 @@
       return String(m).padStart(2, "0") + ":" + String(s).padStart(2, "0");
     }
 
-    function formatEventTime(sec) {
-      return formatTime(sec);
-    }
-
-    function updateRange(point) {
-      if (!state.maxPitch || point.midi > state.maxPitch.midi) {
-        state.maxPitch = { ...point };
-      }
-
-      if (!state.minPitch || point.midi < state.minPitch.midi) {
-        state.minPitch = { ...point };
-      }
-    }
-
-    function getRecentVoiced(windowSec) {
-      if (!state.pitchPoints.length) return [];
-      const latestT = state.pitchPoints[state.pitchPoints.length - 1].t;
-      const from = latestT - windowSec;
-      return state.pitchPoints.filter((p) => p.t >= from);
-    }
-
-    function centsFromMidi(midi, baseMidi) {
-      return (midi - baseMidi) * 100;
+    function updateRange(session, point) {
+      if (!session.maxPitch || point.midi > session.maxPitch.midi) session.maxPitch = { ...point };
+      if (!session.minPitch || point.midi < session.minPitch.midi) session.minPitch = { ...point };
     }
 
     function mean(values) {
@@ -1610,31 +1761,42 @@
       return Math.sqrt(values.reduce((a, b) => a + (b - m) * (b - m), 0) / values.length);
     }
 
-    function detectTechniques(nowMs) {
-      detectVibrato(nowMs);
-      detectScoop(nowMs);
-      detectFall(nowMs);
+    function getRecentVoiced(session, windowSec) {
+      if (!session.pitchPoints.length) return [];
+      const latestT = session.pitchPoints[session.pitchPoints.length - 1].t;
+      const from = latestT - windowSec;
+      return session.pitchPoints.filter((p) => p.t >= from);
     }
 
-    function detectVibrato(nowMs) {
+    function centsFromMidi(midi, baseMidi) {
+      return (midi - baseMidi) * 100;
+    }
+
+    function detectTechniques(session, nowMs) {
+      detectVibrato(session, nowMs);
+      detectScoop(session, nowMs);
+      detectFall(session, nowMs);
+    }
+
+    function detectVibrato(session, nowMs) {
       const cfg = CONFIG.technique.vibrato;
-      const recent = getRecentVoiced(cfg.windowSec);
+      const recent = getRecentVoiced(session, cfg.windowSec);
       if (recent.length < 12) {
-        state.vibratoActive = false;
+        session.vibratoActive = false;
         return;
       }
 
       const latestT = recent[recent.length - 1].t;
       const span = latestT - recent[0].t;
       if (span < cfg.windowSec * 0.72) {
-        state.vibratoActive = false;
+        session.vibratoActive = false;
         return;
       }
 
       const expectedFrames = Math.max(1, cfg.windowSec * 25);
       const voicedRatio = Math.min(1, recent.length / expectedFrames);
       if (voicedRatio < cfg.minVoicedRatio) {
-        state.vibratoActive = false;
+        session.vibratoActive = false;
         return;
       }
 
@@ -1642,9 +1804,8 @@
       const base = mean(midis);
       const cents = midis.map((m) => centsFromMidi(m, base));
       const amplitude = (Math.max(...cents) - Math.min(...cents)) / 2;
-
       if (amplitude < cfg.minDepthCents || amplitude > cfg.maxDepthCents) {
-        state.vibratoActive = false;
+        session.vibratoActive = false;
         return;
       }
 
@@ -1652,39 +1813,28 @@
       let lastSign = Math.sign(cents[0]);
       for (let i = 1; i < cents.length; i++) {
         const sign = Math.sign(cents[i]);
-        if (sign !== 0 && lastSign !== 0 && sign !== lastSign) {
-          zeroCrossings++;
-        }
-        if (sign !== 0) {
-          lastSign = sign;
-        }
+        if (sign !== 0 && lastSign !== 0 && sign !== lastSign) zeroCrossings++;
+        if (sign !== 0) lastSign = sign;
       }
 
       const rateHz = zeroCrossings / 2 / span;
-      if (
-        zeroCrossings >= cfg.minZeroCrossings &&
-        rateHz >= cfg.minRateHz &&
-        rateHz <= cfg.maxRateHz
-      ) {
-        if (!state.vibratoActive && nowMs - state.lastTechniqueAt.vibrato > cfg.cooldownMs) {
-          addTechniqueEvent("vibrato", recent[Math.floor(recent.length / 2)] || recent[recent.length - 1], {
-            depth: amplitude,
-            rate: rateHz
-          });
-          state.lastTechniqueAt.vibrato = nowMs;
-          state.activeTechniqueUntil.vibrato = nowMs + 1000;
+      if (zeroCrossings >= cfg.minZeroCrossings && rateHz >= cfg.minRateHz && rateHz <= cfg.maxRateHz) {
+        if (!session.vibratoActive && nowMs - session.lastTechniqueAt.vibrato > cfg.cooldownMs) {
+          addTechniqueEvent(session, "vibrato", recent[Math.floor(recent.length / 2)] || recent[recent.length - 1], { depth: amplitude, rate: rateHz });
+          session.lastTechniqueAt.vibrato = nowMs;
+          session.activeTechniqueUntil.vibrato = nowMs + 1000;
+          markCurrentSegment(session, "vibrato");
         }
-        state.vibratoActive = true;
+        session.vibratoActive = true;
       } else {
-        state.vibratoActive = false;
+        session.vibratoActive = false;
       }
     }
 
-    function detectScoop(nowMs) {
+    function detectScoop(session, nowMs) {
       const cfg = CONFIG.technique.scoop;
-      if (nowMs - state.lastTechniqueAt.scoop < cfg.cooldownMs) return;
-
-      const recent = getRecentVoiced(cfg.lookbackSec);
+      if (nowMs - session.lastTechniqueAt.scoop < cfg.cooldownMs) return;
+      const recent = getRecentVoiced(session, cfg.lookbackSec);
       if (recent.length < 8) return;
 
       const endT = recent[recent.length - 1].t;
@@ -1692,29 +1842,18 @@
       const tail = recent.filter((p) => p.t >= tailFrom);
       if (tail.length < 4) return;
 
-      const tailMidis = tail.map((p) => p.midi);
-      const tailMean = mean(tailMidis);
-      const tailStd = std(tailMidis) * 100;
+      const tailMean = mean(tail.map((p) => p.midi));
+      const tailStd = std(tail.map((p) => p.midi)) * 100;
       if (tailStd > cfg.maxTailStdCents) return;
 
       let minPoint = recent[0];
       for (const p of recent) {
-        if (p.t < tailFrom && p.midi < minPoint.midi) {
-          minPoint = p;
-        }
+        if (p.t < tailFrom && p.midi < minPoint.midi) minPoint = p;
       }
 
       const riseCents = (tailMean - minPoint.midi) * 100;
       const durationMs = (tail[0].t - minPoint.t) * 1000;
-
-      if (
-        riseCents < cfg.minRiseCents ||
-        riseCents > cfg.maxRiseCents ||
-        durationMs < cfg.minDurationMs ||
-        durationMs > cfg.maxDurationMs
-      ) {
-        return;
-      }
+      if (riseCents < cfg.minRiseCents || riseCents > cfg.maxRiseCents || durationMs < cfg.minDurationMs || durationMs > cfg.maxDurationMs) return;
 
       const segment = recent.filter((p) => p.t >= minPoint.t && p.t <= tail[tail.length - 1].t);
       if (segment.length < 5) return;
@@ -1728,54 +1867,38 @@
         if (diff > 0) upward++;
       }
 
-      const upwardRatio = total ? upward / total : 0;
-      if (upwardRatio >= cfg.minUpwardRatio) {
-        addTechniqueEvent("scoop", tail[Math.floor(tail.length / 2)] || recent[recent.length - 1], {
-          rise: riseCents,
-          durationMs
-        });
-        state.lastTechniqueAt.scoop = nowMs;
-        state.activeTechniqueUntil.scoop = nowMs + 1000;
+      if ((total ? upward / total : 0) >= cfg.minUpwardRatio) {
+        addTechniqueEvent(session, "scoop", tail[Math.floor(tail.length / 2)] || recent[recent.length - 1], { rise: riseCents, durationMs });
+        session.lastTechniqueAt.scoop = nowMs;
+        session.activeTechniqueUntil.scoop = nowMs + 1000;
+        markCurrentSegment(session, "scoop");
       }
     }
 
-    function detectFall(nowMs) {
+    function detectFall(session, nowMs) {
       const cfg = CONFIG.technique.fall;
-      if (nowMs - state.lastTechniqueAt.fall < cfg.cooldownMs) return;
-
-      const recent = getRecentVoiced(cfg.lookbackSec);
+      if (nowMs - session.lastTechniqueAt.fall < cfg.cooldownMs) return;
+      const recent = getRecentVoiced(session, cfg.lookbackSec);
       if (recent.length < 8) return;
 
       const latest = recent[recent.length - 1];
       const endT = latest.t;
       const headEnd = endT - cfg.tailSec;
       const headStart = headEnd - cfg.stableHeadSec;
-
       const head = recent.filter((p) => p.t >= headStart && p.t <= headEnd);
       const tail = recent.filter((p) => p.t >= headEnd);
-
       if (head.length < 4 || tail.length < 4) return;
 
-      const headMidis = head.map((p) => p.midi);
-      const headMean = mean(headMidis);
-      const headStd = std(headMidis) * 100;
+      const headMean = mean(head.map((p) => p.midi));
+      const headStd = std(head.map((p) => p.midi)) * 100;
       if (headStd > cfg.maxHeadStdCents) return;
 
       let minTail = tail[0];
-      for (const p of tail) {
-        if (p.midi < minTail.midi) minTail = p;
-      }
+      for (const p of tail) if (p.midi < minTail.midi) minTail = p;
 
       const dropCents = (headMean - minTail.midi) * 100;
       const durationMs = (minTail.t - head[head.length - 1].t) * 1000;
-
-      if (
-        dropCents < cfg.minDropCents ||
-        dropCents > cfg.maxDropCents ||
-        durationMs < cfg.minDurationMs
-      ) {
-        return;
-      }
+      if (dropCents < cfg.minDropCents || dropCents > cfg.maxDropCents || durationMs < cfg.minDurationMs) return;
 
       let downward = 0;
       let total = 0;
@@ -1786,19 +1909,16 @@
         if (diff < 0) downward++;
       }
 
-      const downwardRatio = total ? downward / total : 0;
-      if (downwardRatio >= 0.55) {
-        addTechniqueEvent("fall", minTail, {
-          drop: dropCents,
-          durationMs
-        });
-        state.lastTechniqueAt.fall = nowMs;
-        state.activeTechniqueUntil.fall = nowMs + 1000;
+      if ((total ? downward / total : 0) >= 0.55) {
+        addTechniqueEvent(session, "fall", minTail, { drop: dropCents, durationMs });
+        session.lastTechniqueAt.fall = nowMs;
+        session.activeTechniqueUntil.fall = nowMs + 1000;
+        markCurrentSegment(session, "fall");
       }
     }
 
-    function addTechniqueEvent(type, point, detail = {}) {
-      const event = {
+    function addTechniqueEvent(session, type, point, detail = {}) {
+      session.techniqueEvents.push({
         type,
         t: point.t,
         timeMs: point.timeMs,
@@ -1806,99 +1926,72 @@
         freq: point.freq,
         label: point.label,
         detail
-      };
-
-      state.techniqueEvents.push(event);
-      state.counts[type] += 1;
+      });
+      session.counts[type] += 1;
     }
 
-    function setBadge(type, on) {
-      const text = {
-        vibrato: "ビブラート検出",
-        scoop: "しゃくり検出",
-        fall: "フォール検出"
-      };
-
-      const idle = {
-        vibrato: "待機中",
-        scoop: "待機中",
-        fall: "待機中"
-      };
-
-      const element = {
-        vibrato: elements.vibratoBadge,
-        scoop: elements.scoopBadge,
-        fall: elements.fallBadge
-      }[type];
-
-      element.classList.toggle("on", on);
-      element.textContent = on ? text[type] : idle[type];
+    function markCurrentSegment(session, type) {
+      if (session.tracker && session.tracker.current) session.tracker.current[type] = true;
     }
 
-    function updateLiveUI(nowMs) {
-      const elapsed = state.running ? (nowMs - state.startedAt) / 1000 : 0;
-      elements.elapsedText.textContent = formatTime(elapsed);
-      elements.graphWindowText.textContent = String(CONFIG.graph.liveWindowSec);
-
-      if (state.currentPitch) {
-        const p = state.currentPitch;
-        elements.currentLabel.textContent = p.label;
-        elements.currentSub.textContent = p.standard + " / " + p.freq.toFixed(1) + " Hz";
-        elements.freqText.textContent = p.freq.toFixed(1) + " Hz";
-        elements.noteText.textContent = p.standard;
-        elements.clarityText.textContent = Math.round(p.clarity * 100) + "%";
-      } else {
-        elements.currentLabel.textContent = "--";
-        elements.currentSub.textContent = "無音または音程を検出していません";
-        elements.freqText.textContent = "-- Hz";
-        elements.noteText.textContent = "--";
-        elements.clarityText.textContent = "--%";
-      }
-
-      elements.vibratoCount.textContent = String(state.counts.vibrato);
-      elements.scoopCount.textContent = String(state.counts.scoop);
-      elements.fallCount.textContent = String(state.counts.fall);
-      elements.vibratoBigCount.textContent = String(state.counts.vibrato);
-      elements.scoopBigCount.textContent = String(state.counts.scoop);
-      elements.fallBigCount.textContent = String(state.counts.fall);
-
-      setBadge("vibrato", nowMs < state.activeTechniqueUntil.vibrato);
-      setBadge("scoop", nowMs < state.activeTechniqueUntil.scoop);
-      setBadge("fall", nowMs < state.activeTechniqueUntil.fall);
-
-      if (state.maxPitch) {
-        elements.liveMaxNote.textContent = state.maxPitch.label;
-        elements.liveMaxTime.textContent = formatEventTime(state.maxPitch.t) + " / " + state.maxPitch.freq.toFixed(1) + " Hz";
-      } else {
-        elements.liveMaxNote.textContent = "--";
-        elements.liveMaxTime.textContent = "--";
-      }
-
-      if (state.minPitch) {
-        elements.liveMinNote.textContent = state.minPitch.label;
-        elements.liveMinTime.textContent = formatEventTime(state.minPitch.t) + " / " + state.minPitch.freq.toFixed(1) + " Hz";
-      } else {
-        elements.liveMinNote.textContent = "--";
-        elements.liveMinTime.textContent = "--";
-      }
-
-      renderLiveHistory();
+    function trimSession(session) {
+      if (session.pitchPoints.length > 24000) session.pitchPoints.splice(0, session.pitchPoints.length - 24000);
+      if (session.techniqueEvents.length > 4000) session.techniqueEvents.splice(0, session.techniqueEvents.length - 4000);
     }
 
-    function renderLiveHistory() {
-      const recent = state.techniqueEvents.slice(-12).reverse();
+    function updateNormalUI() {
+      const s = app.normal;
+      const now = performance.now();
+      const elapsed = (now - s.startedAt) / 1000;
+      const min = Math.max(elapsed / 60, 1 / 60);
+      els.normalElapsed.textContent = formatTime(elapsed);
+      els.normalCurrentNote.textContent = s.currentPitch ? s.currentPitch.label : "--";
+      els.normalMaxNote.textContent = s.maxPitch ? s.maxPitch.label : "--";
+      els.normalMinNote.textContent = s.minPitch ? s.minPitch.label : "--";
+      els.normalVibratoCount.textContent = s.counts.vibrato;
+      els.normalScoopCount.textContent = s.counts.scoop;
+      els.normalFallCount.textContent = s.counts.fall;
+      els.normalVibratoRate.textContent = (s.counts.vibrato / min).toFixed(1);
+      els.normalScoopRate.textContent = (s.counts.scoop / min).toFixed(1);
+      els.normalFallRate.textContent = (s.counts.fall / min).toFixed(1);
+      els.normalVibratoFlash.classList.toggle("on", now < s.activeTechniqueUntil.vibrato);
+      els.normalScoopFlash.classList.toggle("on", now < s.activeTechniqueUntil.scoop);
+      els.normalFallFlash.classList.toggle("on", now < s.activeTechniqueUntil.fall);
 
-      if (!recent.length) {
-        elements.liveHistory.innerHTML = '<div class="history-item"><span>まだ検出履歴はありません</span><small>--</small></div>';
-        return;
+      const idx = Math.floor(elapsed / CONFIG.normal.windowSec);
+      if (idx !== app.normalWindowIndex) {
+        app.normalWindowIndex = idx;
+        els.normalWindowIndex.textContent = String(idx + 1);
+      }
+    }
+
+    function buildResult() {
+      const s = app.normal;
+      const durationSec = Math.max(0, ((s.endedAt || performance.now()) - s.startedAt) / 1000);
+      const durationMin = Math.max(durationSec / 60, 1 / 60);
+      els.resultMaxNote.textContent = s.maxPitch ? s.maxPitch.label : "--";
+      els.resultMinNote.textContent = s.minPitch ? s.minPitch.label : "--";
+      els.resultMaxTime.textContent = s.maxPitch ? formatTime(s.maxPitch.t) + " / " + s.maxPitch.freq.toFixed(1) + " Hz" : "--";
+      els.resultMinTime.textContent = s.minPitch ? formatTime(s.minPitch.t) + " / " + s.minPitch.freq.toFixed(1) + " Hz" : "--";
+      els.resultDuration.textContent = formatTime(durationSec);
+      els.resultSegmentCount.textContent = String(s.segments.length);
+      els.resultVibrato.textContent = s.counts.vibrato + " / " + (s.counts.vibrato / durationMin).toFixed(1);
+      els.resultScoop.textContent = s.counts.scoop + " / " + (s.counts.scoop / durationMin).toFixed(1);
+      els.resultFall.textContent = s.counts.fall + " / " + (s.counts.fall / durationMin).toFixed(1);
+      if (s.pitchPoints.length) {
+        els.resultClarity.textContent = Math.round(mean(s.pitchPoints.map((p) => p.clarity)) * 100) + "%";
+      } else {
+        els.resultClarity.textContent = "--%";
       }
 
-      elements.liveHistory.innerHTML = recent.map((event) => {
-        return '<div class="history-item">' +
-          '<span>' + escapeHtml(techniqueName(event.type)) + ' <small>' + escapeHtml(event.label) + '</small></span>' +
-          '<small>' + escapeHtml(formatEventTime(event.t)) + '</small>' +
-          '</div>';
-      }).join("");
+      if (!s.techniqueEvents.length) {
+        els.resultHistory.innerHTML = '<div class="history-item"><span>検出履歴はありません</span><small>--</small></div>';
+      } else {
+        els.resultHistory.innerHTML = s.techniqueEvents.map((e, i) => {
+          return '<div class="history-item"><span>' + (i + 1) + ". " + techniqueName(e.type) + ' <small>' + escapeHtml(e.label) + '</small></span><small>' + formatTime(e.t) + '</small></div>';
+        }).join("");
+      }
+      drawResultCanvas();
     }
 
     function techniqueName(type) {
@@ -1908,63 +2001,8 @@
       return type;
     }
 
-    function techniqueColor(type) {
-      if (type === "vibrato") return "#a78bfa";
-      if (type === "scoop") return "#fb923c";
-      if (type === "fall") return "#fb7185";
-      return "#facc15";
-    }
-
     function escapeHtml(value) {
-      return String(value).replace(/[&<>"']/g, (char) => {
-        return {
-          "&": "&amp;",
-          "<": "&lt;",
-          ">": "&gt;",
-          '"': "&quot;",
-          "'": "&#039;"
-        }[char];
-      });
-    }
-
-    function updatePageTimer(nowMs) {
-      const elapsedOnPage = (nowMs - state.pageStartedAt) / 1000;
-      if (elapsedOnPage >= CONFIG.page.switchSec) {
-        setPage((state.currentPage + 1) % CONFIG.page.count, false);
-      }
-
-      const remaining = Math.max(0, Math.ceil(CONFIG.page.switchSec - ((performance.now() - state.pageStartedAt) / 1000)));
-      elements.pageIndicator.textContent = (state.currentPage + 1) + " / " + CONFIG.page.count + "　残り " + remaining + "秒";
-    }
-
-    function setPage(index, manual) {
-      state.currentPage = index;
-      state.pageStartedAt = performance.now();
-
-      for (let i = 1; i <= CONFIG.page.count; i++) {
-        const page = $("page" + i);
-        if (page) page.classList.toggle("active", i - 1 === index);
-      }
-
-      elements.pageIndicator.textContent = (state.currentPage + 1) + " / " + CONFIG.page.count + "　残り " + CONFIG.page.switchSec + "秒";
-
-      if (manual) {
-        drawVisibleCanvases(false);
-      }
-
-      requestAnimationFrame(resizeAllCanvases);
-    }
-
-    function trimOldIfTooLarge() {
-      const maxPoints = 18000;
-      if (state.pitchPoints.length > maxPoints) {
-        state.pitchPoints.splice(0, state.pitchPoints.length - maxPoints);
-      }
-
-      const maxEvents = 3000;
-      if (state.techniqueEvents.length > maxEvents) {
-        state.techniqueEvents.splice(0, state.techniqueEvents.length - maxEvents);
-      }
+      return String(value).replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" }[char]));
     }
 
     function resizeCanvas(canvas) {
@@ -1972,401 +2010,1016 @@
       const dpr = Math.max(1, Math.min(window.devicePixelRatio || 1, 2));
       const width = Math.max(1, Math.floor(rect.width * dpr));
       const height = Math.max(1, Math.floor(rect.height * dpr));
-
       if (canvas.width !== width || canvas.height !== height) {
         canvas.width = width;
         canvas.height = height;
       }
-
       const ctx = canvas.getContext("2d");
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      return {
-        ctx,
-        width: rect.width,
-        height: rect.height,
-        dpr
-      };
+      return { ctx, width: rect.width, height: rect.height };
     }
 
-    function resizeAllCanvases() {
-      [
-        elements.pitchCanvas,
-        elements.vibratoCanvas,
-        elements.scoopCanvas,
-        elements.fallCanvas,
-        elements.resultCanvas
-      ].forEach((canvas) => {
-        if (canvas) resizeCanvas(canvas);
-      });
-      drawVisibleCanvases(true);
+    function drawAll() {
+      if (els.normalScreen.classList.contains("active")) drawNormalCanvas();
+      if (els.resultScreen.classList.contains("active")) drawResultCanvas();
+      if (els.karaokeScreen.classList.contains("active")) drawEditor(karaokeEditor);
+      if (els.reverseScreen.classList.contains("active")) drawEditor(reverseEditor);
     }
 
-    window.addEventListener("resize", resizeAllCanvases);
-    window.addEventListener("orientationchange", () => {
-      setTimeout(resizeAllCanvases, 250);
-    });
+    window.addEventListener("resize", drawAll);
+    window.addEventListener("orientationchange", () => setTimeout(drawAll, 250));
 
-    function drawVisibleCanvases(forceAll) {
-      const page = state.currentPage;
-
-      if (forceAll || page === 0) drawPitchGraph(elements.pitchCanvas, "all", true);
-      if (forceAll || page === 1) drawPitchGraph(elements.vibratoCanvas, "vibrato", true);
-      if (forceAll || page === 2) drawPitchGraph(elements.scoopCanvas, "scoop", true);
-      if (forceAll || page === 3) drawPitchGraph(elements.fallCanvas, "fall", true);
-      if (forceAll) drawPitchGraph(elements.resultCanvas, "all", false);
-    }
-
-    function drawPitchGraph(canvas, markerFilter, live) {
-      const data = resizeCanvas(canvas);
+    function drawNormalCanvas() {
+      const s = app.normal;
+      const data = resizeCanvas(els.normalCanvas);
       const ctx = data.ctx;
       const width = data.width;
       const height = data.height;
+      const elapsed = s.startedAt ? (performance.now() - s.startedAt) / 1000 : 0;
+      const windowIndex = Math.floor(elapsed / CONFIG.normal.windowSec);
+      const tStart = windowIndex * CONFIG.normal.windowSec;
+      const tEnd = tStart + CONFIG.normal.windowSec;
+      const segs = s.segments.filter((r) => r.end >= tStart && r.start <= tEnd);
+      drawRectPitchCanvas(ctx, width, height, segs, tStart, tEnd, true, els.normalRangeText);
+      ctx.save();
+      ctx.strokeStyle = "#a3e635";
+      ctx.lineWidth = 3;
+      const x = ((elapsed - tStart) / CONFIG.normal.windowSec) * width;
+      ctx.beginPath();
+      ctx.moveTo(x, 0);
+      ctx.lineTo(x, height);
+      ctx.stroke();
+      ctx.restore();
+    }
 
+    function drawResultCanvas() {
+      const s = app.normal;
+      const data = resizeCanvas(els.resultCanvas);
+      const ctx = data.ctx;
+      const width = data.width;
+      const height = data.height;
+      const end = Math.max(1, s.segments.reduce((m, r) => Math.max(m, r.end), 0));
+      drawRectPitchCanvas(ctx, width, height, s.segments, 0, end, false, els.resultRangeText);
+    }
+
+    function drawRectPitchCanvas(ctx, width, height, segments, tStart, tEnd, live, rangeElement) {
       ctx.clearRect(0, 0, width, height);
-
       const gradient = ctx.createLinearGradient(0, 0, 0, height);
       gradient.addColorStop(0, "rgba(8, 47, 73, 0.52)");
       gradient.addColorStop(1, "rgba(2, 6, 23, 0.96)");
       ctx.fillStyle = gradient;
       ctx.fillRect(0, 0, width, height);
 
-      const points = getGraphPoints(live);
-      if (!points.length) {
-        drawEmptyGraph(ctx, width, height, "音程を検出するとここに線が描画されます");
-        return;
-      }
-
-      const bounds = getMidiBounds(points);
+      const bounds = getSegmentMidiBounds(segments);
       const minMidi = bounds.minMidi;
       const maxMidi = bounds.maxMidi;
-      const duration = live
-        ? CONFIG.graph.liveWindowSec
-        : Math.max(1, (points[points.length - 1].t - points[0].t) || 1);
+      drawPitchGrid(ctx, width, height, minMidi, maxMidi);
 
-      const tStart = live
-        ? Math.max(0, ((performance.now() - state.startedAt) / 1000) - CONFIG.graph.liveWindowSec)
-        : points[0].t;
-      const tEnd = live
-        ? tStart + CONFIG.graph.liveWindowSec
-        : points[points.length - 1].t;
-
-      drawGrid(ctx, width, height, minMidi, maxMidi);
-
-      ctx.save();
-      ctx.lineWidth = 3;
-      ctx.lineJoin = "round";
-      ctx.lineCap = "round";
-      ctx.strokeStyle = "#22d3ee";
-      ctx.shadowColor = "rgba(34, 211, 238, 0.55)";
-      ctx.shadowBlur = 12;
-
-      let drawing = false;
-      let prev = null;
-      ctx.beginPath();
-
-      for (const p of points) {
-        const x = ((p.t - tStart) / Math.max(0.001, (tEnd - tStart))) * width;
-        const y = height - ((p.midi - minMidi) / Math.max(0.001, (maxMidi - minMidi))) * height;
-
-        if (!Number.isFinite(x) || !Number.isFinite(y)) continue;
-
-        if (!prev || Math.abs(p.t - prev.t) > 0.28) {
-          if (drawing) {
-            ctx.stroke();
-            ctx.beginPath();
-          }
-          ctx.moveTo(x, y);
-          drawing = true;
-        } else {
-          ctx.lineTo(x, y);
-        }
-
-        prev = p;
+      if (!segments.length) {
+        ctx.save();
+        ctx.fillStyle = "rgba(226,246,255,0.72)";
+        ctx.font = "900 17px system-ui, sans-serif";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText("歌うと音程バーが表示されます", width / 2, height / 2);
+        ctx.restore();
       }
 
-      if (drawing) ctx.stroke();
-      ctx.restore();
-
-      drawMarkers(ctx, width, height, minMidi, maxMidi, tStart, tEnd, markerFilter);
-
-      if (state.currentPitch && live) {
-        const p = state.currentPitch;
-        if (p.t >= tStart && p.t <= tEnd) {
-          const x = ((p.t - tStart) / (tEnd - tStart)) * width;
-          const y = height - ((p.midi - minMidi) / (maxMidi - minMidi)) * height;
-          ctx.save();
-          ctx.fillStyle = "#a3e635";
-          ctx.shadowColor = "rgba(163, 230, 53, 0.7)";
-          ctx.shadowBlur = 18;
-          ctx.beginPath();
-          ctx.arc(x, y, 7, 0, Math.PI * 2);
-          ctx.fill();
-          ctx.restore();
-        }
+      for (const seg of segments) {
+        const start = Math.max(seg.start, tStart);
+        const end = Math.min(seg.end, tEnd);
+        if (end <= start) continue;
+        const x = ((start - tStart) / (tEnd - tStart)) * width;
+        const w = Math.max(2, ((end - start) / (tEnd - tStart)) * width);
+        const rowH = Math.max(16, height / Math.max(8, maxMidi - minMidi + 1) * 0.72);
+        const yCenter = height - ((seg.midi - minMidi) / Math.max(0.001, maxMidi - minMidi)) * height;
+        const y = yCenter - rowH / 2;
+        drawSegmentRect(ctx, x, y, w, rowH, seg, false);
       }
 
-      const topNote = midiToKaraokeNote(Math.round(maxMidi)).label;
-      const bottomNote = midiToKaraokeNote(Math.round(minMidi)).label;
-      const rangeText = bottomNote + " ～ " + topNote;
-
-      if (canvas === elements.pitchCanvas) elements.graphRangeText.textContent = rangeText;
-      if (canvas === elements.resultCanvas) elements.resultGraphRange.textContent = rangeText;
+      if (rangeElement) {
+        rangeElement.textContent = midiToKaraokeNote(Math.round(minMidi)).label + " ～ " + midiToKaraokeNote(Math.round(maxMidi)).label;
+      }
     }
 
-    function getGraphPoints(live) {
-      if (!state.pitchPoints.length) return [];
-
-      if (!live) {
-        return decimatePoints(state.pitchPoints, 2600);
-      }
-
-      const nowSec = state.running
-        ? (performance.now() - state.startedAt) / 1000
-        : (state.endedAt - state.startedAt) / 1000;
-      const from = nowSec - CONFIG.graph.liveWindowSec;
-      return state.pitchPoints.filter((p) => p.t >= from);
-    }
-
-    function decimatePoints(points, max) {
-      if (points.length <= max) return points;
-      const step = Math.ceil(points.length / max);
-      const out = [];
-      for (let i = 0; i < points.length; i += step) {
-        out.push(points[i]);
-      }
-      if (out[out.length - 1] !== points[points.length - 1]) {
-        out.push(points[points.length - 1]);
-      }
-      return out;
-    }
-
-    function getMidiBounds(points) {
+    function getSegmentMidiBounds(segments) {
       let min = Infinity;
       let max = -Infinity;
-
-      for (const p of points) {
-        if (p.midi < min) min = p.midi;
-        if (p.midi > max) max = p.midi;
+      for (const s of segments) {
+        min = Math.min(min, s.midi);
+        max = Math.max(max, s.midi);
       }
-
       if (!Number.isFinite(min) || !Number.isFinite(max)) {
-        min = 48;
-        max = 72;
+        min = 55;
+        max = 76;
       }
-
-      min -= CONFIG.graph.verticalPaddingSemi;
-      max += CONFIG.graph.verticalPaddingSemi;
-
+      min -= CONFIG.normal.verticalPaddingSemi;
+      max += CONFIG.normal.verticalPaddingSemi;
       const span = max - min;
-      if (span < CONFIG.graph.minSemitoneSpan) {
-        const center = (min + max) / 2;
-        min = center - CONFIG.graph.minSemitoneSpan / 2;
-        max = center + CONFIG.graph.minSemitoneSpan / 2;
+      if (span < CONFIG.normal.minSemitoneSpan) {
+        const c = (min + max) / 2;
+        min = c - CONFIG.normal.minSemitoneSpan / 2;
+        max = c + CONFIG.normal.minSemitoneSpan / 2;
       }
-
-      return {
-        minMidi: min,
-        maxMidi: max
-      };
+      return { minMidi: min, maxMidi: max };
     }
 
-    function drawGrid(ctx, width, height, minMidi, maxMidi) {
+    function drawPitchGrid(ctx, width, height, minMidi, maxMidi) {
       ctx.save();
-
       ctx.strokeStyle = "rgba(148, 163, 184, 0.12)";
       ctx.lineWidth = 1;
-
-      for (let i = 0; i <= 6; i++) {
-        const y = (height / 6) * i;
-        ctx.beginPath();
-        ctx.moveTo(0, y);
-        ctx.lineTo(width, y);
-        ctx.stroke();
-      }
-
-      for (let i = 0; i <= 8; i++) {
-        const x = (width / 8) * i;
+      for (let i = 0; i <= 10; i++) {
+        const x = width * i / 10;
         ctx.beginPath();
         ctx.moveTo(x, 0);
         ctx.lineTo(x, height);
         ctx.stroke();
       }
-
-      ctx.fillStyle = "rgba(226, 246, 255, 0.50)";
-      ctx.font = "700 12px system-ui, sans-serif";
-      ctx.textBaseline = "middle";
-
-      const minRound = Math.ceil(minMidi);
-      const maxRound = Math.floor(maxMidi);
-      for (let midi = minRound; midi <= maxRound; midi++) {
-        if (midi % 2 !== 0) continue;
-        const y = height - ((midi - minMidi) / (maxMidi - minMidi)) * height;
-        if (y < 12 || y > height - 12) continue;
-        const label = midiToKaraokeNote(midi).label;
-        ctx.fillText(label, 10, y);
+      for (let midi = Math.ceil(minMidi); midi <= Math.floor(maxMidi); midi++) {
+        const y = height - ((midi - minMidi) / Math.max(0.001, maxMidi - minMidi)) * height;
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(width, y);
+        ctx.stroke();
+        if (midi % 2 === 0 && y > 14 && y < height - 14) {
+          ctx.fillStyle = "rgba(226,246,255,0.50)";
+          ctx.font = "800 12px system-ui, sans-serif";
+          ctx.fillText(midiToKaraokeNote(midi).label, 10, y - 3);
+        }
       }
-
       ctx.restore();
     }
 
-    function drawMarkers(ctx, width, height, minMidi, maxMidi, tStart, tEnd, markerFilter) {
-      const events = state.techniqueEvents.filter((event) => {
-        if (event.t < tStart || event.t > tEnd) return false;
-        if (markerFilter === "all") return true;
-        return event.type === markerFilter;
+    function drawSegmentRect(ctx, x, y, w, h, seg, selected) {
+      const color = seg.color || "#22d3ee";
+      ctx.save();
+      const grad = ctx.createLinearGradient(x, y, x + w, y + h);
+      grad.addColorStop(0, color);
+      grad.addColorStop(1, shadeColor(color, 18));
+      ctx.fillStyle = grad;
+      ctx.shadowColor = color;
+      ctx.shadowBlur = selected ? 18 : 9;
+      roundRect(ctx, x, y, w, h, Math.min(9, h / 2));
+      ctx.fill();
+      ctx.shadowBlur = 0;
+      ctx.lineWidth = selected ? 3 : 1.4;
+      ctx.strokeStyle = selected ? "#ffffff" : "rgba(255,255,255,0.45)";
+      ctx.stroke();
+
+      if (seg.vibrato || seg.scoop || seg.fall) {
+        const marks = [];
+        if (seg.vibrato) marks.push("V");
+        if (seg.scoop) marks.push("↑");
+        if (seg.fall) marks.push("↓");
+        ctx.fillStyle = "rgba(2,6,23,0.58)";
+        roundRect(ctx, x + 4, y + 3, Math.min(54, w - 8), Math.min(18, h - 4), 7);
+        ctx.fill();
+        ctx.fillStyle = "#fff";
+        ctx.font = "900 11px system-ui, sans-serif";
+        ctx.textAlign = "left";
+        ctx.textBaseline = "middle";
+        ctx.fillText(marks.join(""), x + 9, y + Math.min(12, h / 2));
+      }
+
+      const label = seg.label || midiToKaraokeNote(seg.midi).label;
+      ctx.fillStyle = "#02111d";
+      ctx.font = "950 14px system-ui, sans-serif";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      if (w >= 34) {
+        ctx.fillText(label, x + w / 2, y + h / 2);
+      } else {
+        ctx.fillStyle = "#ffffff";
+        ctx.font = "950 10px system-ui, sans-serif";
+        ctx.fillText("♪", x + w / 2, y + h / 2);
+      }
+      ctx.restore();
+    }
+
+    function roundRect(ctx, x, y, w, h, r) {
+      r = Math.max(0, Math.min(r, Math.abs(w) / 2, Math.abs(h) / 2));
+      ctx.beginPath();
+      ctx.moveTo(x + r, y);
+      ctx.arcTo(x + w, y, x + w, y + h, r);
+      ctx.arcTo(x + w, y + h, x, y + h, r);
+      ctx.arcTo(x, y + h, x, y, r);
+      ctx.arcTo(x, y, x + w, y, r);
+      ctx.closePath();
+    }
+
+    function shadeColor(color, percent) {
+      const hex = color.replace("#", "");
+      if (hex.length !== 6) return color;
+      const num = parseInt(hex, 16);
+      let r = (num >> 16) + percent;
+      let g = ((num >> 8) & 0x00ff) + percent;
+      let b = (num & 0x0000ff) + percent;
+      r = Math.max(0, Math.min(255, r));
+      g = Math.max(0, Math.min(255, g));
+      b = Math.max(0, Math.min(255, b));
+      return "#" + (b | (g << 8) | (r << 16)).toString(16).padStart(6, "0");
+    }
+
+    const noteOptions = [];
+    for (let midi = CONFIG.editor.minMidi; midi <= CONFIG.editor.maxMidi; midi++) {
+      noteOptions.push({ midi, label: midiToKaraokeNote(midi).label + " / " + midiToKaraokeNote(midi).standard });
+    }
+
+    function fillPitchSelect(select) {
+      select.innerHTML = noteOptions.map((n) => '<option value="' + n.midi + '">' + n.label + '</option>').join("");
+    }
+
+    fillPitchSelect(els.editPitchSelect);
+    fillPitchSelect(els.reverseEditPitchSelect);
+
+    function createEditor(config) {
+      return {
+        name: config.name,
+        canvas: config.canvas,
+        scroll: config.scroll,
+        rects: [],
+        selectedId: null,
+        dragging: false,
+        dragMode: "move",
+        pointerStart: null,
+        rectStart: null,
+        pxPerSec: CONFIG.editor.pxPerSec,
+        playheadSec: 0,
+        getBpm: config.getBpm,
+        getTimeSig: config.getTimeSig,
+        getSnap: config.getSnap,
+        getTitle: config.getTitle,
+        setTitle: config.setTitle,
+        inputs: config.inputs,
+        defaultColor: config.defaultColor,
+        jsonArea: config.jsonArea,
+        onChange: config.onChange || function () {}
+      };
+    }
+
+    const karaokeEditor = createEditor({
+      name: "karaoke",
+      canvas: els.karaokeCanvas,
+      scroll: els.karaokeScroll,
+      getBpm: () => Number(els.karaokeBpmInput.value) || 120,
+      getTimeSig: () => Number(els.karaokeTimeSigInput.value) || 4,
+      getSnap: () => els.karaokeSnapInput.checked,
+      getTitle: () => els.songTitleInput.value || "Untitled Song",
+      setTitle: (v) => { els.songTitleInput.value = v; },
+      defaultColor: "#22d3ee",
+      jsonArea: els.jsonArea,
+      inputs: {
+        pitch: els.editPitchSelect,
+        start: els.editStartInput,
+        duration: els.editDurationInput,
+        color: els.editColorInput,
+        midi: els.editMidiInput
+      }
+    });
+
+    const reverseEditor = createEditor({
+      name: "reverse",
+      canvas: els.reverseCanvas,
+      scroll: els.reverseScroll,
+      getBpm: () => Number(els.reverseBpmInput.value) || 120,
+      getTimeSig: () => Number(els.reverseTimeSigInput.value) || 4,
+      getSnap: () => els.reverseSnapInput.checked,
+      getTitle: () => els.reverseTitleInput.value || "My Reverse Song",
+      setTitle: (v) => { els.reverseTitleInput.value = v; },
+      defaultColor: "#34d399",
+      jsonArea: els.reverseJsonArea,
+      inputs: {
+        pitch: els.reverseEditPitchSelect,
+        start: els.reverseEditStartInput,
+        duration: els.reverseEditDurationInput,
+        color: els.reverseEditColorInput,
+        midi: els.reverseEditMidiInput
+      },
+      onChange: () => updateReversePanel()
+    });
+
+    function bindEditor(editor) {
+      const canvas = editor.canvas;
+
+      canvas.addEventListener("pointerdown", (ev) => {
+        ev.preventDefault();
+        canvas.setPointerCapture(ev.pointerId);
+        const pos = getEditorPos(editor, ev);
+        const hit = hitTestEditor(editor, pos.x, pos.y);
+        if (hit) {
+          editor.selectedId = hit.rect.id;
+          editor.dragging = true;
+          editor.dragMode = hit.mode;
+          editor.pointerStart = pos;
+          editor.rectStart = { ...hit.rect };
+          loadSelectedToInputs(editor);
+        } else {
+          const rect = createRectFromPosition(editor, pos.x, pos.y);
+          editor.rects.push(rect);
+          editor.selectedId = rect.id;
+          editor.dragging = true;
+          editor.dragMode = "move";
+          editor.pointerStart = pos;
+          editor.rectStart = { ...rect };
+          loadSelectedToInputs(editor);
+        }
+        editor.onChange();
+        drawEditor(editor);
       });
 
-      for (const event of events) {
-        const x = ((event.t - tStart) / Math.max(0.001, (tEnd - tStart))) * width;
-        const y = height - ((event.midi - minMidi) / Math.max(0.001, (maxMidi - minMidi))) * height;
-        const color = techniqueColor(event.type);
+      canvas.addEventListener("pointermove", (ev) => {
+        if (!editor.dragging) return;
+        ev.preventDefault();
+        const pos = getEditorPos(editor, ev);
+        const rect = getSelectedRect(editor);
+        if (!rect || !editor.pointerStart || !editor.rectStart) return;
 
+        const dxSec = (pos.x - editor.pointerStart.x) / editor.pxPerSec;
+        const dyMidi = Math.round((editor.pointerStart.y - pos.y) / CONFIG.editor.rowHeight);
+
+        if (editor.dragMode === "left") {
+          let newStart = editor.rectStart.start + dxSec;
+          if (editor.getSnap()) newStart = snapTime(editor, newStart);
+          newStart = Math.max(0, Math.min(newStart, editor.rectStart.end - 0.05));
+          rect.start = newStart;
+          rect.duration = rect.end - rect.start;
+        } else if (editor.dragMode === "right") {
+          let newEnd = editor.rectStart.end + dxSec;
+          if (editor.getSnap()) newEnd = snapTime(editor, newEnd);
+          newEnd = Math.max(editor.rectStart.start + 0.05, newEnd);
+          rect.end = newEnd;
+          rect.duration = rect.end - rect.start;
+        } else {
+          let newStart = editor.rectStart.start + dxSec;
+          if (editor.getSnap()) newStart = snapTime(editor, newStart);
+          rect.duration = editor.rectStart.end - editor.rectStart.start;
+          rect.start = Math.max(0, newStart);
+          rect.end = rect.start + rect.duration;
+          rect.midi = clamp(editor.rectStart.midi + dyMidi, CONFIG.editor.minMidi, CONFIG.editor.maxMidi);
+          rect.label = midiToKaraokeNote(rect.midi).label;
+        }
+
+        loadSelectedToInputs(editor);
+        editor.onChange();
+        drawEditor(editor);
+      });
+
+      canvas.addEventListener("pointerup", (ev) => {
+        editor.dragging = false;
+        editor.pointerStart = null;
+        editor.rectStart = null;
+        editor.onChange();
+        drawEditor(editor);
+      });
+
+      canvas.addEventListener("pointercancel", () => {
+        editor.dragging = false;
+        editor.pointerStart = null;
+        editor.rectStart = null;
+      });
+    }
+
+    bindEditor(karaokeEditor);
+    bindEditor(reverseEditor);
+
+    function getEditorPos(editor, ev) {
+      const rect = editor.canvas.getBoundingClientRect();
+      return {
+        x: ev.clientX - rect.left,
+        y: ev.clientY - rect.top
+      };
+    }
+
+    function hitTestEditor(editor, x, y) {
+      for (let i = editor.rects.length - 1; i >= 0; i--) {
+        const r = editor.rects[i];
+        const box = rectToEditorBox(editor, r);
+        if (x >= box.x && x <= box.x + box.w && y >= box.y && y <= box.y + box.h) {
+          let mode = "move";
+          if (x - box.x < 10) mode = "left";
+          else if (box.x + box.w - x < 10) mode = "right";
+          return { rect: r, mode };
+        }
+      }
+      return null;
+    }
+
+    function createRectFromPosition(editor, x, y) {
+      let start = Math.max(0, x / editor.pxPerSec);
+      const beat = 60 / editor.getBpm();
+      let duration = beat;
+      if (editor.getSnap()) {
+        start = snapTime(editor, start);
+        duration = Math.max(0.05, beat);
+      }
+      const midi = yToMidi(y);
+      return {
+        id: makeId(),
+        start,
+        end: start + duration,
+        duration,
+        midi,
+        label: midiToKaraokeNote(midi).label,
+        color: editor.defaultColor
+      };
+    }
+
+    function yToMidi(y) {
+      const max = CONFIG.editor.maxMidi;
+      const midi = max - Math.floor(y / CONFIG.editor.rowHeight);
+      return clamp(midi, CONFIG.editor.minMidi, CONFIG.editor.maxMidi);
+    }
+
+    function midiToY(midi) {
+      return (CONFIG.editor.maxMidi - midi) * CONFIG.editor.rowHeight;
+    }
+
+    function rectToEditorBox(editor, r) {
+      return {
+        x: r.start * editor.pxPerSec,
+        y: midiToY(r.midi) + 3,
+        w: Math.max(6, (r.end - r.start) * editor.pxPerSec),
+        h: CONFIG.editor.rowHeight - 6
+      };
+    }
+
+    function snapTime(editor, t) {
+      const beat = 60 / editor.getBpm();
+      const grid = beat / CONFIG.editor.beatSubdiv;
+      return Math.round(t / grid) * grid;
+    }
+
+    function clamp(v, min, max) {
+      return Math.max(min, Math.min(max, v));
+    }
+
+    function getSelectedRect(editor) {
+      return editor.rects.find((r) => r.id === editor.selectedId) || null;
+    }
+
+    function loadSelectedToInputs(editor) {
+      const r = getSelectedRect(editor);
+      if (!r) return;
+      editor.inputs.pitch.value = r.midi;
+      editor.inputs.start.value = r.start.toFixed(2);
+      editor.inputs.duration.value = (r.end - r.start).toFixed(2);
+      editor.inputs.color.value = r.color || editor.defaultColor;
+      editor.inputs.midi.value = r.midi;
+    }
+
+    function applyInputsToSelected(editor) {
+      const r = getSelectedRect(editor);
+      if (!r) return;
+      let midi = Number(editor.inputs.midi.value);
+      if (!Number.isFinite(midi)) midi = Number(editor.inputs.pitch.value);
+      midi = clamp(Math.round(midi), CONFIG.editor.minMidi, CONFIG.editor.maxMidi);
+      const start = Math.max(0, Number(editor.inputs.start.value) || 0);
+      const duration = Math.max(0.05, Number(editor.inputs.duration.value) || CONFIG.editor.defaultDurationSec);
+      r.midi = midi;
+      r.label = midiToKaraokeNote(midi).label;
+      r.start = start;
+      r.end = start + duration;
+      r.duration = duration;
+      r.color = editor.inputs.color.value || editor.defaultColor;
+      editor.inputs.pitch.value = midi;
+      editor.onChange();
+      drawEditor(editor);
+    }
+
+    function duplicateSelected(editor) {
+      const r = getSelectedRect(editor);
+      if (!r) return;
+      const beat = 60 / editor.getBpm();
+      const n = { ...r, id: makeId(), start: r.start + beat, end: r.end + beat };
+      editor.rects.push(n);
+      editor.selectedId = n.id;
+      loadSelectedToInputs(editor);
+      editor.onChange();
+      drawEditor(editor);
+    }
+
+    function deleteSelected(editor) {
+      if (!editor.selectedId) return;
+      editor.rects = editor.rects.filter((r) => r.id !== editor.selectedId);
+      editor.selectedId = null;
+      editor.onChange();
+      drawEditor(editor);
+    }
+
+    els.applyEditBtn.addEventListener("click", () => applyInputsToSelected(karaokeEditor));
+    els.duplicateRectBtn.addEventListener("click", () => duplicateSelected(karaokeEditor));
+    els.copyRectBtn.addEventListener("click", () => { const r = getSelectedRect(karaokeEditor); if (r) app.copiedRect = { ...r }; });
+    els.deleteRectBtn.addEventListener("click", () => deleteSelected(karaokeEditor));
+    els.reverseApplyEditBtn.addEventListener("click", () => applyInputsToSelected(reverseEditor));
+    els.reverseDuplicateRectBtn.addEventListener("click", () => duplicateSelected(reverseEditor));
+    els.reverseDeleteRectBtn.addEventListener("click", () => deleteSelected(reverseEditor));
+
+    for (const input of [els.editPitchSelect, els.editStartInput, els.editDurationInput, els.editColorInput, els.editMidiInput]) {
+      input.addEventListener("change", () => applyInputsToSelected(karaokeEditor));
+    }
+    for (const input of [els.reverseEditPitchSelect, els.reverseEditStartInput, els.reverseEditDurationInput, els.reverseEditColorInput, els.reverseEditMidiInput]) {
+      input.addEventListener("change", () => applyInputsToSelected(reverseEditor));
+    }
+
+    for (const input of [els.karaokeBpmInput, els.karaokeTimeSigInput, els.karaokeSnapInput]) {
+      input.addEventListener("change", () => drawEditor(karaokeEditor));
+    }
+    for (const input of [els.reverseBpmInput, els.reverseTimeSigInput, els.reverseSnapInput]) {
+      input.addEventListener("change", () => drawEditor(reverseEditor));
+    }
+
+    function drawEditor(editor) {
+      const duration = Math.max(16, ...editor.rects.map((r) => r.end + 2), editor.playheadSec + 2);
+      const widthCss = Math.max(editor.scroll.clientWidth || 800, duration * editor.pxPerSec);
+      const heightCss = (CONFIG.editor.maxMidi - CONFIG.editor.minMidi + 1) * CONFIG.editor.rowHeight;
+      editor.canvas.style.width = widthCss + "px";
+      editor.canvas.style.height = heightCss + "px";
+
+      const dpr = Math.max(1, Math.min(window.devicePixelRatio || 1, 2));
+      const w = Math.floor(widthCss * dpr);
+      const h = Math.floor(heightCss * dpr);
+      if (editor.canvas.width !== w || editor.canvas.height !== h) {
+        editor.canvas.width = w;
+        editor.canvas.height = h;
+      }
+
+      const ctx = editor.canvas.getContext("2d");
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.clearRect(0, 0, widthCss, heightCss);
+
+      const grad = ctx.createLinearGradient(0, 0, 0, heightCss);
+      grad.addColorStop(0, "rgba(8,47,73,0.42)");
+      grad.addColorStop(1, "rgba(2,6,23,0.96)");
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, widthCss, heightCss);
+
+      drawEditorGrid(ctx, editor, widthCss, heightCss);
+
+      for (const r of editor.rects.slice().sort((a, b) => a.start - b.start)) {
+        const box = rectToEditorBox(editor, r);
+        drawSegmentRect(ctx, box.x, box.y, box.w, box.h, r, r.id === editor.selectedId);
+      }
+
+      if (editor.playheadSec > 0 || app.metronome.playing) {
+        const x = editor.playheadSec * editor.pxPerSec;
         ctx.save();
-        ctx.fillStyle = color;
-        ctx.strokeStyle = "rgba(255,255,255,0.84)";
-        ctx.lineWidth = 2;
-        ctx.shadowColor = color;
-        ctx.shadowBlur = 16;
+        ctx.strokeStyle = "#a3e635";
+        ctx.lineWidth = 3;
         ctx.beginPath();
-        ctx.arc(x, y, 8, 0, Math.PI * 2);
-        ctx.fill();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, heightCss);
         ctx.stroke();
-
-        ctx.shadowBlur = 0;
-        ctx.font = "900 12px system-ui, sans-serif";
-        ctx.fillStyle = "rgba(255,255,255,0.92)";
-        ctx.textAlign = "center";
-        ctx.fillText(techniqueShortName(event.type), x, Math.max(14, y - 14));
         ctx.restore();
       }
     }
 
-    function techniqueShortName(type) {
-      if (type === "vibrato") return "Vib";
-      if (type === "scoop") return "Up";
-      if (type === "fall") return "Fall";
-      return "*";
-    }
-
-    function drawEmptyGraph(ctx, width, height, text) {
-      drawGrid(ctx, width, height, 48, 72);
+    function drawEditorGrid(ctx, editor, width, height) {
+      const bpm = editor.getBpm();
+      const beatSec = 60 / bpm;
+      const timeSig = editor.getTimeSig();
+      const measureSec = beatSec * timeSig;
+      const subSec = beatSec / CONFIG.editor.beatSubdiv;
 
       ctx.save();
-      ctx.fillStyle = "rgba(226, 246, 255, 0.68)";
-      ctx.font = "900 16px system-ui, sans-serif";
-      ctx.textAlign = "center";
-      ctx.textBaseline = "middle";
-      ctx.fillText(text, width / 2, height / 2);
+      for (let midi = CONFIG.editor.minMidi; midi <= CONFIG.editor.maxMidi; midi++) {
+        const y = midiToY(midi);
+        ctx.strokeStyle = midi % 12 === 0 ? "rgba(34,211,238,0.24)" : "rgba(148,163,184,0.12)";
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(width, y);
+        ctx.stroke();
+
+        ctx.fillStyle = "rgba(226,246,255,0.56)";
+        ctx.font = "800 11px system-ui, sans-serif";
+        ctx.textBaseline = "middle";
+        ctx.fillText(midiToKaraokeNote(midi).label, 8, y + CONFIG.editor.rowHeight / 2);
+      }
+
+      const totalSec = width / editor.pxPerSec;
+      for (let t = 0; t <= totalSec + 0.01; t += subSec) {
+        const x = t * editor.pxPerSec;
+        const isBeat = Math.abs((t / beatSec) - Math.round(t / beatSec)) < 0.001;
+        const isMeasure = Math.abs((t / measureSec) - Math.round(t / measureSec)) < 0.001;
+        ctx.strokeStyle = isMeasure ? "rgba(250,204,21,0.34)" : isBeat ? "rgba(226,246,255,0.20)" : "rgba(148,163,184,0.08)";
+        ctx.lineWidth = isMeasure ? 2 : 1;
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, height);
+        ctx.stroke();
+
+        if (isMeasure) {
+          ctx.fillStyle = "rgba(250,204,21,0.8)";
+          ctx.font = "900 12px system-ui, sans-serif";
+          ctx.fillText(String(Math.round(t / measureSec) + 1), x + 4, 14);
+        }
+      }
       ctx.restore();
     }
 
-    function stopAnalysisAndShowResult() {
-      if (!state.running) return;
+    els.karaokePlayBtn.addEventListener("click", () => startMetronome());
+    els.karaokePauseBtn.addEventListener("click", () => pauseMetronome());
+    els.karaokeStopPlayBtn.addEventListener("click", () => stopMetronome());
 
-      state.running = false;
-      state.endedAt = performance.now();
-
-      if (state.rafId) {
-        cancelAnimationFrame(state.rafId);
-        state.rafId = null;
+    function startMetronome() {
+      if (app.metronome.playing) return;
+      const ctxClass = window.AudioContext || window.webkitAudioContext;
+      if (!app.audioContext && ctxClass) {
+        app.audioContext = new ctxClass();
       }
-
-      stopAudioOnly();
-      buildResultScreen();
-      showScreen("result");
-      setTimeout(() => drawPitchGraph(elements.resultCanvas, "all", false), 60);
+      app.metronome.playing = true;
+      app.metronome.startedAt = performance.now() - app.metronome.playheadSec * 1000;
+      scheduleBeat();
+      metronomeLoop();
     }
 
-    function stopAudioOnly() {
+    function pauseMetronome() {
+      app.metronome.playing = false;
+      if (app.metronome.rafId) cancelAnimationFrame(app.metronome.rafId);
+      clearTimeout(app.metronome.beatTimer);
+    }
+
+    function stopMetronome() {
+      app.metronome.playing = false;
+      app.metronome.playheadSec = 0;
+      karaokeEditor.playheadSec = 0;
+      if (app.metronome.rafId) cancelAnimationFrame(app.metronome.rafId);
+      clearTimeout(app.metronome.beatTimer);
+      drawEditor(karaokeEditor);
+    }
+
+    function metronomeLoop() {
+      if (!app.metronome.playing) return;
+      app.metronome.playheadSec = (performance.now() - app.metronome.startedAt) / 1000;
+      karaokeEditor.playheadSec = app.metronome.playheadSec;
+      drawEditor(karaokeEditor);
+      app.metronome.rafId = requestAnimationFrame(metronomeLoop);
+    }
+
+    function scheduleBeat() {
+      if (!app.metronome.playing) return;
+      playClick();
+      const beatMs = 60000 / karaokeEditor.getBpm();
+      app.metronome.beatTimer = setTimeout(scheduleBeat, beatMs);
+    }
+
+    function playClick() {
+      const ctx = app.audioContext;
+      if (!ctx) return;
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = "square";
+      osc.frequency.value = 880;
+      gain.gain.setValueAtTime(0.0001, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.18, ctx.currentTime + 0.006);
+      gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.055);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start();
+      osc.stop(ctx.currentTime + 0.06);
+    }
+
+    function getSongData(editor) {
+      return {
+        version: 1,
+        title: editor.getTitle(),
+        bpm: editor.getBpm(),
+        timeSig: editor.getTimeSig(),
+        rects: editor.rects.map((r) => ({
+          id: r.id || makeId(),
+          start: Number(r.start),
+          end: Number(r.end),
+          duration: Number(r.end - r.start),
+          midi: Number(r.midi),
+          label: midiToKaraokeNote(Number(r.midi)).label,
+          color: r.color || editor.defaultColor,
+          vibrato: !!r.vibrato,
+          scoop: !!r.scoop,
+          fall: !!r.fall
+        }))
+      };
+    }
+
+    function loadSongData(editor, data) {
+      editor.setTitle(data.title || "Untitled Song");
+      if (editor === karaokeEditor) {
+        els.karaokeBpmInput.value = data.bpm || 120;
+        els.karaokeTimeSigInput.value = data.timeSig || 4;
+      } else {
+        els.reverseBpmInput.value = data.bpm || 120;
+        els.reverseTimeSigInput.value = data.timeSig || 4;
+      }
+      editor.rects = (data.rects || []).map((r) => ({
+        id: r.id || makeId(),
+        start: Number(r.start) || 0,
+        end: Number(r.end) || ((Number(r.start) || 0) + (Number(r.duration) || 0.5)),
+        duration: Number(r.duration) || Math.max(0.05, (Number(r.end) || 0) - (Number(r.start) || 0)),
+        midi: clamp(Math.round(Number(r.midi) || 69), CONFIG.editor.minMidi, CONFIG.editor.maxMidi),
+        label: midiToKaraokeNote(clamp(Math.round(Number(r.midi) || 69), CONFIG.editor.minMidi, CONFIG.editor.maxMidi)).label,
+        color: r.color || editor.defaultColor,
+        vibrato: !!r.vibrato,
+        scoop: !!r.scoop,
+        fall: !!r.fall
+      }));
+      for (const r of editor.rects) {
+        r.end = r.start + Math.max(0.05, r.duration || (r.end - r.start));
+      }
+      editor.selectedId = null;
+      editor.onChange();
+      drawEditor(editor);
+    }
+
+    const STORAGE_KEY = "vocal_analyzer_karaoke_songs_v2";
+
+    function getSavedSongs() {
       try {
-        if (state.source) {
-          state.source.disconnect();
+        return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+      } catch (_) {
+        return [];
+      }
+    }
+
+    function setSavedSongs(list) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+      refreshSavedSongs();
+    }
+
+    function refreshSavedSongs() {
+      const list = getSavedSongs();
+      els.savedSongsSelect.innerHTML = list.map((s, i) => '<option value="' + i + '">' + escapeHtml(s.title || ("Song " + (i + 1))) + '</option>').join("");
+    }
+
+    els.saveSongBtn.addEventListener("click", () => {
+      const list = getSavedSongs();
+      const data = getSongData(karaokeEditor);
+      const idx = list.findIndex((s) => s.title === data.title);
+      if (idx >= 0) list[idx] = data;
+      else list.push(data);
+      setSavedSongs(list);
+      alert("譜面を保存しました。");
+    });
+
+    els.loadSongBtn.addEventListener("click", () => {
+      const list = getSavedSongs();
+      const idx = Number(els.savedSongsSelect.value);
+      if (list[idx]) loadSongData(karaokeEditor, list[idx]);
+    });
+
+    els.deleteSongBtn.addEventListener("click", () => {
+      const list = getSavedSongs();
+      const idx = Number(els.savedSongsSelect.value);
+      if (!list[idx]) return;
+      if (!confirm("選択した譜面を削除しますか？")) return;
+      list.splice(idx, 1);
+      setSavedSongs(list);
+    });
+
+    els.exportJsonBtn.addEventListener("click", () => {
+      els.jsonArea.value = JSON.stringify(getSongData(karaokeEditor), null, 2);
+    });
+
+    els.importJsonBtn.addEventListener("click", () => {
+      try {
+        const data = JSON.parse(els.jsonArea.value);
+        loadSongData(karaokeEditor, data);
+      } catch (e) {
+        alert("JSONを読み込めませんでした。形式を確認してください。");
+      }
+    });
+
+    refreshSavedSongs();
+
+    els.scoreStartBtn.addEventListener("click", async () => {
+      stopAudioOnly();
+      app.score = createSession();
+      app.score.tracker = new SegmentTracker(app.score.segments, { defaultColor: "#34d399" });
+      clearScoreDisplay();
+      const ok = await startAudioSession("score", app.score);
+      if (ok) {
+        karaokeEditor.playheadSec = 0;
+        drawEditor(karaokeEditor);
+      }
+    });
+
+    els.scoreStopBtn.addEventListener("click", () => {
+      if (app.audioMode !== "score") return;
+      app.score.endedAt = performance.now();
+      if (app.score.tracker) app.score.tracker.processSilence((app.score.endedAt - app.score.startedAt) / 1000 + 10);
+      stopAudioOnly();
+      const result = calculateScore(karaokeEditor.rects, app.score.segments, app.score.counts);
+      showScore(result);
+    });
+
+    function clearScoreDisplay() {
+      els.scoreAccuracy.textContent = "--%";
+      els.scoreVibratoBonus.textContent = "--";
+      els.scoreScoopBonus.textContent = "--";
+      els.scoreFallBonus.textContent = "--";
+      els.scoreTechBonus.textContent = "--";
+      els.scoreFinal.textContent = "--";
+    }
+
+    function updateScoreLiveUI() {
+      const s = app.score;
+      karaokeEditor.playheadSec = (performance.now() - s.startedAt) / 1000;
+      drawEditor(karaokeEditor);
+    }
+
+    function calculateScore(targetRects, sungRects, counts) {
+      const targets = targetRects.filter((r) => r.end > r.start);
+      if (!targets.length) {
+        return { accuracy: 0, vibratoBonus: 0, scoopBonus: 0, fallBonus: 0, techBonus: 0, final: 0 };
+      }
+
+      let totalWeight = 0;
+      let timingScore = 0;
+      let pitchScore = 0;
+      const step = CONFIG.scoring.sampleStepSec;
+
+      for (const target of targets) {
+        for (let t = target.start; t < target.end; t += step) {
+          totalWeight += step;
+          const sung = sungRects.find((r) => r.start <= t && r.end >= t);
+          if (!sung) continue;
+          timingScore += step;
+          const cents = Math.abs((sung.midi - target.midi) * 100);
+          let p = 0;
+          if (cents <= CONFIG.scoring.pitchFullCents) p = 1;
+          else if (cents >= CONFIG.scoring.pitchZeroCents) p = 0;
+          else p = 1 - (cents - CONFIG.scoring.pitchFullCents) / (CONFIG.scoring.pitchZeroCents - CONFIG.scoring.pitchFullCents);
+          pitchScore += p * step;
         }
-      } catch (_) {}
-
-      if (state.mediaStream) {
-        state.mediaStream.getTracks().forEach((track) => {
-          try {
-            track.stop();
-          } catch (_) {}
-        });
       }
 
-      if (state.audioContext && state.audioContext.state !== "closed") {
-        state.audioContext.close().catch(() => {});
+      const timingRate = totalWeight ? timingScore / totalWeight : 0;
+      const pitchRate = totalWeight ? pitchScore / totalWeight : 0;
+      const accuracy = (pitchRate * 0.72 + timingRate * 0.28) * 100;
+
+      const vibratoBonus = counts.vibrato * CONFIG.scoring.vibratoPoint;
+      const scoopBonus = counts.scoop * CONFIG.scoring.scoopPoint;
+      const fallBonus = counts.fall * CONFIG.scoring.fallPoint;
+      const techBonus = Math.min(CONFIG.scoring.techMax, vibratoBonus + scoopBonus + fallBonus);
+      const final = Math.min(100, accuracy * (CONFIG.scoring.baseMax / 100) + techBonus);
+
+      return { accuracy, vibratoBonus, scoopBonus, fallBonus, techBonus, final };
+    }
+
+    function showScore(r) {
+      els.scoreAccuracy.textContent = r.accuracy.toFixed(1) + "%";
+      els.scoreVibratoBonus.textContent = r.vibratoBonus.toFixed(1);
+      els.scoreScoopBonus.textContent = r.scoopBonus.toFixed(1);
+      els.scoreFallBonus.textContent = r.fallBonus.toFixed(1);
+      els.scoreTechBonus.textContent = r.techBonus.toFixed(1);
+      els.scoreFinal.textContent = r.final.toFixed(1);
+    }
+
+    els.reverseStartBtn.addEventListener("click", async () => {
+      stopAudioOnly();
+      app.reverse = createSession();
+      reverseEditor.rects = [];
+      reverseEditor.selectedId = null;
+      app.reverse.tracker = new SegmentTracker(reverseEditor.rects, {
+        defaultColor: "#34d399",
+        snapProvider: (start, end) => {
+          if (!reverseEditor.getSnap()) return { start, end };
+          const s = snapTime(reverseEditor, start);
+          const e = Math.max(s + 0.05, snapTime(reverseEditor, end));
+          return { start: s, end: e };
+        }
+      });
+      const ok = await startAudioSession("reverse", app.reverse);
+      if (ok) {
+        setMicStatus("reverse", true, "自動入力中");
       }
+    });
 
-      state.source = null;
-      state.mediaStream = null;
-      state.audioContext = null;
-      state.analyser = null;
-      state.buffer = null;
-      setMicStatus(false, "停止");
+    els.reverseStopBtn.addEventListener("click", () => {
+      if (app.audioMode !== "reverse") return;
+      app.reverse.endedAt = performance.now();
+      if (app.reverse.tracker) app.reverse.tracker.processSilence((app.reverse.endedAt - app.reverse.startedAt) / 1000 + 10);
+      stopAudioOnly();
+      setMicStatus("reverse", false, "編集可能");
+      updateReversePanel();
+      drawEditor(reverseEditor);
+    });
+
+    function updateReverseLiveUI() {
+      const s = app.reverse;
+      const elapsed = s.startedAt ? (performance.now() - s.startedAt) / 1000 : 0;
+      els.reverseCurrentNote.textContent = s.currentPitch ? s.currentPitch.label : "--";
+      els.reverseElapsed.textContent = formatTime(elapsed);
+      reverseEditor.playheadSec = elapsed;
+      updateReversePanel();
     }
 
-    function buildResultScreen() {
-      const durationSec = Math.max(
-        0,
-        ((state.endedAt || performance.now()) - state.startedAt) / 1000
-      );
-      const durationMin = Math.max(durationSec / 60, 1 / 60);
-
-      elements.resultDuration.textContent = formatTime(durationSec);
-
-      elements.resultMaxNote.textContent = state.maxPitch ? state.maxPitch.label : "--";
-      elements.resultMinNote.textContent = state.minPitch ? state.minPitch.label : "--";
-
-      elements.resultMaxTime.textContent = state.maxPitch
-        ? formatEventTime(state.maxPitch.t) + " / " + state.maxPitch.freq.toFixed(1) + " Hz"
-        : "--";
-
-      elements.resultMinTime.textContent = state.minPitch
-        ? formatEventTime(state.minPitch.t) + " / " + state.minPitch.freq.toFixed(1) + " Hz"
-        : "--";
-
-      elements.resultVibrato.textContent =
-        state.counts.vibrato + " / " + (state.counts.vibrato / durationMin).toFixed(1);
-
-      elements.resultScoop.textContent =
-        state.counts.scoop + " / " + (state.counts.scoop / durationMin).toFixed(1);
-
-      elements.resultFall.textContent =
-        state.counts.fall + " / " + (state.counts.fall / durationMin).toFixed(1);
-
-      renderResultHistory();
-    }
-
-    function renderResultHistory() {
-      if (!state.techniqueEvents.length) {
-        elements.resultHistory.innerHTML = '<div class="history-item"><span>検出履歴はありません</span><small>--</small></div>';
-        return;
+    function updateReversePanel() {
+      els.reverseRectCount.textContent = String(reverseEditor.rects.length);
+      if (!app.running || app.audioMode !== "reverse") {
+        els.reverseCurrentNote.textContent = app.reverse.currentPitch ? app.reverse.currentPitch.label : "--";
       }
-
-      elements.resultHistory.innerHTML = state.techniqueEvents.map((event, index) => {
-        return '<div class="history-item">' +
-          '<span>' +
-          String(index + 1) + ". " +
-          '<span style="color:' + techniqueColor(event.type) + '">' + escapeHtml(techniqueName(event.type)) + '</span>' +
-          ' <small>' + escapeHtml(event.label) + '</small>' +
-          '</span>' +
-          '<small>' + escapeHtml(formatEventTime(event.t)) + '</small>' +
-          '</div>';
-      }).join("");
+      drawEditor(reverseEditor);
     }
+
+    els.reverseCopyToKaraokeBtn.addEventListener("click", () => {
+      const data = getSongData(reverseEditor);
+      loadSongData(karaokeEditor, data);
+      showScreen("karaoke");
+    });
+
+    els.reverseSaveBtn.addEventListener("click", () => {
+      const list = getSavedSongs();
+      const data = getSongData(reverseEditor);
+      const idx = list.findIndex((s) => s.title === data.title);
+      if (idx >= 0) list[idx] = data;
+      else list.push(data);
+      setSavedSongs(list);
+      alert("逆カラオケ譜面を保存しました。");
+    });
+
+    els.reverseExportBtn.addEventListener("click", () => {
+      els.reverseJsonArea.value = JSON.stringify(getSongData(reverseEditor), null, 2);
+    });
+
+    els.reverseImportBtn.addEventListener("click", () => {
+      try {
+        const data = JSON.parse(els.reverseJsonArea.value);
+        loadSongData(reverseEditor, data);
+      } catch (_) {
+        alert("JSONを読み込めませんでした。形式を確認してください。");
+      }
+    });
+
+    function updateReverseRectDurations() {
+      for (const r of reverseEditor.rects) {
+        r.duration = Math.max(0.05, r.end - r.start);
+        r.label = midiToKaraokeNote(r.midi).label;
+      }
+    }
+
+    setInterval(() => {
+      updateReverseRectDurations();
+      if (els.reverseScreen.classList.contains("active")) updateReversePanel();
+    }, 300);
+
+    function saveBeforeUnload() {
+      stopAudioOnly();
+      stopMetronome();
+    }
+
+    window.addEventListener("beforeunload", saveBeforeUnload);
 
     document.addEventListener("visibilitychange", async () => {
-      if (!document.hidden && state.running && state.audioContext && state.audioContext.state === "suspended") {
-        try {
-          await state.audioContext.resume();
-        } catch (_) {}
+      if (!document.hidden && app.running && app.audioContext && app.audioContext.state === "suspended") {
+        try { await app.audioContext.resume(); } catch (_) {}
       }
     });
 
-    window.addEventListener("beforeunload", () => {
-      stopAudioOnly();
+    document.addEventListener("keydown", (ev) => {
+      if (ev.key === "Delete" || ev.key === "Backspace") {
+        if (els.karaokeScreen.classList.contains("active")) deleteSelected(karaokeEditor);
+        if (els.reverseScreen.classList.contains("active")) deleteSelected(reverseEditor);
+      }
+      if ((ev.ctrlKey || ev.metaKey) && ev.key.toLowerCase() === "d") {
+        ev.preventDefault();
+        if (els.karaokeScreen.classList.contains("active")) duplicateSelected(karaokeEditor);
+        if (els.reverseScreen.classList.contains("active")) duplicateSelected(reverseEditor);
+      }
+      if ((ev.ctrlKey || ev.metaKey) && ev.key.toLowerCase() === "v" && app.copiedRect && els.karaokeScreen.classList.contains("active")) {
+        const n = { ...app.copiedRect, id: makeId(), start: app.copiedRect.start + 0.5, end: app.copiedRect.end + 0.5 };
+        karaokeEditor.rects.push(n);
+        karaokeEditor.selectedId = n.id;
+        loadSelectedToInputs(karaokeEditor);
+        drawEditor(karaokeEditor);
+      }
     });
 
-    resizeAllCanvases();
+    function initDemoRects() {
+      karaokeEditor.rects = [
+        { id: makeId(), start: 0, end: 1.0, duration: 1.0, midi: 69, label: midiToKaraokeNote(69).label, color: "#22d3ee" },
+        { id: makeId(), start: 1.0, end: 2.0, duration: 1.0, midi: 71, label: midiToKaraokeNote(71).label, color: "#34d399" },
+        { id: makeId(), start: 2.0, end: 3.0, duration: 1.0, midi: 72, label: midiToKaraokeNote(72).label, color: "#a3e635" },
+        { id: makeId(), start: 3.0, end: 4.0, duration: 1.0, midi: 71, label: midiToKaraokeNote(71).label, color: "#22d3ee" }
+      ];
+      drawEditor(karaokeEditor);
+      drawEditor(reverseEditor);
+    }
+
+    function clearResultAndNormalUI() {
+      els.normalCurrentNote.textContent = "--";
+      els.normalMaxNote.textContent = "--";
+      els.normalMinNote.textContent = "--";
+      els.normalVibratoCount.textContent = "0";
+      els.normalScoopCount.textContent = "0";
+      els.normalFallCount.textContent = "0";
+      els.normalVibratoRate.textContent = "0.0";
+      els.normalScoopRate.textContent = "0.0";
+      els.normalFallRate.textContent = "0.0";
+      els.normalElapsed.textContent = "00:00";
+      els.normalWindowIndex.textContent = "1";
+    }
+
+    clearResultAndNormalUI();
+    initDemoRects();
+    drawAll();
   </script>
 </body>
 </html>
